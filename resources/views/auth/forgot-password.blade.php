@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <div class="wsus__login_input">
                                         <i class="fal fa-envelope"></i>
-                                        <input id="email" name="email" value="{{ old('email') }}" type="email" placeholder="Your Email">
+                                        <input id="email" class="form-control" name="email" value="{{ old('email') }}" type="email" placeholder="Your Email">
                                     </div>
                                     @if ($errors->has('email'))
                                         <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('email') }}</code>

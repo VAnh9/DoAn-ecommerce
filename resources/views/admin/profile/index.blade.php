@@ -27,8 +27,8 @@
                         </div>
                         <label>Image</label>
                         <input type="file" name="image" class="form-control">
-                        @if ($errors->has('file'))
-                            <code>{{ $errors->first('file') }}</code>
+                        @if ($errors->has('image'))
+                            <code>{{ $errors->first('image') }}</code>
                         @endif
                     </div>
 

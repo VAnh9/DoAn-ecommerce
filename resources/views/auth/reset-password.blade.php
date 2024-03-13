@@ -42,19 +42,19 @@
 
                             <div class="wsus__single_pass">
                                 <label>email</label>
-                                <input id="email" name="email" value="{{ old('email', $request->email) }}" type="email" placeholder="Email">
+                                <input id="email" class="form-control" name="email" value="{{ old('email', $request->email) }}" type="email" placeholder="Email">
                             </div>
 
 
                             <div class="wsus__single_pass">
                                 <label>new password</label>
-                                <input id="password" type="password" name="password" required placeholder="New Password">
+                                <input id="password" class="form-control" type="password" name="password" required placeholder="New Password">
                             </div>
 
 
                             <div class="wsus__single_pass">
                                 <label>confirm password</label>
-                                <input id="password_confirmation" type="password"  name="password_confirmation"  required placeholder="Confirm Password">
+                                <input id="password_confirmation" class="form-control" type="password"  name="password_confirmation"  required placeholder="Confirm Password">
                             </div>
 
                             <button class="common_btn" type="submit">submit</button>

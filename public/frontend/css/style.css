@@ -7207,7 +7207,8 @@ WISHLIST PAGE START
 .wsus__dash_pro_single {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  /* margin-bottom: 30px; */
 }
 
 .wsus__dash_pro_single i {

@@ -54,7 +54,7 @@
                                         <div class="form-group">
                                             <div class="wsus__login_input">
                                                 <i class="fas fa-user-tie"></i>
-                                                <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email">
+                                                <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Email">
                                             </div>
                                             @if ($errors->has('email'))
                                                 <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('email') }}</code>
@@ -64,7 +64,7 @@
                                         <div class="form-group">
                                             <div class="wsus__login_input ">
                                                 <i class="fas fa-key"></i>
-                                                <input id="password" type="password" name="password" placeholder="Password">
+                                                <input id="password" class="form-control" type="password" name="password" placeholder="Password">
                                             </div>
                                             @if ($errors->has('password'))
                                                     <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('password') }}</code>
@@ -104,7 +104,7 @@
                                         <div class="form-group">
                                             <div class="wsus__login_input">
                                                 <i class="fas fa-user-tie"></i>
-                                                <input id="name" name="name" value="{{ old('name') }}" type="text" placeholder="Name">
+                                                <input id="name" class="form-control"  name="name" value="{{ old('name') }}" type="text" placeholder="Name">
                                             </div>
                                             @if ($errors->has('name'))
                                                     <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('name') }}</code>
@@ -115,7 +115,7 @@
                                         <div class="form-group">
                                             <div class="wsus__login_input">
                                                 <i class="far fa-envelope"></i>
-                                                <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="Email">
+                                                <input id="email" class="form-control" name="email" type="email" value="{{ old('email') }}" placeholder="Email">
                                             </div>
                                             @if ($errors->has('email'))
                                                 <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('email') }}</code>
@@ -126,7 +126,7 @@
                                         <div class="form-group">
                                             <div class="wsus__login_input">
                                                 <i class="fas fa-key"></i>
-                                                <input id="password" name="password" type="password" placeholder="Password">
+                                                <input id="password" class="form-control" name="password" type="password" placeholder="Password">
                                             </div>
                                             @if ($errors->has('password'))
                                                     <code class="offset-2 offset-md-1 offset-xl-2">{{ $errors->first('password') }}</code>
@@ -135,7 +135,7 @@
 
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
+                                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
                                         </div>
 
                                         <button class="common_btn mt-4" type="submit">signup</button>
