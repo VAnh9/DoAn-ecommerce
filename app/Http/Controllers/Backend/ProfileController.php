@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
+    use ImageUploadTrait;
     public function index() {
 
         return view('admin.profile.index');
@@ -41,8 +43,7 @@ class ProfileController extends Controller
 
             $user->image = $path;
         }
-
-
+        
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
