@@ -19,6 +19,7 @@
     <link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
 
     <!-- Template CSS -->
@@ -89,6 +90,7 @@
     <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> --}}
     <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
@@ -201,8 +203,11 @@
       line-height: 18px;
       color: #fff;
     }
+    #toast-container > .toast-success {
+      background-image: none !important;
+    }
     #toast-container > .toast-success:before {
-      content: "\2713" !important;
+      content: "\2714" !important;
     }
     #toast-container > .toast-info:before {
       content: "\2139" !important;
@@ -214,6 +219,7 @@
     #toast-container > .toast-error:before {
       content: "\26A0" !important;
     }
+
 </style>
 
 </html>
