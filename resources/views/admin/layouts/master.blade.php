@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -57,14 +58,14 @@
             <div class="main-content">
                 @yield('content')
             </div>
-            <footer class="main-footer">
-                {{-- <div class="footer-left">
+            {{-- <footer class="main-footer">
+                <div class="footer-left">
           Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
         </div>
         <div class="footer-right">
 
-        </div> --}}
-            </footer>
+        </div>
+            </footer> --}}
         </div>
     </div>
 
@@ -88,6 +89,7 @@
     <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
 
@@ -105,18 +107,27 @@
 
     <!-- Dynamic Delete Alert -->
     <script>
-        $(document).ready(function() {
-
+        window.onload = function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+        }
+
+        $(document).ready(function() {
+
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
 
             $('body').on('click', '.delete-item', function(event) {
                 event.preventDefault();
 
                 let deleteUrl = $(this).attr('href');
+                var rowDelete = $(this).closest('tr');
 
                 Swal.fire({
                     title: "Are you sure?",
@@ -138,7 +149,8 @@
                                         'Deleted!',
                                         data.message
                                     )
-                                    window.location.reload();
+                                    // window.location.reload();
+                                    rowDelete.remove();
                                 } else if (data.status == 'error') {
                                     Swal.fire(
                                         'Cant Delete!',
@@ -161,15 +173,47 @@
     @stack('scripts')
 </body>
 <style>
-  div.dt-container .dt-paging .dt-paging-button:hover, div.dt-container .dt-paging .dt-paging-button:active {
-    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
-    border-color: transparent;
-    box-shadow: none;
-  }
+    div.dt-container .dt-paging .dt-paging-button:hover,
+    div.dt-container .dt-paging .dt-paging-button:active {
+        background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+        border-color: transparent;
+        box-shadow: none;
+    }
 
-  div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-paging .dt-paging-button.disabled:hover, div.dt-container .dt-paging .dt-paging-button.disabled:active {
-    cursor: pointer;
-  }
+    div.dt-container .dt-paging .dt-paging-button.disabled,
+    div.dt-container .dt-paging .dt-paging-button.disabled:hover,
+    div.dt-container .dt-paging .dt-paging-button.disabled:active {
+        cursor: pointer;
+    }
+
+    table.dataTable thead>tr>th.dt-orderable-asc,
+    table.dataTable thead>tr>th.dt-orderable-desc,
+    table.dataTable thead>tr>td.dt-orderable-asc,
+    table.dataTable thead>tr>td.dt-orderable-desc {
+        text-align: left !important;
+    }
+    #toast-container > .toast:before {
+      position: absolute;
+      left: 17px;
+      top: 20px;
+      font-family: "Font Awesome 5 Free" !important;
+      font-size: 24px;
+      line-height: 18px;
+      color: #fff;
+    }
+    #toast-container > .toast-success:before {
+      content: "\2713" !important;
+    }
+    #toast-container > .toast-info:before {
+      content: "\2139" !important;
+      color: #000;
+    }
+    #toast-container > .toast-warning:before {
+      content: "\26A0" !important;
+    }
+    #toast-container > .toast-error:before {
+      content: "\26A0" !important;
+    }
 </style>
 
 </html>
