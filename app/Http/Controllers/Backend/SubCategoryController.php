@@ -24,7 +24,7 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('status',1)->get();
         return view('admin.sub-category.create', compact('categories'));
     }
 
@@ -68,7 +68,7 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $subCategory = SubCategory::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('status', 1)->get();
         return view('admin.sub-category.edit', compact('subCategory', 'categories'));
     }
 
@@ -118,7 +118,7 @@ class SubCategoryController extends Controller
 
 
         $subCategory->save();
-        
+
         return response(['message' => 'Status has been updated']);
     }
 }
