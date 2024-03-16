@@ -155,8 +155,9 @@
                                     rowDelete.remove();
                                 } else if (data.status == 'error') {
                                     Swal.fire(
-                                        'Cant Delete!',
-                                        data.message
+                                        "Can't Delete!",
+                                        data.message,
+                                        'error'
                                     )
                                 }
                             },
