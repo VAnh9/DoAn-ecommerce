@@ -54,7 +54,7 @@
     <!--============================
         MOBILE MENU START
     ==============================-->
-        @include('frontend.layouts.mobile-menu')
+        {{-- @include('frontend.layouts.mobile-menu') --}}
     <!--============================
         MOBILE MENU END
     ==============================-->
