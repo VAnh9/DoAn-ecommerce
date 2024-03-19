@@ -6,10 +6,10 @@
                     <span class="wsus__mobile_menu_icon"><i class="fal fa-bars"></i></span>
                 </div>
             </div>
-            <div class="col-xl-2 col-7 col-md-8 col-lg-2">
+            <div class="col-xl-2 col-7 col-md-8 col-lg-2 d-flex align-items-center">
                 <div class="wsus_logo_area">
-                    <a class="wsus__header_logo" href="{{ route('home') }}">
-                        <img src="{{ asset('uploads/shine-logo.jpg')}}" alt="logo" class="img-fluid" style="width: 80%">
+                    <a class="wsus__header_logo" style="width: 85%" href="{{ route('home') }}">
+                        <img src="{{ asset('uploads/logo.png')}}" alt="logo" class="img-fluid" style="width: 100%; vertical-align: baseline ">
                     </a>
                 </div>
             </div>

@@ -7,8 +7,8 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <title>Shine || e-Commerce </title>
-    <link rel="icon" type="image/png" href="https://framerusercontent.com/modules/p1wRai4cvSbYMXqphJhP/LpUxC5mvdIPQg9KZQnVg/assets/MIVNdGM33bCcmDOkfXJ4vKxsM.png">
+    <title>Shopnest || Has Everything You Want </title>
+    <link rel="icon" type="image/png" href="{{ asset('uploads/icon.png') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css')}}">
