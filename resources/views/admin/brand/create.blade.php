@@ -15,7 +15,7 @@
                   <div class="card-header">
                     <h4>Create Brand</h4>
                     <div class="card-header-action">
-                      <a href="{{ route('admin.brand.index') }}" class="btn btn-primary">Back</a>
+                      <a href="{{ route('admin.brand.index') }}" class="btn btn-secondary">Back</a>
                     </div>
                   </div>
                   <div class="card-body">

@@ -15,7 +15,7 @@
                   <div class="card-header">
                     <h4>Edit Sub Category</h4>
                     <div class="card-header-action">
-                      <a href="{{ route('admin.sub-category.index') }}" class="btn btn-primary">Back</a>
+                      <a href="{{ route('admin.sub-category.index') }}" class="btn btn-secondary">Back</a>
                     </div>
                   </div>
                   <div class="card-body">
