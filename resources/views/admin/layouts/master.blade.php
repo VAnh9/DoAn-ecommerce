@@ -152,7 +152,8 @@
                                 if (data.status == 'success') {
                                     Swal.fire(
                                         'Deleted!',
-                                        data.message
+                                        data.message,
+                                        'success'
                                     )
                                     // window.location.reload();
                                     rowDelete.remove();
