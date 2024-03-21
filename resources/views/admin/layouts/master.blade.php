@@ -16,10 +16,10 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
-    <link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
 
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
@@ -91,7 +91,7 @@
     <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> --}}
     <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
@@ -163,7 +163,7 @@
                                         data.message,
                                         'error'
                                     )
-                                }
+                                } 
                             },
                             error: function(xhr, status, err) {
                                 console.log(err);
@@ -180,10 +180,10 @@
     @stack('scripts')
 </body>
 <style>
-
     .field-required {
-      color: red;
+        color: red;
     }
+
     div.dt-container .dt-paging .dt-paging-button:hover,
     div.dt-container .dt-paging .dt-paging-button:active {
         background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
@@ -203,32 +203,37 @@
     table.dataTable thead>tr>td.dt-orderable-desc {
         text-align: left !important;
     }
-    #toast-container > .toast:before {
-      position: absolute;
-      left: 17px;
-      top: 20px;
-      font-family: "Font Awesome 5 Free" !important;
-      font-size: 24px;
-      line-height: 18px;
-      color: #fff;
-    }
-    #toast-container > .toast-success {
-      background-image: none !important;
-    }
-    #toast-container > .toast-success:before {
-      content: "\2714" !important;
-    }
-    #toast-container > .toast-info:before {
-      content: "\2139" !important;
-      color: #000;
-    }
-    #toast-container > .toast-warning:before {
-      content: "\26A0" !important;
-    }
-    #toast-container > .toast-error:before {
-      content: "\26A0" !important;
+
+    #toast-container>.toast:before {
+        position: absolute;
+        left: 17px;
+        top: 20px;
+        font-family: "Font Awesome 5 Free" !important;
+        font-size: 24px;
+        line-height: 18px;
+        color: #fff;
     }
 
+    #toast-container>.toast-success {
+        background-image: none !important;
+    }
+
+    #toast-container>.toast-success:before {
+        content: "\2714" !important;
+    }
+
+    #toast-container>.toast-info:before {
+        content: "\2139" !important;
+        color: #000;
+    }
+
+    #toast-container>.toast-warning:before {
+        content: "\26A0" !important;
+    }
+
+    #toast-container>.toast-error:before {
+        content: "\26A0" !important;
+    }
 </style>
 
 </html>
