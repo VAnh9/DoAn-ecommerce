@@ -8,15 +8,15 @@
             <h1>Product Image Gallery</h1>
           </div>
 
+          <div class="card-header-action d-flex justify-content-end mb-3">
+            <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Back</a>
+          </div>
           <div class="section-body">
             <div class="row">
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
                     <h4>Product: {{ $product->name }}</h4>
-                    <div class="card-header-action">
-                      <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Back</a>
-                    </div>
                   </div>
                   <div class="card-body">
                     <form action="{{ route('admin.product-image-gallery.store') }}" method="POST" enctype="multipart/form-data">
