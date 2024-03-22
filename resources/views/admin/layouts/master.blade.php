@@ -163,7 +163,7 @@
                                         data.message,
                                         'error'
                                     )
-                                } 
+                                }
                             },
                             error: function(xhr, status, err) {
                                 console.log(err);

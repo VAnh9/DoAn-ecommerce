@@ -9459,3 +9459,12 @@ a:not([href]):not([class]):hover {
 .wsus__input textarea {
   border: 1px solid #eee;
 }
+.wsus__input select {
+  border: 1px solid #eee;
+}
+#flexSwitchCheckDefault {
+  height: 20px !important;
+  width: 45px !important;
+  border-radius: 2em !important;
+  transition: background-position .25s ease-in-out;
+}

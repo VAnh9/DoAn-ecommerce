@@ -16,12 +16,12 @@
 
                 <form action="{{ route('vendor.shop-profile.store') }}" method="POST" enctype="multipart/form-data">
                   @csrf
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input" style="margin-bottom: 1rem">
                     <label for="">Preview</label> <br>
                     <img width="200px" src="{{ asset($profile->banner) }}" alt="">
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="banner">Banner</label>
                     <input type="file" id="banner" name="banner" class="form-control">
                     @if ($errors->has('banner'))
@@ -29,7 +29,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="name">Shop Name</label>
                     <input type="text" id="type" name="name" class="form-control" value="{{ $profile->name }}">
                     @if ($errors->has('name'))
@@ -37,7 +37,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="phone">Phone</label>
                     <input type="text" name="phone" class="form-control" value="{{ $profile->phone }}">
                     @if ($errors->has('phone'))
@@ -45,7 +45,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ $profile->email }}">
                     @if ($errors->has('email'))
@@ -53,7 +53,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Address</label>
                     <input type="text" name="address" class="form-control" value="{{ $profile->address }}">
                     @if ($errors->has('address'))
@@ -61,7 +61,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Description</label>
                     <textarea name="description"  id="" class="summernote" style="width: 100%">{{ $profile->description }}</textarea>
                     @if ($errors->has('description'))
@@ -69,7 +69,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Facebook</label>
                     <input type="text" name="fb_link" class="form-control" value="{{ $profile->fb_link }}">
                     @if ($errors->has('fb_link'))
@@ -77,7 +77,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Twitter</label>
                     <input type="text" name="tw_link" class="form-control" value="{{ $profile->tw_link }}">
                     @if ($errors->has('tw_link'))
@@ -85,7 +85,7 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input input" style="margin-bottom: 1rem">
+                  <div class="form-group wsus__input " style="margin-bottom: 1rem">
                     <label for="">Instagram</label>
                     <input type="text" name="insta_link" class="form-control" value="{{ $profile->insta_link }}">
                     @if ($errors->has('insta_link'))
@@ -94,7 +94,7 @@
                   </div>
 
 
-                  <button type="submit" class="btn btn-primary wsus__input input">Update</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
                 </form>
 
               </div>
