@@ -43,7 +43,7 @@ class ProfileController extends Controller
 
             $user->image = $path;
         }
-        
+
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
