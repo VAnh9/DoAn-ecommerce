@@ -133,6 +133,7 @@
 
                 let deleteUrl = $(this).attr('href');
                 var rowDelete = $(this).closest('tr');
+                let dataTableId = $(this).attr('data-tableId')
 
                 Swal.fire({
                     title: "Are you sure?",
@@ -157,6 +158,7 @@
                                     )
                                     // window.location.reload();
                                     rowDelete.remove();
+                                    window.LaravelDataTables[dataTableId].ajax.reload();
                                 } else if (data.status == 'error') {
                                     Swal.fire(
                                         "Can't Delete!",

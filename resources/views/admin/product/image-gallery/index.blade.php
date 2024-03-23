@@ -46,7 +46,7 @@
                     <h4>All Images</h4>
                   </div>
                   <div class="card-body">
-                    {{ $dataTable->table(['id'=> 'product_image_gallery'], true) }}
+                    {{ $dataTable->table([], true) }}
                   </div>
                 </div>
               </div>

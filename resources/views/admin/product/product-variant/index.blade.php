@@ -22,7 +22,7 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    {{ $dataTable->table(['id'=> 'product_variant'], true) }}
+                    {{ $dataTable->table([], true) }}
                   </div>
                 </div>
               </div>

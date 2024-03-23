@@ -19,7 +19,7 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    {{ $dataTable->table(['id'=> 'slider'], true) }}
+                    {{ $dataTable->table([], true) }}
                   </div>
                 </div>
               </div>

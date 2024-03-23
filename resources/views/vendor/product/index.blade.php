@@ -16,7 +16,7 @@
             </div>
             <div class="wsus__dashboard_profile">
               <div class="wsus__dash_pro_area">
-                {{ $dataTable->table(['id'=> 'product'], true) }}
+                {{ $dataTable->table([], true) }}
               </div>
             </div>
           </div>

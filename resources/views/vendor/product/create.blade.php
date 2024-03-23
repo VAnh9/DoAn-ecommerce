@@ -250,7 +250,7 @@
             $('.sub-category').html('<option value="">Select</option>');
 
             $.each(data, function(i, item) {
-              $('.sub-category').append(`<option value="${item.id}">${item.name}</option>`);
+              $('.sub-category').append(`<option class="${item.status == 0 ? 'field-disabled' : ''}" value="${item.id}">${ item.status == 1 ? item.name : item.name + ' (disabled)'}</option>`);
             })
           },
           error: function(xhr, status, err) {
@@ -273,7 +273,7 @@
 
             $.each(data, function(i, item) {
 
-              $('.child-category').append(`<option value="${item.id}">${item.name}</option>`);
+              $('.child-category').append(`<option class="${item.status == 0 ? 'field-disabled' : ''}" value="${item.id}">${ item.status == 1 ? item.name : item.name + ' (disabled)'}</option>`);
 
             })
           },

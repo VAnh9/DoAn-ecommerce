@@ -25,7 +25,7 @@ class ProductVariantItemDataTable extends DataTable
             ->addColumn('action', function($query) {
 
               $editBtn = "<a href='".route('admin.product-variant-item.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-              $deleteBtn = "<a href='".route('admin.product-variant-item.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+              $deleteBtn = "<a href='".route('admin.product-variant-item.destroy', $query->id)."' data-tableId='productvariantitem-table' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
               return $editBtn.$deleteBtn;
             })
             ->addColumn('variant_name', function($query) {
@@ -50,6 +50,7 @@ class ProductVariantItemDataTable extends DataTable
                 return '<i class="badge badge-success">default</i>';
               }
             })
+            ->addIndexColumn()
             ->rawColumns(['status', 'action', 'default'])
             ->setRowId('id');
     }
@@ -90,7 +91,7 @@ class ProductVariantItemDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
             Column::make('name'),
             Column::make('variant_name'),
             Column::make('price'),

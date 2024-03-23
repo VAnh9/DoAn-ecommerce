@@ -25,7 +25,7 @@ class ProductVariantDataTable extends DataTable
             ->addColumn('action', function($query) {
               $variantItems = "<a href='".route('admin.product-variant-item.index', ['productId' => request()->product, 'variantId' => $query->id])."' class='btn btn-info mr-2'><i class='far fa-edit'></i> Variant Items</a>";
               $editBtn = "<a href='".route('admin.product-variant.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-              $deleteBtn = "<a href='".route('admin.product-variant.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+              $deleteBtn = "<a href='".route('admin.product-variant.destroy', $query->id)."' data-tableId='productvariant-table' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
               return $variantItems.$editBtn.$deleteBtn;
             })
             ->addColumn('status', function($query) {
@@ -42,6 +42,7 @@ class ProductVariantDataTable extends DataTable
               }
               return $button;
             })
+            ->addIndexColumn()
             ->rawColumns(['status', 'action'])
             ->setRowId('id');
     }
@@ -82,7 +83,7 @@ class ProductVariantDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100),
+            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
             Column::make('name'),
             Column::make('status')->width(300),
             Column::computed('action')

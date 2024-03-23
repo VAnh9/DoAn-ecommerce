@@ -25,14 +25,14 @@ class VendorProductDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query) {
               $editBtn = "<a href='".route('vendor.products.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-              $deleteBtn = "<a href='".route('vendor.products.destroy', $query->id)."' class='btn btn-danger ms-2 me-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+              $deleteBtn = "<a href='".route('vendor.products.destroy', $query->id)."' data-tableId='vendorproduct-table'  class='btn btn-danger ms-2 me-2 delete-item'><i class='far fa-trash-alt'></i></a>";
               $moreBtn = '<div class="btn-group dropstart">
                             <button type="button" class="btn btn-secondary rounded" data-bs-toggle="dropdown" aria-expanded="false">
                               <i class="fas fa-cog"></i>
                             </button>
                             <ul class="dropdown-menu">
                               <li>
-                                <a class="dropdown-item" href="'.route('admin.product-image-gallery.index', ['product' => $query->id]).'"><i class="far fa-heart"></i> Image Gallery</a>
+                                <a class="dropdown-item" href="'.route('vendor.product-image-gallery.index', ['product' => $query->id]).'"><i class="far fa-heart"></i> Image Gallery</a>
                               </li>
                               <li>
                                 <a class="dropdown-item" href="'.route('admin.product-variant.index', ['product' => $query->id]).'"><i class="far fa-file"></i> Variants</a>
@@ -79,6 +79,7 @@ class VendorProductDataTable extends DataTable
               }
               return $button;
             })
+            ->addIndexColumn()
             ->rawColumns(['image', 'type', 'status', 'action'])
             ->setRowId('id');
     }
@@ -119,7 +120,7 @@ class VendorProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-          Column::make('id')->hidden(),
+          Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
           Column::make('image')->width(250),
           Column::make('name'),
           Column::make('price'),

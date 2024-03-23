@@ -192,13 +192,13 @@ class VendorProductController extends Controller
 
     public function getSubCategories(Request $request) {
 
-      $subCategories = SubCategory::where('category_id', $request->id)->where('status',1)->get();
+      $subCategories = SubCategory::where('category_id', $request->id)->get();
       return $subCategories;
     }
 
     public function getChildCategories(Request $request) {
 
-      $childCategories = ChildCategory::where('sub_category_id', $request->id)->where('status',1)->get();
+      $childCategories = ChildCategory::where('sub_category_id', $request->id)->get();
       return $childCategories;
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -25,7 +26,7 @@ class ProductDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query) {
               $editBtn = "<a href='".route('admin.product.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-              $deleteBtn = "<a href='".route('admin.product.destroy', $query->id)."' class='btn btn-danger ml-2 mr-1 delete-item'><i class='far fa-trash-alt'></i></a>";
+              $deleteBtn = "<a href='".route('admin.product.destroy', $query->id)."' data-tableId='product-table' class='btn btn-danger ml-2 mr-1 delete-item'><i class='far fa-trash-alt'></i></a>";
               $moreBtn = '<div class="dropdown dropleft d-inline">
               <button class="btn btn-primary " type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-cog"></i>
@@ -77,6 +78,7 @@ class ProductDataTable extends DataTable
               }
               return $button;
             })
+            ->addIndexColumn()
             ->rawColumns(['image', 'type', 'status', 'action'])
             ->setRowId('id');
     }
@@ -117,7 +119,7 @@ class ProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
             Column::make('image')->width(250),
             Column::make('name'),
             Column::make('price'),

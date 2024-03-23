@@ -19,7 +19,7 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    {{ $dataTable->table(['id'=> 'sub-category'], true) }}
+                    {{ $dataTable->table([], true) }}
                   </div>
                 </div>
               </div>

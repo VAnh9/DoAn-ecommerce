@@ -2,17 +2,30 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\VendorProductImageGalleryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorProductImageGalleryController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, VendorProductImageGalleryDataTable $dataTable)
     {
-        //
+
+        $product = Product::findOrFail($request->product);
+
+        if($product->vendor_id != Auth::user()->vendor->id) {
+          abort(404);
+        }
+
+        return $dataTable->render('vendor.product.image-gallery.index', compact('product'));
     }
 
     /**
@@ -28,7 +41,26 @@ class VendorProductImageGalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+          'image' => ['required'],
+          'image.*' => ['required', 'image', 'max:2048']
+        ]);
+
+        $imagePaths = $this->uploadMultiImage($request, 'image', 'uploads');
+
+        foreach($imagePaths as $imagePath) {
+
+          $productImageGallery = new ProductImageGallery();
+
+          $productImageGallery->image = $imagePath;
+          $productImageGallery->product_id = $request->product;
+
+          $productImageGallery->save();
+        }
+
+        toastr('Uploaded Successfully!');
+
+        return redirect()->back();
     }
 
     /**
@@ -60,6 +92,12 @@ class VendorProductImageGalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $productImageGallery = ProductImageGallery::findOrFail($id);
+
+        $this->deleteImage($productImageGallery->image);
+
+        $productImageGallery->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }

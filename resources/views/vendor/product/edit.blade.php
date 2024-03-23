@@ -47,7 +47,7 @@
                          <select name="category" id="inputState" class="form-control main-category">
                             <option value="">Select</option>
                             @foreach ($categories as $category )
-                              <option {{ $category->id == $product->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                              <option class="{{ $category->status == 0 ? 'field-disabled' : '' }}" {{ $category->id == $product->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->status == 1 ? $category->name : $category->name.' (disabled)' }}</option>
                             @endforeach
                          </select>
                          @if ($errors->has('category'))
@@ -62,7 +62,7 @@
                          <select name="sub_category" id="inputState" class="form-control sub-category">
                             <option value="">Select</option>
                             @foreach ($subCategories as $subCategory )
-                              <option {{ $subCategory->id == $product->sub_category_id ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                              <option class="{{ $subCategory->status == 0 ? 'field-disabled' : '' }}" {{ $subCategory->id == $product->sub_category_id ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->status == 1 ? $subCategory->name : $subCategory->name.' (disabled)' }}</option>
                             @endforeach
                          </select>
                          @if ($errors->has('sub_category'))
@@ -77,7 +77,7 @@
                          <select name="child_category" id="inputState" class="form-control child-category">
                             <option value="">Select</option>
                             @foreach ($childCategories as $childCategory )
-                              <option {{ $childCategory->id == $product->child_category_id ? 'selected' : '' }} value="{{ $childCategory->id }}">{{ $childCategory->name }}</option>
+                              <option class="{{ $childCategory->status == 0 ? 'field-disabled' : '' }}" {{ $childCategory->id == $product->child_category_id ? 'selected' : '' }} value="{{ $childCategory->id }}">{{ $childCategory->status == 1 ? $childCategory->name : $childCategory->name.' (disabled)' }}</option>
                             @endforeach
                          </select>
                          @if ($errors->has('child_category'))
@@ -262,7 +262,7 @@
             $('.sub-category').html('<option value="">Select</option>');
 
             $.each(data, function(i, item) {
-              $('.sub-category').append(`<option value="${item.id}">${item.name}</option>`);
+              $('.sub-category').append(`<option class="${item.status == 0 ? 'field-disabled' : ''}" value="${item.id}">${ item.status == 1 ? item.name : item.name + ' (disabled)'}</option>`);
             })
           },
           error: function(xhr, status, err) {
@@ -285,7 +285,7 @@
 
             $.each(data, function(i, item) {
 
-              $('.child-category').append(`<option value="${item.id}">${item.name}</option>`);
+              $('.child-category').append(`<option class="${item.status == 0 ? 'field-disabled' : ''}" value="${item.id}">${ item.status == 1 ? item.name : item.name + ' (disabled)'}</option>`);
 
             })
           },
