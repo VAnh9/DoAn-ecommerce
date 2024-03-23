@@ -79,8 +79,16 @@ class VendorProductDataTable extends DataTable
               }
               return $button;
             })
+            ->addColumn('approved', function($query) {
+              if($query->is_approved == 1) {
+                return '<i class="badge rounded-pill bg-success">Approved</i>';
+              }
+              else {
+                return '<i class="badge rounded-pill bg-warning">Pending</i>';
+              }
+            })
             ->addIndexColumn()
-            ->rawColumns(['image', 'type', 'status', 'action'])
+            ->rawColumns(['image', 'type', 'status','approved', 'action'])
             ->setRowId('id');
     }
 
@@ -124,6 +132,7 @@ class VendorProductDataTable extends DataTable
           Column::make('image')->width(250),
           Column::make('name'),
           Column::make('price'),
+          Column::make('approved'),
           Column::make('type')->width(200),
           Column::make('status'),
           Column::computed('action')

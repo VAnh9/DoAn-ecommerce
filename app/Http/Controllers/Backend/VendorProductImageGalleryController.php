@@ -94,6 +94,10 @@ class VendorProductImageGalleryController extends Controller
     {
         $productImageGallery = ProductImageGallery::findOrFail($id);
 
+        if($productImageGallery->product->vendor_id != Auth::user()->vendor->id) {
+          abort(404);
+        }
+
         $this->deleteImage($productImageGallery->image);
 
         $productImageGallery->delete();

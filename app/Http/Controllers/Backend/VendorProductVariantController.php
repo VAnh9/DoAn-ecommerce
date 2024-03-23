@@ -73,7 +73,9 @@ class VendorProductVariantController extends Controller
     {
         $variant = ProductVariant::findOrFail($id);
 
-
+        if($variant->product->vendor_id != Auth::user()->vendor->id) {
+          abort(404);
+        }
 
         return view('vendor.product.product-variant.edit', compact('variant'));
     }
@@ -89,6 +91,10 @@ class VendorProductVariantController extends Controller
         ]);
 
         $productVariant = ProductVariant::findOrFail($id);
+
+        if($productVariant->product->vendor_id != Auth::user()->vendor->id) {
+          abort(404);
+        }
 
         $productVariant->name = $request->name;
         $productVariant->status = $request->status;
@@ -106,6 +112,10 @@ class VendorProductVariantController extends Controller
     public function destroy(string $id)
     {
       $variant = ProductVariant::findOrFail($id);
+
+      if($variant->product->vendor_id != Auth::user()->vendor->id) {
+        abort(404);
+      }
 
       $variantItemCheck = ProductVariantItem::where('product_variant_id', $variant->id)->count();
 
