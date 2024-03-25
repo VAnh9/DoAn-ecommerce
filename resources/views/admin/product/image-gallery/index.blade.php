@@ -9,7 +9,7 @@
           </div>
 
           <div class="card-header-action d-flex justify-content-end mb-3">
-            <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Back</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
           </div>
           <div class="section-body">
             <div class="row">

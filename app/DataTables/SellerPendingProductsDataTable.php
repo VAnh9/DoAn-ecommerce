@@ -4,9 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -14,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductDataTable extends DataTable
+class SellerPendingProductsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -78,8 +76,17 @@ class ProductDataTable extends DataTable
               }
               return $button;
             })
-            ->addIndexColumn()
-            ->rawColumns(['image', 'type', 'status', 'action'])
+            ->addColumn('vendor', function($query) {
+              return $query->vendor->name;
+            })
+            ->addColumn('approve', function($query) {
+              return "<select class='form-control is_approved' data-id='$query->id' style='height: 34px; padding: 0 0 0 4px; width: 75%'>
+                        <option selected value='0'>Pending</option>
+                        <option value='1'>Approved</option>
+                      </select>";
+
+            })
+            ->rawColumns(['image', 'type', 'status', 'approve', 'action'])
             ->setRowId('id');
     }
 
@@ -88,7 +95,7 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model): QueryBuilder
     {
-        return $model->where('vendor_id', Auth::user()->vendor->id)->newQuery();
+        return $model->where('is_approved', 0)->newQuery();
     }
 
     /**
@@ -97,7 +104,7 @@ class ProductDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('product-table')
+                    ->setTableId('sellerpendingproducts-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -119,12 +126,14 @@ class ProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
+            Column::make('id')->width(100),
             Column::make('image')->width(250),
             Column::make('name'),
+            Column::make('vendor'),
             Column::make('price'),
             Column::make('type')->width(200),
             Column::make('status'),
+            Column::make('approve')->width(150),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
@@ -138,6 +147,6 @@ class ProductDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Product_' . date('YmdHis');
+        return 'SellerPendingProducts_' . date('YmdHis');
     }
 }

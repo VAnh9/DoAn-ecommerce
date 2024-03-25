@@ -15,7 +15,7 @@
                   <div class="card-header">
                     <h4>Edit Product</h4>
                     <div class="card-header-action">
-                      <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Back</a>
+                      <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                     </div>
                   </div>
                   <div class="card-body">
