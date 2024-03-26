@@ -12,4 +12,16 @@ class Product extends Model
     public function vendor() {
       return $this->belongsTo(Vendor::class);
     }
+
+    public function flashSaleItem() {
+      return $this->hasOne(FlashSaleItem::class);
+    }
+
+    public function category() {
+      return $this->belongsTo(Category::class);
+    }
+
+    public function productImageGalleries() {
+      return $this->hasMany(ProductImageGallery::class);
+    }
 }

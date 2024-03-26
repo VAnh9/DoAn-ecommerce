@@ -9471,3 +9471,88 @@ a:not([href]):not([class]):hover {
 .field-disabled {
   color: #ebebee;
 }
+/* Style for pagination */
+.pagination {
+  justify-content: center;
+}
+.pagination li span i, .pagination li a i  {
+  font-size: 12px;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  color: #0d6efd;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+li.page-item > span.page-link {
+  font-size: 25px ;
+  font-weight: 400 ;
+  color: #0d6efd ;
+}
+li.page-item.disabled > .page-link {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  text-align: center;
+  line-height: 35px;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all linear 0.3s;
+  -webkit-transition: all linear 0.3s;
+  -moz-transition: all linear 0.3s;
+  -ms-transition: all linear 0.3s;
+  -o-transition: all linear 0.3s;
+  border-radius: 50%;
+  border: 1px solid #08C;
+  margin-right: 10px;
+  color: #0d6efd !important;
+
+}
+
+li.page-item.active > .page-link {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  text-align: center;
+  line-height: 35px;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all linear 0.3s;
+  -webkit-transition: all linear 0.3s;
+  -moz-transition: all linear 0.3s;
+  -ms-transition: all linear 0.3s;
+  -o-transition: all linear 0.3s;
+  border-radius: 50%;
+  border: 1px solid #08C;
+  margin-right: 10px;
+}
+
+li.page-item > .page-link {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  text-align: center;
+  line-height: 35px;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all linear 0.3s;
+  -webkit-transition: all linear 0.3s;
+  -moz-transition: all linear 0.3s;
+  -ms-transition: all linear 0.3s;
+  -o-transition: all linear 0.3s;
+  border-radius: 100% !important;
+  border: 1px solid #08C;
+  margin-right: 10px;
+}
+
+.page-link:hover {
+  background: #08C;
+  color: #fff;
+}
+
+
+
