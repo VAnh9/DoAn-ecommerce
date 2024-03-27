@@ -228,14 +228,20 @@
                           <div class="wsus__selectbox">
                             <div class="row">
                               @foreach ($product->variants as $variant )
-                                <div class="col-xl-6 col-sm-6">
+                                @if ($variant->status == 1)
+                                  <div class="col-xl-6 col-sm-6">
                                     <h5 class="mb-2">{{ $variant->name }}:</h5>
                                     <select class="select_2" name="state">
                                       @foreach ($variant->productVariantItems as $variantItem )
-                                        <option {{ $variantItem->is_default == 1 ? 'selected' : '' }}>{{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ($'.$variantItem->price.')' : '' }}</option>
+                                        <option
+                                        {{ ($variantItem->is_default == 1 && $variantItem->status == 1 ) ? 'selected' : '' }}
+                                        {{ ($variantItem->status == 0 ) ? 'disabled' : '' }}
+                                        >
+                                        {{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ($'.$variantItem->price.')' : '' }}</option>
                                       @endforeach
                                     </select>
-                                </div>
+                                  </div>
+                                @endif
                               @endforeach
                             </div>
                         </div>

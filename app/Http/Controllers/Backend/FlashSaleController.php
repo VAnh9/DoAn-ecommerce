@@ -22,7 +22,7 @@ class FlashSaleController extends Controller
     public function update(Request $request) {
 
       $request->validate([
-        'end_date' => ['required', 'date', 'after:today']
+        'end_date' => ['required', 'date', 'after_or_equal:today']
       ]);
 
       FlashSale::updateOrCreate(
