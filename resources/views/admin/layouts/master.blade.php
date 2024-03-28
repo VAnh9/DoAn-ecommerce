@@ -113,13 +113,13 @@
 
     <!-- Dynamic Delete Alert -->
     <script>
-        // window.onload = function() {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        // }
+        window.onload = function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        }
 
         $(document).ready(function() {
 

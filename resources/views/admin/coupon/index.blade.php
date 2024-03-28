@@ -40,6 +40,7 @@
         $.ajax({
           url: "{{ route('admin.coupons.change-status') }}",
           method: 'PUT',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data: {
             id: id,
             status: isChecked

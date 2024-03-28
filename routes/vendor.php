@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorProductAdditionalInformationController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
@@ -50,3 +51,7 @@ Route::put('product-variant-item/{variantItemId}', [VendorProductVariantItemCont
 Route::delete('product-variant-item/{variantItemId}', [VendorProductVariantItemController::class, 'destroy'])->name('product-variant-item.destroy');
 
 Route::put('product-variant-item-status/change-status', [VendorProductVariantItemController::class, 'changeStatus'])->name('product-variant-item.change-status');
+
+/** Product Additional Information */
+Route::put('product-additional-information/change-status', [VendorProductAdditionalInformationController::class, 'changeStatus'])->name('product-additional-information.change-status');
+Route::resource('product-additional-information', VendorProductAdditionalInformationController::class);

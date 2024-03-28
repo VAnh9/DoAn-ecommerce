@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\ProductAdditionalInformationController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
@@ -119,3 +120,7 @@ Route::resource('coupons', CouponController::class);
 /** Shipping Rule routes */
 Route::put('shipping-rule/change-status', [ShippingRuleController::class, 'changeStatus'])->name('shipping-rule.change-status');
 Route::resource('shipping-rule', ShippingRuleController::class);
+
+/** Product Additional Information routes  */
+Route::put('product-additional-information/change-status', [ProductAdditionalInformationController::class, 'changeStatus'])->name('product-additional-information.change-status');
+Route::resource('product-additional-information', ProductAdditionalInformationController::class);

@@ -32,6 +32,7 @@ class SellerPendingProductsDataTable extends DataTable
               <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
                 <a class="dropdown-item has-icon" href="'.route('admin.product-image-gallery.index', ['product' => $query->id]).'"><i class="far fa-heart"></i> Image Gallery</a>
                 <a class="dropdown-item has-icon" href="'.route('admin.product-variant.index', ['product' => $query->id]).'"><i class="far fa-file"></i> Variants</a>
+                <a class="dropdown-item has-icon" href="'.route('admin.product-additional-information.index', ['product' => $query->id]).'"><i class="far fa-sun"></i> Specifications</a>
               </div>
             </div>';
               return $editBtn.$deleteBtn.$moreBtn;

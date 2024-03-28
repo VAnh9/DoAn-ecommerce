@@ -129,6 +129,7 @@
         $.ajax({
           url: "{{ route('admin.flash-sale-status') }}",
           method: 'PUT',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data: {
             id: id,
             status: isChecked

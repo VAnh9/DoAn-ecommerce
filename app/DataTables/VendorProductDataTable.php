@@ -37,6 +37,9 @@ class VendorProductDataTable extends DataTable
                               <li>
                                 <a class="dropdown-item" href="'.route('vendor.product-variant.index', ['product' => $query->id]).'"><i class="far fa-file"></i> Variants</a>
                               </li>
+                              <li>
+                                <a class="dropdown-item" href="'.route('vendor.product-additional-information.index', ['product' => $query->id]).'"><i class="far fa-sun"></i> Specifications</a>
+                              </li>
                             </ul>
                           </div>';
               return $editBtn.$deleteBtn.$moreBtn;
