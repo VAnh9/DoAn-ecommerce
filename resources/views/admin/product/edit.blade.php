@@ -116,7 +116,7 @@
 
                         <div class="col-md-4">
                           <div class="form-group" style="margin-bottom: 1rem">
-                            <label for="">Price <span class="field-required">*</span></label>
+                            <label for="">Price ({{ $settings->currency_icon }})<span class="field-required">*</span></label>
                             <input type="text" name="price" class="form-control" value="{{ $product->price }}">
                             @if ($errors->has('price'))
                               <code>{{ $errors->first('price') }}</code>
@@ -138,7 +138,7 @@
                       <div class="row">
                         <div class="col-md-4">
                           <div class="form-group" style="margin-bottom: 1rem">
-                            <label for="">Offer Price</label>
+                            <label for="">Offer Price ({{ $settings->currency_icon }}) </label>
                             <input type="text" name="offer_price" class="form-control" value="{{ $product->offer_price }}">
                             @if ($errors->has('offer_price'))
                               <code>{{ $errors->first('offer_price') }}</code>

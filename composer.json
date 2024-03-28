@@ -10,6 +10,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "symfony/intl": "^6.4",
         "yajra/laravel-datatables": "^10.1",
         "yoeunes/toastr": "^2.3"
     },

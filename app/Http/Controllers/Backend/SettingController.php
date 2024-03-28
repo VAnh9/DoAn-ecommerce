@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
 use Illuminate\Http\Request;
+use Symfony\Component\Intl\Currencies;
 
 class SettingController extends Controller
 {
@@ -41,6 +42,13 @@ class SettingController extends Controller
 
       return redirect()->back();
 
+    }
+
+    public function getCurrencySymbol(Request $request) {
+
+      $symbol = Currencies::getSymbol($request->currencyCode);
+
+      return $symbol;
     }
 
 }

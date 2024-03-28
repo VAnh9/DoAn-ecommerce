@@ -33,7 +33,7 @@
 
         <div class="form-group" style="margin-bottom: 1rem">
           <label>Default Currency Name</label>
-          <select name="currency_name" class="form-control select2" id="">
+          <select name="currency_name" class="form-control select2 currency-name" id="">
             <option value="">Select</option>
             @foreach (config('settings.currency_list') as $currency )
               <option {{ @$generalSettings->currency_name == $currency ? 'selected' : '' }} value="{{ $currency }}">{{ $currency }}</option>
@@ -46,7 +46,7 @@
 
         <div class="form-group" style="margin-bottom: 1rem">
           <label>Currency Icon</label>
-          <input type="text" name="currency_icon" class="form-control" value="{{ @$generalSettings->currency_icon }}">
+          <input type="text" name="currency_icon" class="form-control currency-symbol" value="{{ @$generalSettings->currency_icon }}">
           @if ($errors->has('currency_icon'))
             <code>{{ $errors->first('currency_icon') }}</code>
           @endif
@@ -70,3 +70,26 @@
     </div>
   </div>
 </div>
+
+@push('scripts')
+  <script>
+    $(document).ready(function() {
+      $('body').on('change', '.currency-name', function() {
+        let currencyCode = $(this).val();
+        $.ajax({
+          url: "{{ route('admin.general-settings.currency-symbol') }}",
+          method: 'GET',
+          data: {
+            currencyCode: currencyCode
+          },
+          success: function(data) {
+            $('.currency-symbol').val(data)
+          },
+          error: function(xhr, status, err) {
+            console.log(err);
+          }
+        })
+      })
+    })
+  </script>
+@endpush

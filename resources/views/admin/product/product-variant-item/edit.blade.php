@@ -39,7 +39,7 @@
                       </div>
 
                       <div class="form-group" style="margin-bottom: 1rem">
-                        <label>Price <code>(Set 0 for make it free)</code></label>
+                        <label>Price ({{ $settings->currency_icon }})<code>(Set 0 for make it free)</code></label>
                         <input type="text"  name="price" class="form-control" value="{{ $variantItem->price }}">
                         @if ($errors->has('price'))
                           <code>{{ $errors->first('price') }}</code>
