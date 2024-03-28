@@ -1,5 +1,9 @@
 @extends('frontend.layouts.master')
 
+@section('title')
+  {{ $settings->site_name }} || Has Everything You Want
+@endsection
+
 @section('content')
 
 
