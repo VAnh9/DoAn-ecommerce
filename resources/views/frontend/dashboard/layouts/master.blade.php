@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <title>Shopnest || e-Commerce </title>
-  <link rel="icon" type="image/png" href="{{ asset('frontend/images/favicon.png')}}">
+  <title>Shopnest || Has Everything You Want </title>
+  <link rel="icon" type="image/png" href="{{ asset('uploads/icon.png')}}">
   <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css')}}">
   <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css')}}">
@@ -35,8 +36,8 @@
   ==============================-->
   <div class="wsus__dashboard_menu">
     <div class="wsusd__dashboard_user">
-      <img src="images/dashboard_user.jpg" alt="img" class="img-fluid">
-      <p>anik roy</p>
+      <img src="{{ asset(Auth::user()->image) }}" alt="img" class="img-fluid">
+      <p>{{ Auth::user()->name }}</p>
     </div>
   </div>
   <!--=============================
@@ -99,8 +100,11 @@
   <!--classycountdown js-->
   <script src="{{ asset('frontend/js/jquery.classycountdown.js')}}"></script>
 
+  <!--sweet alert js-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!--main/custom js-->
   <script src="{{ asset('frontend/js/main.js')}}"></script>
+  @stack('scripts')
 </body>
 
 </html>

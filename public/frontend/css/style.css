@@ -9554,5 +9554,9 @@ li.page-item > .page-link {
   color: #fff;
 }
 
+.wsus__add_address_single input, .wsus__add_address_single textarea {
+  height: 52px;
+}
+
 
 
