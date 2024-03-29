@@ -72,7 +72,7 @@ class CartController extends Controller
 
       $totalPrice = $this->calculateTotalPrice($request->rowId);
 
-      return response(['status' => 'success', 'message' => 'Product Quantity Updated!', 'totalPrice' => $totalPrice]);
+      return response(['status' => 'success', 'message' => 'Product quantity updated!', 'totalPrice' => $totalPrice]);
     }
 
     /** Calculate total product price */
@@ -83,5 +83,23 @@ class CartController extends Controller
       $totalPrice = ($product->price + $product->options->variants_total_price) * $product->qty;
 
       return $totalPrice;
+    }
+
+    /** Clear cart */
+    public function clearCart() {
+
+      Cart::destroy();
+
+      return response(['status' => 'success', 'message' => 'Your cart has been cleared!']);
+    }
+
+    /** Remove a single product from cart */
+    public function removeProduct($rowId) {
+
+      Cart::remove($rowId);
+
+      $count = Cart::count();
+
+      return response(['status' => 'success', 'message' => 'Deleted successfuly!', 'countProduct' => $count]);
     }
 }

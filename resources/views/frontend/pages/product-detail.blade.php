@@ -782,7 +782,9 @@
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data: formData,
           success: function(data) {
-            console.log(data);
+            if(data.status == 'success') {
+              toastr.success(data.message);
+            }
           },
           error: function(xhr, status, err) {
             console.log(err);
