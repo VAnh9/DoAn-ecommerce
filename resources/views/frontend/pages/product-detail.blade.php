@@ -229,40 +229,44 @@
                           </div>
                         @endif
 
-                        <div class="wsus__selectbox">
-                          <div class="row">
-                            @foreach ($product->variants as $variant )
-                              @if ($variant->status == 1)
-                                <div class="col-xl-6 col-sm-6">
-                                  <h5 class="mb-2">{{ $variant->name }}:</h5>
-                                  <select class="select_2" name="state">
-                                    @foreach ($variant->productVariantItems as $variantItem )
-                                      <option
-                                      {{ ($variantItem->is_default == 1 && $variantItem->status == 1 ) ? 'selected' : '' }}
-                                      {{ ($variantItem->status == 0 ) ? 'disabled' : '' }}
-                                      >
-                                      {{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ($'.$variantItem->price.')' : '' }}</option>
-                                    @endforeach
-                                  </select>
-                                </div>
-                              @endif
-                            @endforeach
+                        <form action="" class="shopping-cart-form">
+                          <div class="wsus__selectbox">
+                            <div class="row">
+                              <input type="hidden" name="product_id" value="{{ $product->id }}">
+                              @foreach ($product->variants as $variant )
+                                @if ($variant->status == 1 && count($variant->productVariantItems) > 0)
+                                  <div class="col-xl-6 col-sm-6 mb-2">
+                                    <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                    <select class="select_2" name="variant_items[]">
+                                      @foreach ($variant->productVariantItems as $variantItem )
+                                        <option value="{{ $variantItem->id }}"
+                                        {{ ($variantItem->is_default == 1 && $variantItem->status == 1 ) ? 'selected' : '' }}
+                                        {{ ($variantItem->status == 0 ) ? 'disabled' : '' }}
+                                        >
+                                        {{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ('.$settings->currency_icon.$variantItem->price.')' : '' }}</option>
+                                      @endforeach
+                                    </select>
+                                  </div>
+                                @endif
+                              @endforeach
+                            </div>
                           </div>
-                      </div>
 
-                        <div class="wsus__quentity">
-                            <h5>quantity :</h5>
-                            <form class="select_number">
-                                <input class="number_area" type="text" min="1" max="100" value="1" />
-                            </form>
-                        </div>
+                          <div class="wsus__quentity">
+                              <h5>quantity :</h5>
+                              <div class="select_number">
+                                  <input class="number_area" name="qty" type="text" min="1" max="100" value="1" />
+                              </div>
+                          </div>
 
-                        <ul class="wsus__button_area">
-                            <li><a class="add_cart" href="#">add to cart</a></li>
-                            <li><a class="buy_now" href="#">buy now</a></li>
-                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a></li>
-                        </ul>
+                          <ul class="wsus__button_area">
+                              <li><button type="submit" class="add_cart">add to cart</button></li>
+                              <li><a class="buy_now" href="#">buy now</a></li>
+                              <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                              <li><a href="#"><i class="far fa-random"></i></a></li>
+                          </ul>
+                        </form>
+
                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
@@ -400,7 +404,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
+                            {{-- Review section --}}
+                            {{-- <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
                                 aria-labelledby="pills-contact-tab2">
                                 <div class="wsus__pro_det_review">
                                     <div class="wsus__pro_det_review_single">
@@ -570,7 +575,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -587,7 +592,7 @@
   <!--============================
       RELATED PRODUCT START
   ==============================-->
-  <section id="wsus__flash_sell">
+  {{-- <section id="wsus__flash_sell">
       <div class="container">
           <div class="row">
               <div class="col-xl-12">
@@ -748,7 +753,7 @@
 
           </div>
       </div>
-  </section>
+  </section> --}}
   <!--============================
       RELATED PRODUCT END
   ==============================-->
@@ -758,12 +763,35 @@
   <script>
 
     $(document).ready(function() {
+
+      // set countdown
       simplyCountdown('.simply-countdown-one', {
         year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
         month: {{ date('m', strtotime($flashSaleDate->end_date)) }},
         day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
-    });
+      });
+
+      // add product to cart
+      $('.shopping-cart-form').on('submit', function(e) {
+        e.preventDefault();
+
+        let formData = $(this).serialize();
+        $.ajax({
+          method: 'POST',
+          url: "{{ route('add-to-cart') }}",
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          data: formData,
+          success: function(data) {
+            console.log(data);
+          },
+          error: function(xhr, status, err) {
+            console.log(err);
+          }
+        })
+
+      })
     })
+
   </script>
 
 @endpush

@@ -150,20 +150,29 @@
     $(document).ready(function() {
       $('body').on('change', '.country', function() {
 
-        $('.district').html('<option value="">Select</option>')
+        // $('.district').html('<option value="">Select</option>')
 
-        // let country = $(this).find(':selected').data('id');
+        // let ctry = $(this).find(':selected').data('id');
         // var settings = {
-        //   "url": `https://api.countrystatecity.in/v1/countries/${country}/cities`,
+        //   "url": `https://api.countrystatecity.in/v1/countries/${ctry}/cities`,
         //   "method": "GET",
         //   "headers": {
-        //     "X-CSCAPI-KEY": "API_KEY"
+        //     "X-CSCAPI-KEY": "cDQzcjlkRkFiVEtmT0FuaTJJTFRKMUhNaWNxeDVWaHZ2RUNPYUhxYQ=="
         //   },
         // };
 
-        // $.ajax(settings).done(function (response) {
-        //   console.log(response);
+        // $.ajax(settings).done(function (data) {
+        //   $('.city').html('<option value="">Select</option>')
+        //     $.each(data, function(i, item) {
+
+        //      $('.city').append(`<option value="${item.name}">${item.name}</option>`)
+
+        //     })
         // });
+
+        // $.ajax(settings).fail(function(xhr, status, err) {
+        //   console.log(err);
+        // })
 
         let country = $(this).val();
         country = country.split(" ").join("");
@@ -187,6 +196,7 @@
             console.log(err);
           }
         })
+
       })
     })
   </script>

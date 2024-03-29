@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
@@ -41,6 +42,10 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 /** Product detail route */
 Route::get('product-detail/{slug}', [ProductController::class, 'showProduct'])->name('product-detail');
 
+/**  Cart routes */
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('cart-details', [CartController::class, 'showCartDetails'])->name('cart-details');
+Route::post('cart/update-quantity',[CartController::class, 'updateProductQuantity'])->name('cart.update-quantity');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
