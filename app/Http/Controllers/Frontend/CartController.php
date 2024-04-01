@@ -100,12 +100,29 @@ class CartController extends Controller
 
       $count = Cart::count();
 
-      return response(['status' => 'success', 'message' => 'Deleted successfuly!', 'countProduct' => $count]);
+      return response(['status' => 'success', 'message' => 'Product removed successfuly!', 'countProduct' => $count]);
     }
 
     /** get cart count */
     public function getCartCount() {
-      
+
       return Cart::content()->count();
+    }
+
+    /** get all cart products */
+    public function getCartProducts() {
+      return Cart::content();
+    }
+
+    /** get cart total price */
+    public function getCartTotalPrice() {
+
+      $total = 0;
+
+      foreach(Cart::content() as $cartProduct) {
+        $total += $this->calculateTotalPrice($cartProduct->rowId);
+      }
+
+      return $total;
     }
 }

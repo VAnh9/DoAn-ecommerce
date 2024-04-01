@@ -56,3 +56,15 @@ function productType($type) {
       break;
   }
 }
+
+/** get total cart price */
+
+function getCartToTalPrice() {
+  $total = 0;
+  /** @disregard P1009 */
+  foreach(\Cart::content() as $cartProduct) {
+    $total += ($cartProduct->price + $cartProduct->options->variants_total_price) * $cartProduct->qty;
+  }
+
+  return $total;
+}

@@ -9600,6 +9600,12 @@ li.page-item > .page-link {
     margin: 0px 5px;
 }
 
+/* .wsus__mini_cart .wsus__cart_img img {
+  height: 70px;
+  object-fit: cover;
+} */
+
+
 /* .wsus__cart_list .wsus__pro_name {
   width: 253px;
 }
