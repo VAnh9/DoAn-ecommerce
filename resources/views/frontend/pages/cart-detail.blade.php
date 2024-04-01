@@ -69,12 +69,14 @@
 
                                 @foreach ($cartItem as $item )
                                   <tr class="d-flex">
-                                      <td class="wsus__pro_img"><img src="{{ asset($item->options->image) }}" alt="product"
-                                              class="img-fluid w-100">
+                                      <td class="wsus__pro_img">
+                                        <a href="{{ route('product-detail', $item->options->slug) }}">
+                                          <img src="{{ asset($item->options->image) }}" alt="product" class="img-fluid w-100">
+                                        </a>
                                       </td>
 
                                       <td class="wsus__pro_name">
-                                        <p>{!! $item->name !!}</p>
+                                        <p><a href="{{ route('product-detail', $item->options->slug) }}">{!! $item->name !!}</a></p>
                                         @foreach ($item->options->variants as $key => $variant )
                                           <span>{{$key}}: {{ $variant['name'] }} {{ $variant['price'] > 0 ? ' ('.$settings->currency_icon.$variant['price'].')' : ''}}</span>
                                         @endforeach
@@ -97,7 +99,7 @@
                                       </td>
 
                                       <td class="wsus__pro_icon">
-                                          <a href="{{ route('cart.remove-product', $item->rowId) }}" class="delete_product"><i class="far fa-times"></i></a>
+                                          <a href="{{ route('cart.remove-product', $item->rowId) }}" class="delete_product" data-rowid="{{$item->rowId}}"><i class="far fa-times"></i></a>
                                       </td>
                                   </tr>
 
@@ -110,7 +112,7 @@
             <div class="col-xl-3">
                 <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                     <h6>total cart</h6>
-                    <p>subtotal: <span>$124.00</span></p>
+                    <p>subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartToTalPrice() }}</span></p>
                     <p>delivery: <span>$00.00</span></p>
                     <p>discount: <span>$10.00</span></p>
                     <p class="total"><span>total:</span> <span>$134.00</span></p>
@@ -181,6 +183,7 @@
 <script>
   $(document).ready(function() {
 
+
     // increase product quantity
     $('.btn_add').on('click', function() {
       let input = $(this).siblings('.input_qty');
@@ -201,7 +204,11 @@
             let totalProductPrice = "{{ $settings->currency_icon }}" + data.totalPrice;
             let rowProductTotalPrice = '#' + rowId;
             $(rowProductTotalPrice).text(totalProductPrice);
+            renderCartSubToTal();
             toastr.success(data.message);
+          }
+          else if(data.status == 'error') {
+            toastr.error(data.message);
           }
         },
         error: function(xhr, status, err) {
@@ -245,7 +252,11 @@
             let totalProductPrice = "{{ $settings->currency_icon }}" + data.totalPrice;
             let rowProductTotalPrice = '#' + rowId;
             $(rowProductTotalPrice).text(totalProductPrice);
+            renderCartSubToTal();
             toastr.success(data.message);
+          }
+          else if(data.status == 'error') {
+            toastr.error(data.message);
           }
         },
         error: function(xhr, status, err) {
@@ -277,6 +288,8 @@
               success: function(data) {
                 if(data.status == 'success') {
                   toastr.success(data.message);
+                  getCartCount();
+
                   // window.location.reload();
                   $("#cart_view_wrapper").load(window.location + " #cart_view_wrapper");
                 }
@@ -319,11 +332,11 @@
               headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
               success: function(data) {
                 if(data.status == 'success') {
-                  toastr.success(data.message);
+                  renderCartSubToTal();
                   // window.location.reload();
                   rowDelete.remove();
-
-
+                  getCartCount();
+                  toastr.success(data.message);
                   if(data.countProduct == 0) {
                     $("#cart_view_wrapper").load(window.location + " #cart_view_wrapper");
                   }
@@ -336,6 +349,40 @@
         }
       })
   }
+
+
+  // get cart count
+  function getCartCount() {
+    $.ajax({
+      method: 'GET',
+      url: "{{ route('cart-count') }}",
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      success: function(data) {
+        $('#cart-count').text(data);
+      },
+      error: function(xhr, status, err) {
+        console.log(err);
+      }
+    })
+  }
+
+
+  // get sub total cart price
+  function renderCartSubToTal() {
+    $.ajax({
+      method: 'GET',
+      url: "{{ route('cart.sidebar-product-total') }}",
+      success: function(data) {
+        $('#sub_total').text("{{$settings->currency_icon}}" + data);
+      },
+      error: function(xhr, status, err) {
+        console.log(err);
+      }
+    })
+  }
+
+
+
 </script>
 
 @endpush

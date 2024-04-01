@@ -74,7 +74,6 @@
                         <input name="qty" type="hidden" value="1" />
 
                         <button class="add_cart border border-white" type="submit">add to cart</button>
-
                       </form>
                   </div>
                 </div>
@@ -86,13 +85,13 @@
 </section>
 
 
+<!--==========================
+  PRODUCT MODAL VIEW START
+===========================-->
 @foreach ($flashSaleItems as $item )
   @php
     $product = \App\Models\Product::find($item->product_id);
   @endphp
-  <!--==========================
-    PRODUCT MODAL VIEW START
-  ===========================-->
   <section class="product_popup_modal">
     <div class="modal fade" id="exampleModal-{{ $product->id }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -136,7 +135,11 @@
                         <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="wsus__pro_details_text">
                                 <a class="title" href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
-                                <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                @if ($product->quantity > 0)
+                                  <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{$product->quantity}} item)</p>
+                                @elseif ($product->quantity == 0)
+                                  <p class="wsus__stock_area"><span class="stock_out">stock out</span> ({{$product->quantity}} item)</p>
+                                @endif
                                 @if (checkDiscount($product))
                                   <h4>{{ $settings->currency_icon }}{{ $product->offer_price }} <del>{{ $settings->currency_icon }}{{ $product->price }}</del></h4>
                                 @else
@@ -206,10 +209,10 @@
         </div>
     </div>
   </section>
+@endforeach
   <!--==========================
   PRODUCT MODAL VIEW END
   ===========================-->
-@endforeach
 
 @push('scripts')
   <script>

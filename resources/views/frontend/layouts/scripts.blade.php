@@ -19,6 +19,9 @@
             $('.mini_cart_actions').removeClass('d-none');
             toastr.success(data.message);
           }
+          else if(data.status == 'error') {
+            toastr.error(data.message);
+          }
         },
         error: function(xhr, status, err) {
           console.log(err);
@@ -90,6 +93,7 @@
         success: function(data) {
           let productId = '#mini_cart_' + rowId;
           $(productId).remove();
+          getCartCount();
           getSidebarCartSubTotal();
           if(data.countProduct == 0) {
             $('.mini_cart_actions').addClass('d-none');
@@ -117,6 +121,8 @@
         }
       })
     }
+
+
   })
 
 </script>
