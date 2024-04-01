@@ -51,6 +51,9 @@ Route::delete('cart/remove-product/{rowId}',[CartController::class, 'removeProdu
 Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
 Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('cart-products');
 Route::get('cart/sidebar-product-total', [CartController::class, 'getCartTotalPrice'])->name('cart.sidebar-product-total');
+Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('coupon-calculation', [CartController::class, 'calculateCouponDiscount'])->name('coupon-calculation');
+
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
