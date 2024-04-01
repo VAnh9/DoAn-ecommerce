@@ -102,4 +102,10 @@ class CartController extends Controller
 
       return response(['status' => 'success', 'message' => 'Deleted successfuly!', 'countProduct' => $count]);
     }
+
+    /** get cart count */
+    public function getCartCount() {
+      
+      return Cart::content()->count();
+    }
 }

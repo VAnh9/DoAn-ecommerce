@@ -783,6 +783,7 @@
           data: formData,
           success: function(data) {
             if(data.status == 'success') {
+              getCartCount();
               toastr.success(data.message);
             }
           },
@@ -792,6 +793,20 @@
         })
 
       })
+
+      function getCartCount() {
+        $.ajax({
+          method: 'GET',
+          url: "{{ route('cart-count') }}",
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          success: function(data) {
+            $('#cart-count').text(data);
+          },
+          error: function(xhr, status, err) {
+            console.log(err);
+          }
+        })
+      }
     })
 
   </script>
