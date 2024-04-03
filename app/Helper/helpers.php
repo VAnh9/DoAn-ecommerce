@@ -117,3 +117,16 @@ function getDiscountPrice() {
   }
   else return 0;
 }
+
+/** get shipping fee from session */
+function getShippingFee() {
+  if(Session::has('shipping')) {
+    return Session::get('shipping')['shipping_method']['cost'];
+  }
+  else return 0;
+}
+
+/** get final price in payment page (with shipping fee and coupon) */
+function getFinalPayableAmount() {
+  return getPriceAfterApplyDiscount() + getShippingFee();
+}
