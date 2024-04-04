@@ -115,16 +115,7 @@
                           </div>
                         </div>
 
-                        <div class="tab-pane fade" id="v-pills-stripe" role="tabpanel"
-                        aria-labelledby="v-pills-home-tab">
-                          <div class="row">
-                              <div class="col-xl-12 m-auto">
-                                  <div class="wsus__payment_area">
-                                    <button class="nav-link common_btn">Pay with Stripe</button>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
+                        @include('frontend.pages.payment-gateways.stripe')
 
 
                           <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc9a18473ab7e3549e27662b0a18a09c",
+    "content-hash": "e66cfdc85b386cf0d79f75eeba5ec4ae",
     "packages": [
         {
             "name": "anayarojo/shoppingcart",
@@ -4106,6 +4106,65 @@
                 "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.30"
             },
             "time": "2024-03-03T15:33:56+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v13.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "b122efcf4ee02256e4a9ae60783cbf1c3f702503"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/b122efcf4ee02256e4a9ae60783cbf1c3f702503",
+                "reference": "b122efcf4ee02256e4a9ae60783cbf1c3f702503",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v13.16.0"
+            },
+            "time": "2024-03-28T19:17:08+00:00"
         },
         {
             "name": "symfony/console",
