@@ -142,4 +142,11 @@ Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->
 /** Orders routes */
 Route::put('order/change-order-status', [OrderController::class, 'changeOrderStatus'])->name('order.change-order-status');
 Route::put('order/change-payment-status', [OrderController::class, 'changePaymentStatus'])->name('order.change-payment-status');
+Route::get('pending-orders', [OrderController::class, 'getPendingOrders'])->name('pending-orders.index');
+Route::get('processed-orders', [OrderController::class, 'getProcessedOrders'])->name('processed-orders.index');
+Route::get('dropped-off-orders', [OrderController::class, 'getDroppedOffOrders'])->name('dropped-off-orders.index');
+Route::get('shipped-orders', [OrderController::class, 'getShippedOrders'])->name('shipped-orders.index');
+Route::get('out-for-delivery-orders', [OrderController::class, 'getOutForDeliveryOrders'])->name('out-for-delivery-orders.index');
+Route::get('delivered-orders', [OrderController::class, 'getDeliveredOrders'])->name('delivered-orders.index');
+Route::get('canceled-orders', [OrderController::class, 'getCanceledOrders'])->name('canceled-orders.index');
 Route::resource('orders', OrderController::class);

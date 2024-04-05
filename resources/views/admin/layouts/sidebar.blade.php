@@ -27,10 +27,24 @@
 
         <li class="dropdown {{ setActive([
           'admin.orders.*',
+          'admin.pending-orders.*',
+          'admin.processed-orders.*',
+          'admin.dropped-off-orders.*',
+          'admin.shipped-orders.*',
+          'admin.out-for-delivery-orders.*',
+          'admin.delivered-orders.*',
+          'admin.canceled-orders.*',
         ])}}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Orders</span></a>
           <ul class="dropdown-menu">
             <li class="{{ setActive(['admin.orders.*']) }}"><a class="nav-link" href="{{ route('admin.orders.index') }}">All Orders</a></li>
+            <li class="{{ setActive(['admin.pending-orders.*']) }}"><a class="nav-link" href="{{ route('admin.pending-orders.index') }}">All Pending Orders</a></li>
+            <li class="{{ setActive(['admin.processed-orders.*']) }}"><a class="nav-link" href="{{ route('admin.processed-orders.index') }}">All Processed Orders</a></li>
+            <li class="{{ setActive(['admin.dropped-off-orders.*']) }}"><a class="nav-link" href="{{ route('admin.dropped-off-orders.index') }}">All Dropped Off Orders</a></li>
+            <li class="{{ setActive(['admin.shipped-orders.*']) }}"><a class="nav-link" href="{{ route('admin.shipped-orders.index') }}">All Shipped Orders</a></li>
+            <li class="{{ setActive(['admin.out-for-delivery-orders.*']) }}"><a class="nav-link" href="{{ route('admin.out-for-delivery-orders.index') }}">All Out For Delivery Orders</a></li>
+            <li class="{{ setActive(['admin.delivered-orders.*']) }}"><a class="nav-link" href="{{ route('admin.delivered-orders.index') }}">All Delivered Orders</a></li>
+            <li class="{{ setActive(['admin.canceled-orders.*']) }}"><a class="nav-link" href="{{ route('admin.canceled-orders.index') }}">All Canceled Orders</a></li>
           </ul>
         </li>
 
