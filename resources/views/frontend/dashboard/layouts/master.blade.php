@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="{{ asset('frontend/css/jquery.classycountdown.css')}}">
   <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css')}}">
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
+
   <link rel="stylesheet" href="{{ asset('frontend/css/style.css')}}">
   <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css')}}">
   <!-- <link rel="stylesheet" href="css/rtl.css"> -->
@@ -102,9 +105,36 @@
 
   <!--sweet alert js-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+  <script src="//cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
   <!--main/custom js-->
   <script src="{{ asset('frontend/js/main.js')}}"></script>
   @stack('scripts')
 </body>
+<style>
+  .field-required {
+      color: red;
+  }
 
+  div.dt-container .dt-paging .dt-paging-button:hover,
+  div.dt-container .dt-paging .dt-paging-button:active {
+      background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+      border-color: transparent;
+      box-shadow: none;
+  }
+
+  div.dt-container .dt-paging .dt-paging-button.disabled,
+  div.dt-container .dt-paging .dt-paging-button.disabled:hover,
+  div.dt-container .dt-paging .dt-paging-button.disabled:active {
+      cursor: pointer;
+  }
+
+  table.dataTable thead>tr>th.dt-orderable-asc,
+  table.dataTable thead>tr>th.dt-orderable-desc,
+  table.dataTable thead>tr>td.dt-orderable-asc,
+  table.dataTable thead>tr>td.dt-orderable-desc {
+      text-align: left !important;
+  }
+</style>
 </html>
