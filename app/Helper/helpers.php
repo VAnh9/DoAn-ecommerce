@@ -130,3 +130,18 @@ function getShippingFee() {
 function getFinalPayableAmount() {
   return getPriceAfterApplyDiscount() + getShippingFee();
 }
+
+/** calculate discount coupon on order page */
+function calculateDiscountCoupon($subTotal, $coupon) {
+
+  if ($coupon->discount_type == 'amount') {
+
+    return $coupon->discount;
+
+  } else if ($coupon->discount_type == 'percent') {
+
+    $discount = $subTotal - ($subTotal * $coupon->discount / 100);
+
+    return $discount;
+  }
+}

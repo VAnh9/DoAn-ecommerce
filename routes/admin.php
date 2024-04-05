@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductAdditionalInformationController;
@@ -137,3 +138,8 @@ Route::resource('paypal-settings', PaypalSettingController::class);
 
 /** Stripe settings routes */
 Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->name('stripe-settings.update');
+
+/** Orders routes */
+Route::put('order/change-order-status', [OrderController::class, 'changeOrderStatus'])->name('order.change-order-status');
+Route::put('order/change-payment-status', [OrderController::class, 'changePaymentStatus'])->name('order.change-payment-status');
+Route::resource('orders', OrderController::class);

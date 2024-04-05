@@ -37,6 +37,12 @@ class CouponDataTable extends DataTable
             ->addColumn('discount', function($query) {
               return $this->currencyIcon.$query->discount_value;
             })
+            ->addColumn('end_date', function($query) {
+              if($query->end_date < now()) {
+                return "<i class='text-danger'>$query->end_date</i>";
+              }
+              else return $query->end_date;
+            })
             ->addColumn('status', function($query) {
               if($query->status == 1) {
                 $button = ' <label class="custom-switch mt-2">
@@ -51,7 +57,7 @@ class CouponDataTable extends DataTable
               }
               return $button;
             })
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['status','end_date', 'action'])
             ->setRowId('id');
     }
 

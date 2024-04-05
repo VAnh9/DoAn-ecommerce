@@ -26,6 +26,16 @@
         </li>
 
         <li class="dropdown {{ setActive([
+          'admin.orders.*',
+        ])}}">
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Orders</span></a>
+          <ul class="dropdown-menu">
+            <li class="{{ setActive(['admin.orders.*']) }}"><a class="nav-link" href="{{ route('admin.orders.index') }}">All Orders</a></li>
+          </ul>
+        </li>
+
+
+        <li class="dropdown {{ setActive([
           'admin.brand.*',
           'admin.product.*',
           'admin.product-image-gallery.*',
