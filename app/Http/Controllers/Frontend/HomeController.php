@@ -22,6 +22,8 @@ class HomeController extends Controller
     $popularCategory = HomePageSetting::where('key', 'popular_category_section')->first();
     $brands = Brand::where('status', 1)->where('is_featured', 1)->get();
     $productsBasedType = $this->getProductsBasedType();
+    $categoryProductSliderOne  = HomePageSetting::where('key', 'product_slider_section_one')->first();
+    $categoryProductSliderTwo  = HomePageSetting::where('key', 'product_slider_section_two')->first();
 
     return view('frontend.home.home', compact(
       'sliders',
@@ -29,7 +31,9 @@ class HomeController extends Controller
       'flashSaleItems',
       'popularCategory',
       'brands',
-      'productsBasedType'
+      'productsBasedType',
+      'categoryProductSliderOne',
+      'categoryProductSliderTwo'
     ));
   }
 

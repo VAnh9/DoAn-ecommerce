@@ -13,7 +13,9 @@ class HomePageSettingController extends Controller
   {
     $categories = Category::where('status', 1)->get();
     $popularCategorySection = HomePageSetting::where('key', 'popular_category_section')->first();
-    return view('admin.home-page-setting.index', compact('categories', 'popularCategorySection'));
+    $productSliderOne = HomePageSetting::where('key', 'product_slider_section_one')->first();
+    $productSliderTwo = HomePageSetting::where('key', 'product_slider_section_two')->first();
+    return view('admin.home-page-setting.index', compact('categories', 'popularCategorySection', 'productSliderOne', 'productSliderTwo'));
   }
 
   public function updatePopularCategorySection(Request $request)
@@ -23,6 +25,11 @@ class HomePageSettingController extends Controller
       'cat_two' => ['required'],
       'cat_three' => ['required'],
       'cat_four' => ['required'],
+    ], [
+      'cat_one.required' => 'Category field is required',
+      'cat_two.required' => 'Category field is required',
+      'cat_three.required' => 'Category field is required',
+      'cat_four.required' => 'Category field is required',
     ]);
 
     $data = [
@@ -54,6 +61,64 @@ class HomePageSettingController extends Controller
     HomePageSetting::updateOrCreate(
       [
         'key' => 'popular_category_section'
+      ],
+      [
+        'value' => json_encode($data)
+      ]
+    );
+
+    toastr('Updated Successfully!');
+
+    return redirect()->back();
+  }
+
+  public function updateProductSliderOne(Request $request)
+  {
+    $request->validate([
+      'category_one' => ['required'],
+    ], [
+      'category_one.required' => 'Category field is required'
+    ]);
+
+    $data = [
+
+      'category' => $request->category_one,
+      'sub_category' => $request->sub_category_one,
+      'child_category' => $request->child_category_one,
+    ];
+
+    HomePageSetting::updateOrCreate(
+      [
+        'key' => 'product_slider_section_one'
+      ],
+      [
+        'value' => json_encode($data)
+      ]
+    );
+
+    toastr('Updated Successfully!');
+
+    return redirect()->back();
+  }
+
+  public function updateProductSliderTwo(Request $request)
+  {
+    $request->validate([
+      'category_two' => ['required'],
+    ], [
+      'category_two.required' => 'Category field is required'
+    ]);
+
+    $data = [
+
+      'category' => $request->category_two,
+      'sub_category' => $request->sub_category_two,
+      'child_category' => $request->child_category_two,
+    ];
+
+    HomePageSetting::updateOrCreate(
+      [
+        'key' => 'product_slider_section_two'
       ],
       [
         'value' => json_encode($data)

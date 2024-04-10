@@ -65,7 +65,7 @@
     <!--============================
         ELECTRONIC PART START
     ==============================-->
-        {{-- @include('frontend.home.sections.category-product-slider-one') --}}
+        @include('frontend.home.sections.category-product-slider-one')
     <!--============================
         ELECTRONIC PART END
     ==============================-->
@@ -74,7 +74,7 @@
     <!--============================
         ELECTRONIC PART START
     ==============================-->
-        {{-- @include('frontend.home.sections.category-product-slider-two') --}}
+        @include('frontend.home.sections.category-product-slider-two')
     <!--============================
         ELECTRONIC PART END
     ==============================-->
