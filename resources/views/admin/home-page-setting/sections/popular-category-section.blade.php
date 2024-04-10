@@ -254,7 +254,9 @@
           },
           success: function(data) {
             let selector = row.find('.sub-category');
+            let selector2 = row.find('.child-category');
             selector.html('<option value="">Select</option>');
+            selector2.html('<option value="">Select</option>');
             $.each(data, function(i, item) {
               selector.append(`<option value="${item.id}">${item.name}</option>`);
             })

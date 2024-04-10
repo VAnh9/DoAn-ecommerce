@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Session;
 
 /** Set Sidebar item active */
-function setActive(array $route) {
-  if(is_array($route)) {
-    foreach($route as $r) {
-      if(request()->routeIs($r)) {
+function setActive(array $route)
+{
+  if (is_array($route)) {
+    foreach ($route as $r) {
+      if (request()->routeIs($r)) {
         return 'active';
       }
     }
@@ -15,11 +16,12 @@ function setActive(array $route) {
 
 /** Check if product has discount */
 
-function checkDiscount($product) {
+function checkDiscount($product)
+{
 
   $currentDate = date('Y-m-d');
 
-  if($product->offer_price > 0 && $currentDate >= $product->offer_start_date && $currentDate <= $product->offer_end_date) {
+  if ($product->offer_price > 0 && $currentDate >= $product->offer_start_date && $currentDate <= $product->offer_end_date) {
     return true;
   }
 
@@ -28,7 +30,8 @@ function checkDiscount($product) {
 
 /** Calculate discount percent */
 
-function calculateDiscountPercent($originalPrice, $discountPrice) {
+function calculateDiscountPercent($originalPrice, $discountPrice)
+{
 
   $discountAmount = $originalPrice - $discountPrice;
   $discountPercent = ($discountAmount / $originalPrice) * 100;
@@ -38,7 +41,8 @@ function calculateDiscountPercent($originalPrice, $discountPrice) {
 
 /** convert product type */
 
-function productType($type) {
+function productType($type)
+{
 
   switch ($type) {
     case 'new_arrival':
@@ -61,10 +65,11 @@ function productType($type) {
 
 /** get total cart price */
 
-function getCartToTalPrice() {
+function getCartToTalPrice()
+{
   $total = 0;
   /** @disregard P1009 */
-  foreach(\Cart::content() as $cartProduct) {
+  foreach (\Cart::content() as $cartProduct) {
     $total += ($cartProduct->price + $cartProduct->options->variants_total_price) * $cartProduct->qty;
   }
 
@@ -72,7 +77,8 @@ function getCartToTalPrice() {
 }
 
 /** get total amount after apply discount */
-function getPriceAfterApplyDiscount() {
+function getPriceAfterApplyDiscount()
+{
   if (Session::has('coupon')) {
 
     $coupon = Session::get('coupon');
@@ -82,7 +88,7 @@ function getPriceAfterApplyDiscount() {
 
       $total = $originalPrice - $coupon['discount'];
 
-      if($total < 0) $total = 0;
+      if ($total < 0) $total = 0;
 
       return $total;
     } else if ($coupon['discount_type'] == 'percent') {
@@ -93,12 +99,12 @@ function getPriceAfterApplyDiscount() {
 
       return $total;
     }
-  }
-  else return getCartToTalPrice();
+  } else return getCartToTalPrice();
 }
 
 /** get discount price from coupon */
-function getDiscountPrice() {
+function getDiscountPrice()
+{
   if (Session::has('coupon')) {
 
     $coupon = Session::get('coupon');
@@ -107,41 +113,48 @@ function getDiscountPrice() {
     if ($coupon['discount_type'] == 'amount') {
 
       return $coupon['discount'];
-
     } else if ($coupon['discount_type'] == 'percent') {
 
       $discount = $originalPrice - ($originalPrice * $coupon['discount'] / 100);
 
       return $discount;
     }
-  }
-  else return 0;
+  } else return 0;
 }
 
 /** get shipping fee from session */
-function getShippingFee() {
-  if(Session::has('shipping')) {
+function getShippingFee()
+{
+  if (Session::has('shipping')) {
     return Session::get('shipping')['shipping_method']['cost'];
-  }
-  else return 0;
+  } else return 0;
 }
 
 /** get final price in payment page (with shipping fee and coupon) */
-function getFinalPayableAmount() {
+function getFinalPayableAmount()
+{
   return getPriceAfterApplyDiscount() + getShippingFee();
 }
 
 /** calculate discount coupon on order page */
-function calculateDiscountCoupon($subTotal, $coupon) {
+function calculateDiscountCoupon($subTotal, $coupon)
+{
 
   if ($coupon->discount_type == 'amount') {
 
     return $coupon->discount;
-
   } else if ($coupon->discount_type == 'percent') {
 
     $discount = $subTotal - ($subTotal * $coupon->discount / 100);
 
     return $discount;
   }
+}
+
+
+/** limit text */
+function limitText($text, $limit = 20)
+{
+  /** @disregard P1009 */
+  return \Str::limit($text, $limit);
 }
