@@ -36,7 +36,7 @@ function calculateDiscountPercent($originalPrice, $discountPrice)
   $discountAmount = $originalPrice - $discountPrice;
   $discountPercent = ($discountAmount / $originalPrice) * 100;
 
-  return $discountPercent;
+  return round($discountPercent);
 }
 
 /** convert product type */
