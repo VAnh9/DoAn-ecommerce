@@ -122,6 +122,37 @@
       })
     }
 
+    // add product to wishlist
+    $('.wishlist-btn').on('click', function(e) {
+      e.preventDefault();
+
+      let id = $(this).data('id');
+
+      $.ajax({
+        method: 'POST',
+        url: "{{ route('user.wishlist.store') }}",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: {
+          id: id,
+        },
+        success: function(data) {
+          if(data.status == 'success') {
+            $('#wishlist-count').text(data.count);
+            toastr.success(data.message);
+          }
+          else if(data.status == 'error') {
+            toastr.error(data.message);
+          }
+        },
+        error: function(xhr, status, err) {
+          console.log(err);
+          if(err == 'Unauthorized') {
+            toastr.error('Login before add a product to wishlist!');
+          }
+        }
+      })
+    })
+
 
   })
 
