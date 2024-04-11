@@ -1,6 +1,7 @@
 @php
   $categoryProductSliderTwo = json_decode($categoryProductSliderTwo->value);
   $lastKey = [];
+  $type = '';
 
   foreach ($categoryProductSliderTwo as $key => $category) {
     if($category == null) {
@@ -13,14 +14,17 @@
   if(array_keys($lastKey)[0] == 'category') {
     $category = \App\Models\Category::find($lastKey['category']);
     $products = \App\Models\Product::where('category_id', $category->id)->orderBy('id', 'DESC')->take(8)->get();
+    $type = 'category';
   }
   else if(array_keys($lastKey)[0] == 'sub_category') {
     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
     $products = \App\Models\Product::where('sub_category_id', $category->id)->orderBy('id', 'DESC')->take(8)->get();
+    $type = 'subcategory';
   }
   else {
     $category = \App\Models\ChildCategory::find($lastKey['child_category']);
     $products = \App\Models\Product::where('child_category_id', $category->id)->orderBy('id', 'DESC')->take(8)->get();
+    $type = 'childcategory';
   }
 
 @endphp
@@ -31,7 +35,7 @@
             <div class="col-xl-12">
                 <div class="wsus__section_header">
                     <h3>{{ $category->name }}</h3>
-                    <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
+                    <a class="see_btn" href="{{ route('products.index', [$type => $category->slug]) }}">see more <i class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>

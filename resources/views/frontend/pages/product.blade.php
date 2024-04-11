@@ -247,7 +247,7 @@
                                           @endif" alt="product" class="img-fluid w-100 img_2" />
                                         </a>
                                           <div class="wsus__product_details">
-                                            <a class="wsus__category" href="#">{{ @$product->category->name }}</a>
+                                            <a class="wsus__category" href="javascript:;">{{ @$product->category->name }}</a>
                                               <p class="wsus__pro_rating">
                                                   <i class="fas fa-star"></i>
                                                   <i class="fas fa-star"></i>
