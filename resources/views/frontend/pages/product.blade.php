@@ -69,7 +69,9 @@
                                   aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                   <div class="accordion-body">
                                       <ul>
-                                          <li><a href="#">Accessories</a></li>
+                                        @foreach ($categories as $category )
+                                          <li><a href="{{ route('products.index', ['category' => $category->slug]) }}">{{$category->name}}</a></li>
+                                        @endforeach
                                       </ul>
                                   </div>
                               </div>
@@ -85,8 +87,15 @@
                                   aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                   <div class="accordion-body">
                                       <div class="price_ranger">
-                                          <input type="hidden" id="slider_range" class="flat-slider" />
+                                        <form action="{{ url()->current() }}">
+                                          @foreach (request()->query() as $key =>  $value )
+                                            @if ($key != 'range')
+                                              <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                            @endif
+                                          @endforeach
+                                          <input type="hidden" id="slider_range" name="range" class="flat-slider" value="0;8000" />
                                           <button type="submit" class="common_btn">filter</button>
+                                        </form>
                                       </div>
                                   </div>
                               </div>
@@ -573,6 +582,29 @@
         }
       })
     })
+
+    @php
+      if(request()->has('range')) {
+        $price = explode(';', request()->range);
+        $from = $price[0];
+        $to = $price[1];
+      }
+      else {
+        $from = 0;
+        $to = 8000;
+      }
+    @endphp
+
+    jQuery(function () {
+        jQuery("#slider_range").flatslider({
+            min: 0, max: 10000,
+            step: 50,
+            values: [{{ $from }}, {{ $to }}],
+            range: true,
+            einheit: '{{ $settings->currency_icon }}'
+        });
+    });
+
   })
 </script>
 

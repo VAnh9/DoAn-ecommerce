@@ -28,17 +28,44 @@ class ProductController extends Controller
   {
     if ($request->has('category')) {
       $category = Category::where('slug', $request->category)->firstOrFail();
-      $products = Product::where(['category_id' => $category->id, 'status' => 1, 'is_approved' => 1])->paginate(12);
+      $products = Product::where(['category_id' => $category->id, 'status' => 1, 'is_approved' => 1])
+      ->when($request->has('range'), function($query) use ($request) {
+        $price = explode(';', $request->range);
+        $from = $price[0];
+        $to = $price[1];
+
+        return $query->where('price', '>=', $from)->where('price', '<=', $to);
+      })
+      ->paginate(12);
     }
     else if($request->has('subcategory')) {
       $category = SubCategory::where('slug', $request->subcategory)->firstOrFail();
-      $products = Product::where(['sub_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])->paginate(12);
+      $products = Product::where(['sub_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])
+      ->when($request->has('range'), function($query) use ($request) {
+        $price = explode(';', $request->range);
+        $from = $price[0];
+        $to = $price[1];
+
+        return $query->where('price', '>=', $from)->where('price', '<=', $to);
+      })
+      ->paginate(12);
     }
     else if($request->has('childcategory')) {
       $category = ChildCategory::where('slug', $request->childcategory)->firstOrFail();
-      $products = Product::where(['child_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])->paginate(12);
+      $products = Product::where(['child_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])
+      ->when($request->has('range'), function($query) use ($request) {
+        $price = explode(';', $request->range);
+        $from = $price[0];
+        $to = $price[1];
+
+        return $query->where('price', '>=', $from)->where('price', '<=', $to);
+      })
+      ->paginate(12);
     }
-    return view('frontend.pages.product', compact('products'));
+
+    $categories = Category::where(['status' => 1])->get();
+
+    return view('frontend.pages.product', compact('products', 'categories'));
   }
 
   public function changeProductFormatView(Request $request)
