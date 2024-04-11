@@ -42,6 +42,10 @@ Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login'
 /** Flash sale route */
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
 
+/** Product route */
+Route::get('products', [ProductController::class, 'productsIndex'])->name('products.index');
+Route::get('change-product-format-view', [ProductController::class, 'changeProductFormatView'])->name('change-product-format-view');
+
 /** Product detail route */
 Route::get('product-detail/{slug}', [ProductController::class, 'showProduct'])->name('product-detail');
 
