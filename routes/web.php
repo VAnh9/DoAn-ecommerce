@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -62,6 +63,9 @@ Route::get('cart/sidebar-product-total', [CartController::class, 'getCartTotalPr
 Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
 Route::get('coupon-calculation', [CartController::class, 'calculateCouponDiscount'])->name('coupon-calculation');
 
+/** Newsletter */
+Route::post('newsletter-request', [NewsletterController::class, 'requestNewsletter'])->name('newsletter-request');
+Route::get('newsletter-verify/{token}', [NewsletterController::class, 'verifyNewsletterEmail'])->name('newsletter-verify');
 
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {

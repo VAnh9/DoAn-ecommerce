@@ -27,6 +27,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -181,3 +182,10 @@ Route::put('footer-grid-three/change-status', [FooterGridThreeController::class,
 Route::put('footer-grid-three/change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
 Route::resource('footer-grid-three', FooterGridThreeController::class);
 
+/** Email Configuration routes */
+Route::put('email-configuration-update', [SettingController::class, 'emailConfigUpdate'])->name('email-configuration-update');
+
+/** Subscribers routes */
+Route::get('subscribers', [SubscribersController::class, 'index'])->name('subscribers.index');
+Route::delete('subscribers/{id}', [SubscribersController::class, 'destroy'])->name('subscribers.destroy');
+Route::post('subscribers-send-email', [SubscribersController::class, 'sendMail'])->name('subscribers-send-email');
