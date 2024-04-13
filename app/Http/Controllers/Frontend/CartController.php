@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
@@ -72,7 +73,12 @@ class CartController extends Controller
   {
 
     $cartItem = Cart::content();
-    return view('frontend.pages.cart-detail', compact('cartItem'));
+
+    // cart banner ad
+    $cartPageBanner = Advertisement::where('key', 'cart_page_banner')->first();
+    $cartPageBanner = json_decode($cartPageBanner?->value);
+
+    return view('frontend.pages.cart-detail', compact('cartItem', 'cartPageBanner'));
   }
 
   /** Update product quantity */

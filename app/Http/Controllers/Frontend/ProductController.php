@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
@@ -24,7 +25,7 @@ class ProductController extends Controller
     return view('frontend.pages.product-detail', compact('product', 'flashSaleDate'));
   }
 
-
+  /** Show products at product page */
   public function productsIndex(Request $request)
   {
     if ($request->has('category')) {
@@ -93,7 +94,12 @@ class ProductController extends Controller
     $categories = Category::where(['status' => 1])->get();
     $brands = Brand::where(['status' => 1])->get();
 
-    return view('frontend.pages.product', compact('products', 'categories', 'brands'));
+    // product banner ad
+    $productPageBanner = Advertisement::where('key', 'product_page_banner')->first();
+    $productPageBanner = json_decode($productPageBanner?->value);
+
+
+    return view('frontend.pages.product', compact('products', 'categories', 'brands', 'productPageBanner'));
   }
 
   public function changeProductFormatView(Request $request)
