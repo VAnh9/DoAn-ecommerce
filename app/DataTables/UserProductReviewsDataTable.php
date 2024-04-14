@@ -59,7 +59,6 @@ class UserProductReviewsDataTable extends DataTable
                           <i class="fas fa-star" style="color:gold;"></i>
                           <i class="fas fa-star" style="color:gold;"></i>
                           <i class="fas fa-star" style="color:gold;"></i>
-                          <i class="fas fa-star" style="color:gold;"></i>
                           <i class="fas fa-star" style="color:gold;"></i>';
                   break;
                 default:

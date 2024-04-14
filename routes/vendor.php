@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductAdditionalInformationController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
+use App\Http\Controllers\Backend\VendorProductReviewController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
 use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
@@ -61,3 +62,8 @@ Route::resource('product-additional-information', VendorProductAdditionalInforma
 Route::get('orders', [VendorOrderController::class, 'index'])->name('orders');
 Route::get('orders/show/{id}', [VendorOrderController::class, 'show'])->name('orders.show');
 Route::put('orders/change-order-status/{id}', [VendorOrderController::class, 'changeOrderStatus'])->name('orders.change-order-status');
+
+/** Product review routes */
+Route::get('reviews', [VendorProductReviewController::class, 'index'])->name('reviews.index');
+Route::get('review/image-gallery/{id}', [VendorProductReviewController::class, 'getImageGallery'])->name('review.image-gallery');
+
