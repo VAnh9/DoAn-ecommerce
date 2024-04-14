@@ -4049,7 +4049,7 @@ PRODUCT DETAILS START
   height: 100% !important;
   object-fit: cover !important;
   width: 100% !important;
-  margin-top: 25px !important;
+  /* margin-top: 25px !important; */
   -webkit-border-radius: 5px !important;
   -moz-border-radius: 5px !important;
   -ms-border-radius: 5px !important;
@@ -9658,5 +9658,24 @@ li.page-item > .page-link {
   object-fit: cover;
 } */
 
+/* style star rating */
 
+.star-wrap {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 3px;
+}
 
+.star-wrap > input[type=radio] {
+  position: fixed;
+  opacity: 0;
+  left: -9000000px;
+}
+
+.star-wrap > input[type=radio] ~ label {
+  color: #D3D3D3;
+}
+
+.star-wrap > input[type=radio]:checked ~ label {
+  color: #ff9f00;
+}
