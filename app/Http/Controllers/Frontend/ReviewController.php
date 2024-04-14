@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\DataTables\UserProductReviewsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ProductReview;
 use App\Models\ProductReviewGallery;
@@ -13,20 +14,38 @@ class ReviewController extends Controller
 {
   use ImageUploadTrait;
 
+  public function index(UserProductReviewsDataTable $dataTable)
+  {
+    return $dataTable->render('frontend.dashboard.review.index');
+  }
+
+  public function getImageGallery($id)
+  {
+    $productReview = ProductReview::findOrFail($id);
+
+    if($productReview->user_id != Auth::user()->id) {
+      abort(404);
+    }
+
+    $productReviewImages = $productReview->productReviewGalleries;
+
+    return view('frontend.dashboard.review.image-gallery', compact('productReviewImages'));
+  }
+
   public function postReview(Request $request)
   {
     $request->validate([
       'star_rate' => ['required'],
       'review' => ['required', 'max:500'],
       'image.*' => ['nullable', 'image'],
-    ],[
+    ], [
       'star_rate.required' => 'Rating field is required',
       'image.*.image' => 'Image not valid'
     ]);
 
-    $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id ])->first();
+    $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->first();
 
-    if($checkReviewExist) {
+    if ($checkReviewExist) {
       toastr('You already added review for this product!', 'error');
       return redirect()->back();
     }
@@ -44,8 +63,8 @@ class ReviewController extends Controller
 
     $productReview->save();
 
-    if(!empty($imagePaths)) {
-      foreach($imagePaths as $path) {
+    if (!empty($imagePaths)) {
+      foreach ($imagePaths as $path) {
 
         $reviewGallery = new ProductReviewGallery();
 

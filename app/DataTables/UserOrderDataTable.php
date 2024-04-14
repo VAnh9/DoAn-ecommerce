@@ -74,6 +74,7 @@ class UserOrderDataTable extends DataTable
               }
               else return "<i class='badge bg-warning rounded-pill'>Pending</i>";
             })
+            ->addIndexColumn()
             ->rawColumns(['order_status', 'payment_status', 'action'])
             ->setRowId('id');
     }
@@ -114,7 +115,7 @@ class UserOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
             Column::make('invoice_id'),
             Column::make('customer'),
             Column::make('date'),
