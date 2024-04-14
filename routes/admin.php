@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductAdditionalInformationController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
+use App\Http\Controllers\Backend\ProductReviewController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
@@ -200,3 +201,8 @@ Route::put('advertisement/homepage-banner-section-four', [AdvertisementControlle
 Route::put('advertisement/product-page-banner', [AdvertisementController::class, 'productPageBanner'])->name('advertisement.product-page-banner');
 Route::put('advertisement/cart-page-banner', [AdvertisementController::class, 'cartPageBanner'])->name('advertisement.cart-page-banner');
 Route::put('advertisement/flashsale-page-banner', [AdvertisementController::class, 'flashsalePageBanner'])->name('advertisement.flashsale-page-banner');
+
+/** Product Reviews routes */
+Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
+Route::put('review/change-status', [ProductReviewController::class, 'changeStatus'])->name('review.change-status');
+Route::get('review/image-gallery/{id}', [ProductReviewController::class, 'getImageGallery'])->name('review.image-gallery');
