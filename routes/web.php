@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserOrderController;
@@ -73,6 +74,16 @@ Route::get('newsletter-verify/{token}', [NewsletterController::class, 'verifyNew
 Route::get('vendors', [HomeController::class, 'showVendorPage'])->name('vendor.index');
 Route::get('vendor-product/{id}', [HomeController::class, 'showVendorProductsPage'])->name('vendor.product-detail-page');
 
+/** About page routes */
+Route::get('about', [PageController::class, 'about'])->name('about');
+
+/** terms and conditions page routes */
+Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('terms-and-conditions');
+
+/** contact routes */
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
@@ -117,6 +128,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     /** Request to vendor routes */
     Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorRequestController::class, 'store'])->name('vendor-request.store');
+
 
 });
 

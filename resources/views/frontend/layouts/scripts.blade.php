@@ -164,15 +164,19 @@
         data: data,
         beforeSend: function() {
           $('.subscribe-btn').text('Loading...');
+          $('.subscribe-btn').attr('disabled', true);
+
         },
         success: function(data) {
           if(data.status == 'success') {
             $('.subscribe-btn').text('Subscribe');
+            $('.subscribe-btn').attr('disabled', false);
             $('.newsletter_email').val('');
             toastr.success(data.message);
           }
           else if(data.status == 'error') {
             $('.subscribe-btn').text('Subscribe');
+            $('.subscribe-btn').attr('disabled', false);
             toastr.error(data.message);
           }
         },
@@ -184,6 +188,7 @@
             })
           }
           $('.subscribe-btn').text('Subscribe');
+          $('.subscribe-btn').attr('disabled', false);
 
         }
       })

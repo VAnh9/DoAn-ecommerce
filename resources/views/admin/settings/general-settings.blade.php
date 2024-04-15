@@ -32,6 +32,30 @@
         </div>
 
         <div class="form-group" style="margin-bottom: 1rem">
+          <label>Contact Phone</label>
+          <input type="text" name="contact_phone" class="form-control" value="{{ @$generalSettings->contact_phone }}">
+          @if ($errors->has('contact_phone'))
+            <code>{{ $errors->first('contact_phone') }}</code>
+          @endif
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem">
+          <label>Contact Address</label>
+          <input type="text" name="contact_address" class="form-control" value="{{ @$generalSettings->contact_address }}">
+          @if ($errors->has('contact_address'))
+            <code>{{ $errors->first('contact_address') }}</code>
+          @endif
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem">
+          <label>Google Map Url</label>
+          <input type="text" name="map" class="form-control" value="{{ @$generalSettings->map }}">
+          @if ($errors->has('map'))
+            <code>{{ $errors->first('map') }}</code>
+          @endif
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem">
           <label>Default Currency Name</label>
           <select name="currency_name" class="form-control select2 currency-name" id="">
             <option value="">Select</option>

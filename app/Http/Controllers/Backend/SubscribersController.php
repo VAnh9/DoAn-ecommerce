@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\DataTables\NewsletterSubscriberDataTable;
+use App\Helper\MailHelper;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendMailToSubscribers;
 use App\Mail\Newsletter;
@@ -34,6 +35,8 @@ class SubscribersController extends Controller
     ]);
 
     $emails = NewsletterSubscriber::where('is_verified', 1)->pluck('email')->toArray();
+
+    MailHelper::setMailConfig();
 
     SendMailToSubscribers::dispatch($emails, $request->subject, $request->message);
 
