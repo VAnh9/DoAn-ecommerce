@@ -87,6 +87,25 @@ class ProductController extends Controller
                 $query->where('name', 'like', '%'.$request->search.'%');
               });
       })
+      ->when($request->has('range'), function($query) use ($request) {
+        $price = explode(';', $request->range);
+        $from = $price[0];
+        $to = $price[1];
+
+        return $query->where('price', '>=', $from)->where('price', '<=', $to);
+      })
+      ->paginate(12);
+    }
+    else if($request->has('range')) {
+
+      $products = Product::where(['status' => 1, 'is_approved' => 1])
+      ->when($request->has('range'), function($query) use ($request) {
+        $price = explode(';', $request->range);
+        $from = $price[0];
+        $to = $price[1];
+
+        return $query->where('price', '>=', $from)->where('price', '<=', $to);
+      })
       ->paginate(12);
     }
     else {

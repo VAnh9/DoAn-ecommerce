@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-  {{ $settings->site_name }} || Products
+  {{ $settings->site_name }} || Vendor Products
 @endsection
 
 @section('content')
@@ -14,10 +14,11 @@
           <div class="container">
               <div class="row">
                   <div class="col-12">
-                      <h4>products</h4>
+                      <h4>vendor products</h4>
                       <ul>
                           <li><a href="{{ url('/') }}">home</a></li>
-                          <li><a href="javascrip:;">product</a></li>
+                          <li><a href="{{ route('vendor.index') }}">vendor product</a></li>
+                          <li><a href="{{ route('vendor.product-detail-page', $vendor->id) }}">vendor product detail</a></li>
                       </ul>
                   </div>
               </div>
@@ -36,19 +37,34 @@
       <div class="container">
           <div class="row">
               <div class="col-xl-12">
-                @if ($productPageBanner->banner_one->status == 1)
-                  <div class="wsus__pro_page_bammer">
-                      <img src="{{ asset($productPageBanner->banner_one->banner_image) }}" alt="banner" class="img-fluid w-100">
-                      <div class="wsus__pro_page_bammer_text">
-                          <div class="wsus__pro_page_bammer_text_center">
-                              <p>up to <span>70% off</span></p>
-                              <h5>wemen's jeans Collection</h5>
-                              <h3>fashion for wemen's</h3>
-                              <a href="{{$productPageBanner->banner_one->banner_url}}" class="add_cart">Discover Now</a>
-                          </div>
+                <div class="wsus__pro_page_bammer vendor_det_banner">
+                  <img src="{{ asset('uploads/vendor_details_banner.jpg') }}" alt="banner" class="img-fluid w-100"/>
+                  <div class="wsus__pro_page_bammer_text wsus__vendor_det_banner_text">
+                      <div class="wsus__vendor_text_center">
+                          <h4>{{ $vendor->name }}</h4>
+                          @php
+                            $rating = round($vendor->productReviews()->avg('rating'));
+                          @endphp
+                          <p class="wsus__vendor_rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                              @if ($i <= $rating)
+                                <i class="fas fa-star"></i>
+                              @else
+                                <i class="far fa-star"></i>
+                              @endif
+                            @endfor
+                          </p>
+                          <a href="callto:{{ $vendor->phone }}"><i class="far fa-phone-alt"></i> {{ $vendor->phone }}</a>
+                          <a href="mailto:{{ $vendor->email }}"><i class="far fa-envelope"></i> {{ $vendor->email }}</a>
+                          <p class="wsus__vendor_location"><i class="fal fa-map-marker-alt"></i> {{ $vendor->address }}</p>
+                          <ul class="d-flex">
+                              <li><a class="facebook" href="{{ $vendor->fb_link }}"><i class="fab fa-facebook-f"></i></a></li>
+                              <li><a class="twitter" href="{{ $vendor->tw_link }}"><i class="fab fa-twitter"></i></a></li>
+                              <li><a class="instagram" href="{{ $vendor->insta_link }}"><i class="fab fa-instagram"></i></a></li>
+                          </ul>
                       </div>
                   </div>
-                @endif
+                </div>
               </div>
               <div class="col-xl-3 col-lg-4">
                   <div class="wsus__sidebar_filter ">
@@ -72,7 +88,7 @@
                                   <div class="accordion-body">
                                       <ul>
                                         @foreach ($categories as $category )
-                                          <li><a href="{{ route('products.index', ['category' => $category->slug]) }}">{{$category->name}}</a></li>
+                                          <li><a href="{{ route('vendor.product-detail-page', ['id' => $vendor->id, 'category' => $category->slug]) }}">{{$category->name}}</a></li>
                                         @endforeach
                                       </ul>
                                   </div>
@@ -115,7 +131,7 @@
                                   <div class="accordion-body">
                                     <ul>
                                       @foreach ($brands as $brand )
-                                        <li><a href="{{ route('products.index', ['brand' => $brand->slug]) }}">{{$brand->name}}</a></li>
+                                        <li><a href="{{ route('vendor.product-detail-page', ['id' => $vendor->id, 'brand' => $brand->slug]) }}">{{$brand->name}}</a></li>
                                       @endforeach
                                     </ul>
                                   </div>
@@ -142,6 +158,7 @@
                                           <i class="fas fa-list-ul"></i>
                                       </button>
                                   </div>
+
                                   {{-- <div class="wsus__topbar_select">
                                       <select class="select_2" name="state">
                                           <option>default shorting</option>
@@ -153,7 +170,7 @@
                                   </div> --}}
                               </div>
                               <div class="wsus__product_topbar_right">
-                                <a href="{{ route('products.index') }}" class="btn btn-light rounded-pill border">All Products</a>
+                                <a href="{{ route('vendor.product-detail-page', $vendor->id) }}" class="btn btn-light rounded-pill border">All Products</a>
                               </div>
                           </div>
                       </div>

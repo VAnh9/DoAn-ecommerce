@@ -24,6 +24,7 @@ class AdminVendorProfileSeeder extends Seeder
         $vendor->address = '212 Street, USA';
         $vendor->description = 'shop descritpion';
         $vendor->user_id = $user->id;
+        $vendor->status = 1;
         $vendor->save();
     }
 }

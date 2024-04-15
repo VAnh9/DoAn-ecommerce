@@ -24,6 +24,7 @@ class VendorShopProfileSeeder extends Seeder
         $vendor->address = '255 Street, USA';
         $vendor->description = 'vendor shop descritpion';
         $vendor->user_id = $user->id;
+        $vendor->status = 1;
         $vendor->save();
     }
 }

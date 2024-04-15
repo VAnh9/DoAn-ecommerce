@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('tw_link')->nullable();
             $table->text('insta_link')->nullable();
             $table->integer('user_id');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

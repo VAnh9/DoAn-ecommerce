@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,10 @@ Route::get('coupon-calculation', [CartController::class, 'calculateCouponDiscoun
 Route::post('newsletter-request', [NewsletterController::class, 'requestNewsletter'])->name('newsletter-request');
 Route::get('newsletter-verify/{token}', [NewsletterController::class, 'verifyNewsletterEmail'])->name('newsletter-verify');
 
+/** Vendor page routes */
+Route::get('vendors', [HomeController::class, 'showVendorPage'])->name('vendor.index');
+Route::get('vendor-product/{id}', [HomeController::class, 'showVendorProductsPage'])->name('vendor.product-detail-page');
+
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
@@ -108,6 +113,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::post('review', [ReviewController::class, 'postReview'])->name('review.create');
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
     Route::get('review/image-gallery/{id}', [ReviewController::class, 'getImageGallery'])->name('review.image-gallery');
+
+    /** Request to vendor routes */
+    Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
+    Route::post('vendor-request', [UserVendorRequestController::class, 'store'])->name('vendor-request.store');
 
 });
 

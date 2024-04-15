@@ -300,7 +300,11 @@
                                                     @foreach ($reviews as $review )
                                                       <div class="wsus__main_comment">
                                                           <div class="wsus__comment_img">
-                                                              <img src="{{ asset($review->user->image) }}" alt="user"
+                                                            @php
+                                                              $reviewerImage = asset($review->user->image);
+                                                              $defaultImage = asset('uploads/default_profile.jpg');
+                                                            @endphp
+                                                              <img src="{{ $review->user->image ? $reviewerImage  : $defaultImage }}" alt="user"
                                                                   class="img-fluid w-100">
                                                           </div>
                                                           <div class="wsus__comment_text reply">
