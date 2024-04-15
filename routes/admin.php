@@ -31,6 +31,7 @@ use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -206,3 +207,8 @@ Route::put('advertisement/flashsale-page-banner', [AdvertisementController::clas
 Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
 Route::put('review/change-status', [ProductReviewController::class, 'changeStatus'])->name('review.change-status');
 Route::get('review/image-gallery/{id}', [ProductReviewController::class, 'getImageGallery'])->name('review.image-gallery');
+
+/** Vendor Request routes */
+Route::get('vendor-request', [VendorRequestController::class, 'index'])->name('vendor-request.index');
+Route::get('vendor-request/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-request.show');
+Route::put('vendor-request/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-request.change-status');

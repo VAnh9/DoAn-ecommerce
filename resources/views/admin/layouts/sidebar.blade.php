@@ -58,7 +58,9 @@
           'admin.product-variant.*',
           'admin.product-variant-item.*',
           'admin.seller-products.*',
-          'admin.seller-pending-products.*'
+          'admin.seller-pending-products.*',
+          'admin.reviews.*',
+          'admin.review.*'
         ])}}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Products</span></a>
           <ul class="dropdown-menu">
@@ -68,13 +70,12 @@
               'admin.product-image-gallery.*',
               'admin.product-variant.*',
               'admin.product-variant-item.*',
-              'admin.reviews.*'
               ]) }}"><a class="nav-link" href="{{ route('admin.product.index') }}">Products</a></li>
             <li class="{{ setActive([
               'admin.seller-products.*',
               ]) }}"><a class="nav-link" href="{{ route('admin.seller-products.index') }}">Seller Products</a></li>
             <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link" href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Products</a></li>
-            <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link" href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
+            <li class="{{ setActive(['admin.reviews.*', 'admin.review.*']) }}"><a class="nav-link" href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
           </ul>
         </li>
 
@@ -118,6 +119,15 @@
             <li class="{{ setActive(['admin.footer-social-links.*']) }}"><a class="nav-link" href="{{ route('admin.footer-social-links.index') }}">Footer Social Links</a></li>
             <li class="{{ setActive(['admin.footer-grid-two.*']) }}"><a class="nav-link" href="{{ route('admin.footer-grid-two.index') }}">Footer Grid Two</a></li>
             <li class="{{ setActive(['admin.footer-grid-three.*']) }}"><a class="nav-link" href="{{ route('admin.footer-grid-three.index') }}">Footer Grid Three</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown {{ setActive([
+          'admin.vendor-request.*',
+        ])}}">
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>User</span></a>
+          <ul class="dropdown-menu">
+            <li class="{{ setActive(['admin.vendor-request.*']) }}"><a class="nav-link" href="{{ route('admin.vendor-request.index') }}">Pending Vendors</a></li>
           </ul>
         </li>
 
