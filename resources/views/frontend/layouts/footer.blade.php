@@ -55,10 +55,6 @@
                         <input type="text" placeholder="Email" name="email" class="newsletter_email"/>
                         <button type="submit" class="common_btn subscribe-btn">subscribe</button>
                     </form>
-                    <div class="footer_payment">
-                        <p>We're using safe payment for :</p>
-                        <img src="images/credit2.png" alt="card" class="img-fluid">
-                    </div>
                 </div>
             </div>
         </div>

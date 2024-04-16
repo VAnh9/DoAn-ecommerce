@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -88,6 +89,12 @@ Route::post('contact', [PageController::class, 'handleContactForm'])->name('hand
 /** Product Track routes */
 Route::get('tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
 
+/** Blog detail routes */
+Route::get('blog/{slug}', [BlogController::class, 'index'])->name('blog.index');
+
+/** Blog routes */
+Route::get('blogs', [BlogController::class, 'getAllBlogs'])->name('blogs.index');
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
@@ -132,6 +139,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorRequestController::class, 'store'])->name('vendor-request.store');
 
-
+    /** Blog comment routes */
+    Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
 });
 
