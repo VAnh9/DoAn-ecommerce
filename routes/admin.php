@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialLinkController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -221,6 +222,10 @@ Route::put('vendor-request/{id}/change-status', [VendorRequestController::class,
 /** Customer list routes */
 Route::get('customers', [CustomerListController::class, 'index'])->name('customers.index');
 Route::put('customers/change-status', [CustomerListController::class, 'changeStatus'])->name('customers.change-status');
+
+/** Manage user routes */
+Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
+Route::post('manage-user', [ManageUserController::class, 'create'])->name('manage-user.create');
 
 /** Vendor list routes */
 Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
