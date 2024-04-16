@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
@@ -84,6 +85,8 @@ Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions']
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
 
+/** Product Track routes */
+Route::get('tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
