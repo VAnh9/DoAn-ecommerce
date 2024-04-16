@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AboutPageController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminListController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BrandController;
@@ -226,6 +227,11 @@ Route::put('customers/change-status', [CustomerListController::class, 'changeSta
 /** Manage user routes */
 Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
 Route::post('manage-user', [ManageUserController::class, 'create'])->name('manage-user.create');
+
+/** Admin list routes */
+Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');
+Route::put('admin-list/change-status', [AdminListController::class, 'changeStatus'])->name('admin-list.change-status');
+Route::delete('admin-list/{id}', [AdminListController::class, 'destroy'])->name('admin-list.destroy');
 
 /** Vendor list routes */
 Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
