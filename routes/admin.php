@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminListController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
+use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -248,3 +249,8 @@ Route::put('about/update', [AboutPageController::class, 'update'])->name('about.
 /** Terms and Conditions routes */
 Route::get('terms-and-conditions', [TermAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermAndConditionController::class, 'update'])->name('terms-and-conditions.update');
+
+/** Blog category routes */
+Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
+Route::resource('blog-category', BlogCategoryController::class);
+
