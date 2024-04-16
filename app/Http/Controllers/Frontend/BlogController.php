@@ -16,7 +16,7 @@ class BlogController extends Controller
   {
     $blog = Blog::with(['user', 'blogComments'])->where('slug', $slug)->where('status', 1)->firstOrFail();
     $relatedBlogs = Blog::with('blogCategory')->where('blog_category_id', $blog->blog_category_id)->where('status', 1)->where('slug', '!=', $slug)->orderBy('id', 'DESC')->take(5)->get();
-    $comments = $blog->blogComments()->paginate(5);
+    $comments = $blog->blogComments()->where('status', 1)->paginate(5);
     $moreBlogs = Blog::with('blogComments')->where('status', 1)->where('slug', '!=', $slug)->orderBy('id', 'DESC')->take(5)->get();
     $blogCategories = BlogCategory::where('status', 1)->get();
     return view('frontend.pages.blog-detail', compact('blog', 'relatedBlogs', 'comments', 'moreBlogs', 'blogCategories'));
@@ -33,6 +33,7 @@ class BlogController extends Controller
     $blogComment->user_id = Auth::user()->id;
     $blogComment->blog_id = $request->blog_id;
     $blogComment->comment = $request->comment;
+    $blogComment->status = 1;
 
     $blogComment->save();
 

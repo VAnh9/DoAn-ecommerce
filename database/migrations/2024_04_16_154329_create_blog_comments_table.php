@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('blog_id');
             $table->text('comment');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

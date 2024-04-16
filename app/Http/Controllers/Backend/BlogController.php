@@ -130,6 +130,8 @@ class BlogController extends Controller
 
     $this->deleteImage($blog->thumb_image);
 
+    $blog->blogComments()->delete();
+
     $blog->delete();
 
     return response(['status' => 'success', 'message' => 'Deleted Successfully!']);

@@ -102,9 +102,14 @@ class BlogCategoryController extends Controller
   {
     $category = BlogCategory::findOrFail($id);
 
+    if(count($category->blogs) != 0) {
+      return response(['status' => 'error', 'message' => 'This category contains blogs. Please delete blogs first!']);
+    }
+
     $category->delete();
 
     return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+
   }
 
   public function changeStatus(Request $request) {
