@@ -193,19 +193,6 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input" style="margin-bottom: 1rem">
-                    <label for="inputState">Product Type</label>
-                      <select name="product_type" id="inputState" class="form-control">
-                        <option value="">Select</option>
-                        <option {{ $product->product_type == 'new_arrival' ? 'selected' : '' }} value="new_arrival">New Arrival</option>
-                        <option {{ $product->product_type == 'featured_product' ? 'selected' : '' }} value="featured_product">Featured</option>
-                        <option {{ $product->product_type == 'top_product' ? 'selected' : '' }} value="top_product">Top Product</option>
-                        <option {{ $product->product_type == 'best_product' ? 'selected' : '' }} value="best_product">Best Product</option>
-                      </select>
-                      @if ($errors->has('product_type'))
-                      <code>{{ $errors->first('product_type') }}</code>
-                    @endif
-                  </div>
 
                   <div class="form-group wsus__input" style="margin-bottom: 1rem">
                     <label for="">Seo Title</label>

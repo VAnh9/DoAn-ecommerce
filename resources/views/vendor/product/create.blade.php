@@ -180,19 +180,6 @@
                     @endif
                   </div>
 
-                  <div class="form-group wsus__input" style="margin-bottom: 1rem">
-                    <label for="inputState">Product Type</label>
-                      <select name="product_type" id="inputState" class="form-control">
-                        <option value="">Select</option>
-                        <option value="new_arrival">New Arrival</option>
-                        <option value="featured_product">Featured</option>
-                        <option value="top_product">Top Product</option>
-                        <option value="best_product">Best Product</option>
-                      </select>
-                      @if ($errors->has('is_top'))
-                      <code>{{ $errors->first('is_top') }}</code>
-                    @endif
-                  </div>
 
                   <div class="form-group wsus__input" style="margin-bottom: 1rem">
                     <label for="">Seo Title</label>

@@ -200,7 +200,7 @@
         text-align: left !important;
     }
 
-    #toast-container>.toast:before {
+    /* #toast-container>.toast:before {
         position: absolute;
         left: 17px;
         top: 20px;
@@ -229,7 +229,7 @@
 
     #toast-container>.toast-error:before {
         content: "\26A0" !important;
-    }
+    } */
 </style>
 
 </html>
