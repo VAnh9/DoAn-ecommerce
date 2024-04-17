@@ -20,11 +20,13 @@ class ProductController extends Controller
   public function showProduct(string $slug)
   {
 
-    $product = Product::with(['vendor', 'category', 'productImageGalleries', 'variants', 'brand', 'productAdditionalInformation'])->where('slug', $slug)->where('status', 1)->first();
+    $product = Product::with(['vendor', 'category', 'productImageGalleries', 'variants', 'brand', 'productAdditionalInformation', 'productReviews'])->where('slug', $slug)->where('status', 1)->first();
     $flashSaleDate  = FlashSale::first();
     $reviews = ProductReview::where(['product_id' => $product->id, 'status' => 1])->orderBy('id', 'DESC')->paginate(5);
 
-    return view('frontend.pages.product-detail', compact('product', 'flashSaleDate', 'reviews'));
+    $relatedProducts = Product::with(['vendor', 'category', 'productImageGalleries', 'variants', 'brand', 'productAdditionalInformation', 'productReviews'])->where('slug', '!=', $slug)->where('category_id', $product->category_id)->where('status', 1)->get();
+
+    return view('frontend.pages.product-detail', compact('product', 'flashSaleDate', 'reviews', 'relatedProducts'));
   }
 
   /** Show products at product page */

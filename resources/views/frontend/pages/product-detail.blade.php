@@ -132,9 +132,9 @@
 
                           <ul class="wsus__button_area">
                               <li><button type="submit" class="add_cart">add to cart</button></li>
-                              <li><a class="buy_now" href="#">buy now</a></li>
+                              {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
+                              <li></li>
                               <li><a href="javascript:;" class="wishlist-btn" data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a></li>
-                              {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                           </ul>
                         </form>
 
@@ -143,36 +143,13 @@
                 </div>
                 <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
                     <div class="wsus_pro_det_sidebar" id="sticky_sidebar">
-                        <ul>
-                            <li>
-                                <span><i class="fal fa-truck"></i></span>
-                                <div class="text">
-                                    <h4>Return Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="far fa-shield-check"></i></span>
-                                <div class="text">
-                                    <h4>Secure Payment</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="fal fa-envelope-open-dollar"></i></span>
-                                <div class="text">
-                                    <h4>Warranty Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="wsus__det_sidebar_banner">
-                            <img src="images/blog_1.jpg" alt="banner" class="img-fluid w-100">
+                        <div class="wsus__det_sidebar_banner" style="height: 400px">
+                            <img src="{{asset('frontend/images/zoom3.jpg')}}" alt="banner" class="img-fluid w-100">
                             <div class="wsus__det_sidebar_banner_text_overlay">
                                 <div class="wsus__det_sidebar_banner_text">
-                                    <p>Black Friday Sale</p>
+                                    <p>Flash Sale</p>
                                     <h4>Up To 70% Off</h4>
-                                    <a href="#" class="common_btn">shope now</a>
+                                    <a href="{{ route('flash-sale') }}" class="common_btn">shope now</a>
                                 </div>
                             </div>
                         </div>
@@ -252,19 +229,25 @@
                                         <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                             <div class="wsus__pro_det_vendor_text">
                                                 <h4>{{ $product->vendor->user->name }}</h4>
+                                                @php
+                                                  $rating = round($product->vendor->productReviews()->avg('rating'));
+                                                  $reviewsOfVendor = count($product->vendor->productReviews)
+                                                @endphp
                                                 <p class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <span>(41 review)</span>
+                                                  @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $rating)
+                                                      <i class="fas fa-star"></i>
+                                                    @else
+                                                      <i class="far fa-star"></i>
+                                                    @endif
+                                                  @endfor
+                                                    <span>({{ $reviewsOfVendor }} review)</span>
                                                 </p>
                                                 <p><span>Store Name:</span>{{ $product->vendor->name }}</p>
                                                 <p><span>Address:</span>{{ $product->vendor->address }}</p>
                                                 <p><span>Phone:</span>{{ $product->vendor->phone }}</p>
                                                 <p><span>mail:</span>{{ $product->vendor->email }}</p>
-                                                <a href="vendor_details.html" class="see_btn">visit store</a>
+                                                <a href="{{ route('vendor.product-detail-page', $product->vendor->id) }}" class="see_btn">visit store</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
@@ -326,6 +309,12 @@
                                                           </div>
                                                       </div>
                                                     @endforeach
+
+                                                    <div class="mt-2">
+                                                      @if (!$isBought)
+                                                        <i>Buy this product to review!</i>
+                                                      @endif
+                                                    </div>
 
                                                     <div id="pagination">
                                                         @if ($reviews->hasPages())
@@ -401,168 +390,231 @@
   <!--============================
       RELATED PRODUCT START
   ==============================-->
-  {{-- <section id="wsus__flash_sell">
-      <div class="container">
-          <div class="row">
-              <div class="col-xl-12">
-                  <div class="wsus__section_header">
-                      <h3>Related Products</h3>
-                      <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
-                  </div>
-              </div>
-          </div>
-          <div class="row flash_sell_slider">
+  @if (count($relatedProducts) > 0)
+    <section id="wsus__flash_sell">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="wsus__section_header">
+                        <h3>Related Products</h3>
+                        <a class="see_btn" href="{{ route('products.index', ['category' => $product->category->slug]) }}">see more <i class="fas fa-caret-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row flash_sell_slider">
+              @foreach ($relatedProducts as $relatedProduct )
               <div class="col-xl-3 col-sm-6 col-lg-4">
                   <div class="wsus__product_item">
-                      <span class="wsus__new">New</span>
-                      <span class="wsus__minus">-20%</span>
-                      <a class="wsus__pro_link" href="product_details.html">
-                          <img src="images/pro3.jpg" alt="product" class="img-fluid w-100 img_1" />
-                          <img src="images/pro3_3.jpg" alt="product" class="img-fluid w-100 img_2" />
-                      </a>
-                      <ul class="wsus__single_pro_icon">
-                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                      class="far fa-eye"></i></a></li>
-                          <li><a href="#"><i class="far fa-heart"></i></a></li>
-                          <li><a href="#"><i class="far fa-random"></i></a>
-                      </ul>
-                      <div class="wsus__product_details">
-                          <a class="wsus__category" href="#">Electronics </a>
-                          <p class="wsus__pro_rating">
+                    @if ($relatedProduct->product_type != null)
+                      <span class="wsus__new" style="width: auto">{{ productType($relatedProduct->product_type) }}</span>
+                    @endif
+                    @if (checkDiscount($relatedProduct))
+                      <span class="wsus__minus">-{{ calculateDiscountPercent($relatedProduct->price, $relatedProduct->offer_price) }}%</span>
+                    @endif
+                    <a class="wsus__pro_link" href="{{ route('product-detail', $relatedProduct->slug) }}">
+                        <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product" class="img-fluid w-100 img_1" />
+                        <img src="@if (isset($relatedProduct->productImageGalleries[0]->image))
+                          {{ asset($relatedProduct->productImageGalleries[0]->image) }}
+                        @else
+                          {{ asset($relatedProduct->thumb_image) }}
+                        @endif" alt="product" class="img-fluid w-100 img_2" />
+                    </a>
+                    <ul class="wsus__single_pro_icon">
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#relatedProduct-{{ $relatedProduct->id }}"><i
+                                    class="far fa-eye"></i></a></li>
+                        <li><a href="javascript:;" class="wishlist-btn" data-id="{{ $relatedProduct->id }}"><i class="far fa-heart"></i></a></li>
+                        {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
+                    </ul>
+                    <div class="wsus__product_details">
+                        <a class="wsus__category" href="#">{{ $relatedProduct->category->name }}</a>
+                        <p class="wsus__pro_rating">
+                          @php
+                            $avgRating = round($relatedProduct->productReviews()->avg('rating'));
+                          @endphp
+                          @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $avgRating)
                               <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star-half-alt"></i>
-                              <span>(133 review)</span>
-                          </p>
-                          <a class="wsus__pro_name" href="#">hp 24" FHD monitore</a>
-                          <p class="wsus__price">$159 <del>$200</del></p>
-                          <a class="add_cart" href="#">add to cart</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-lg-4">
-                  <div class="wsus__product_item">
-                      <span class="wsus__new">New</span>
-                      <a class="wsus__pro_link" href="product_details.html">
-                          <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                          <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                      </a>
-                      <ul class="wsus__single_pro_icon">
-                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                      class="far fa-eye"></i></a></li>
-                          <li><a href="#"><i class="far fa-heart"></i></a></li>
-                          <li><a href="#"><i class="far fa-random"></i></a>
-                      </ul>
-                      <div class="wsus__product_details">
-                          <a class="wsus__category" href="#">fashion </a>
-                          <p class="wsus__pro_rating">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star-half-alt"></i>
-                              <span>(17 review)</span>
-                          </p>
-                          <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                          <p class="wsus__price">$159 <del>$200</del></p>
-                          <a class="add_cart" href="#">add to cart</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-lg-4">
-                  <div class="wsus__product_item">
-                      <span class="wsus__minus">-20%</span>
-                      <a class="wsus__pro_link" href="product_details.html">
-                          <img src="images/pro9.jpg" alt="product" class="img-fluid w-100 img_1" />
-                          <img src="images/pro9_9.jpg" alt="product" class="img-fluid w-100 img_2" />
-                      </a>
-                      <ul class="wsus__single_pro_icon">
-                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                      class="far fa-eye"></i></a></li>
-                          <li><a href="#"><i class="far fa-heart"></i></a></li>
-                          <li><a href="#"><i class="far fa-random"></i></a>
-                      </ul>
-                      <div class="wsus__product_details">
-                          <a class="wsus__category" href="#">fashion </a>
-                          <p class="wsus__pro_rating">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star-half-alt"></i>
-                              <span>(120 review)</span>
-                          </p>
-                          <a class="wsus__pro_name" href="#">men's fashion sholder bag</a>
-                          <p class="wsus__price">$159 <del>$200</del></p>
-                          <a class="add_cart" href="#">add to cart</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-lg-4">
-                  <div class="wsus__product_item">
-                      <span class="wsus__new">New</span>
-                      <span class="wsus__minus">-20%</span>
-                      <a class="wsus__pro_link" href="product_details.html">
-                          <img src="images/pro2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                          <img src="images/pro2_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                      </a>
-                      <ul class="wsus__single_pro_icon">
-                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                      class="far fa-eye"></i></a></li>
-                          <li><a href="#"><i class="far fa-heart"></i></a></li>
-                          <li><a href="#"><i class="far fa-random"></i></a>
-                      </ul>
-                      <div class="wsus__product_details">
-                          <a class="wsus__category" href="#">fashion </a>
-                          <p class="wsus__pro_rating">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star-half-alt"></i>
-                              <span>(72 review)</span>
-                          </p>
-                          <a class="wsus__pro_name" href="#">men's casual shoes</a>
-                          <p class="wsus__price">$159 <del>$200</del></p>
-                          <a class="add_cart" href="#">add to cart</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-lg-4">
-                  <div class="wsus__product_item">
-                      <span class="wsus__minus">-20%</span>
-                      <a class="wsus__pro_link" href="product_details.html">
-                          <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                          <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                      </a>
-                      <ul class="wsus__single_pro_icon">
-                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                      class="far fa-eye"></i></a></li>
-                          <li><a href="#"><i class="far fa-heart"></i></a></li>
-                          <li><a href="#"><i class="far fa-random"></i></a>
-                      </ul>
-                      <div class="wsus__product_details">
-                          <a class="wsus__category" href="#">fashion </a>
-                          <p class="wsus__pro_rating">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star-half-alt"></i>
-                              <span>(17 review)</span>
-                          </p>
-                          <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                          <p class="wsus__price">$159 <del>$200</del></p>
-                          <a class="add_cart" href="#">add to cart</a>
-                      </div>
-                  </div>
-              </div>
+                            @else
+                              <i class="far fa-star"></i>
+                            @endif
+                          @endfor
+                            <span>({{ count($relatedProduct->productReviews) }} review)</span>
+                        </p>
+                        <a class="wsus__pro_name" href="{{ route('product-detail', $relatedProduct->slug) }}">{{ limitText($relatedProduct->name, 53) }}</a>
+                        @if (checkDiscount($relatedProduct))
+                          <p class="wsus__price">{{ $settings->currency_icon }}{{ $relatedProduct->offer_price }} <del>{{ $settings->currency_icon }}{{ $relatedProduct->price }}</del></p>
+                        @else
+                          <p class="wsus__price">{{ $settings->currency_icon }}{{ $relatedProduct->price }}</p>
+                        @endif
 
-          </div>
-      </div>
-  </section> --}}
+                        <form class="shopping-cart-form">
+                          <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+                          @foreach ($relatedProduct->variants as $variant )
+                            @if ($variant->status == 1 && count($variant->productVariantItems) > 0)
+
+                            <select class="d-none" name="variant_items[]">
+                              @foreach ($variant->productVariantItems as $variantItem )
+                                <option value="{{ $variantItem->id }}"
+                                {{ ($variantItem->is_default == 1 && $variantItem->status == 1 ) ? 'selected' : '' }}
+                                {{ ($variantItem->status == 0 ) ? 'disabled' : '' }}
+                                >
+                                {{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ('.$settings->currency_icon.$variantItem->price.')' : '' }}</option>
+                              @endforeach
+                            </select>
+                            @endif
+                          @endforeach
+                          <input name="qty" type="hidden" value="1" />
+
+                          <button class="add_cart border border-white" type="submit">add to cart</button>
+                        </form>
+                    </div>
+                  </div>
+              </div>
+            @endforeach
+
+            </div>
+        </div>
+    </section>
+
+  @endif
+
+  <!--============================
+      RELATED PRODUCT MODAL START
+  ==============================-->
+
+  @foreach ($relatedProducts as $relatedProduct )
+  <section class="product_popup_modal">
+    <div class="modal fade" id="relatedProduct-{{ $relatedProduct->id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="far fa-times"></i></button>
+                    <div class="row">
+                        <div class="col-xl-6 col-12 col-sm-10 col-md-8 col-lg-6 m-auto display">
+                            <div class="wsus__quick_view_img">
+                                @if ($relatedProduct->video_link)
+                                  <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
+                                      href="{{ $relatedProduct->video_link }}">
+                                      <i class="fas fa-play"></i>
+                                  </a>
+                                @endif
+
+                                <div class="row modal_slider">
+                                  <div class="col-xl-12">
+                                    <div class="modal_slider_img">
+                                        <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product" class="img-fluid w-100">
+                                    </div>
+                                  </div>
+                                  @if (count($relatedProduct->productImageGalleries) == 0)
+                                    <div class="col-xl-12">
+                                      <div class="modal_slider_img">
+                                          <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product" class="img-fluid w-100">
+                                      </div>
+                                    </div>
+                                  @endif
+                                  @foreach ($relatedProduct->productImageGalleries as $productImage )
+                                    <div class="col-xl-12">
+                                        <div class="modal_slider_img">
+                                            <img src="{{ asset($productImage->image) }}" alt="product" class="img-fluid w-100">
+                                        </div>
+                                    </div>
+                                  @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
+                            <div class="wsus__pro_details_text">
+                                <a class="title" href="{{ route('product-detail', $relatedProduct->slug) }}">{{ $relatedProduct->name }}</a>
+                                @if ($relatedProduct->quantity > 0)
+                                  <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{$relatedProduct->quantity}} item)</p>
+                                @elseif ($relatedProduct->quantity == 0)
+                                  <p class="wsus__stock_area"><span class="stock_out">stock out</span> ({{$relatedProduct->quantity}} item)</p>
+                                @endif
+                                @if (checkDiscount($relatedProduct))
+                                  <h4>{{ $settings->currency_icon }}{{ $relatedProduct->offer_price }} <del>{{ $settings->currency_icon }}{{ $relatedProduct->price }}</del></h4>
+                                @else
+                                  <h4>{{ $settings->currency_icon }}{{ $relatedProduct->price }}</h4>
+                                @endif
+                                <p class="review">
+                                  @php
+                                    $avgRating = round($relatedProduct->productReviews()->avg('rating'));
+                                  @endphp
+                                  @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $avgRating)
+                                      <i class="fas fa-star"></i>
+                                    @else
+                                      <i class="far fa-star"></i>
+                                    @endif
+                                  @endfor
+                                  <span>({{ count($relatedProduct->productReviews) }} review)</span>
+                                </p>
+                                <p class="description">{!! $relatedProduct->short_description !!}</p>
+
+                                @if (checkDiscount($relatedProduct))
+                                  <div class="wsus_pro_hot_deals">
+                                    <h5>offer ending time : </h5>
+                                    <div class="simply-countdown simply-countdown-one"></div>
+                                  </div>
+                                @endif
+
+                                <form action="" class="shopping-cart-form">
+                                  <div class="wsus__selectbox">
+                                    <div class="row">
+                                      <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+                                      @foreach ($relatedProduct->variants as $variant )
+                                        @if ($variant->status == 1 && count($variant->productVariantItems) > 0)
+                                          <div class="col-xl-6 col-sm-6 mb-2">
+                                            <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                            <select class="select_2" name="variant_items[]">
+                                              @foreach ($variant->productVariantItems as $variantItem )
+                                                <option value="{{ $variantItem->id }}"
+                                                {{ ($variantItem->is_default == 1 && $variantItem->status == 1 ) ? 'selected' : '' }}
+                                                {{ ($variantItem->status == 0 ) ? 'disabled' : '' }}
+                                                >
+                                                {{ $variantItem->name }} {{ $variantItem->price > 0 ? ' ('.$settings->currency_icon.$variantItem->price.')' : '' }}</option>
+                                              @endforeach
+                                            </select>
+                                          </div>
+                                        @endif
+                                      @endforeach
+                                    </div>
+                                  </div>
+
+                                  <div class="wsus__quentity">
+                                      <h5>quantity :</h5>
+                                      <div class="select_number">
+                                          <input class="number_area" name="qty" type="text" min="1" max="100" value="1" />
+                                      </div>
+                                  </div>
+
+                                  <ul class="wsus__button_area">
+                                      <li><button type="submit" class="add_cart">add to cart</button></li>
+                                      {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
+                                      <li></li>
+                                      <li><a href="javascript:;" class="wishlist-btn" data-id="{{ $relatedProduct->id }}"><i class="fal fa-heart"></i></a></li>
+                                      {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
+                                  </ul>
+                                </form>
+
+                                <p class="brand_model"><span>brand :</span> {{ $relatedProduct->brand->name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+@endforeach
+
+
+  <!--============================
+      RELATED PRODUCT MODAL END
+  ==============================-->
+
+
+
   <!--============================
       RELATED PRODUCT END
   ==============================-->

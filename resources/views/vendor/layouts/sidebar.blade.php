@@ -6,6 +6,7 @@
     <a href="{{ url('/') }}" class="dash_logo"><img src="{{ asset( $logoSettings->logo ) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link" style="margin-top: 18px">
       <li><a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
+      <li><a href="{{ route('home') }}"><i class="fas fa-home"></i> Go To Home</a></li>
       <li><a class="{{ setActive(['vendor.orders.*', 'vendor.orders']) }}" href="{{ route('vendor.orders') }}"><i class="far fa-truck"></i> Orders</a></li>
       <li><a class="{{ setActive(['vendor.products.*', 'vendor.product-image-gallery.*', 'vendor.product-variant.*', 'vendor.product-variant-item.*', 'vendor.product-additional-information.*']) }}" href="{{ route('vendor.products.index') }}"><i class="far fa-box"></i> Products</a></li>
       <li><a class="{{ setActive(['vendor.reviews.*', 'vendor.review.*']) }}" href="{{ route('vendor.reviews.index') }}"><i class="far fa-star"></i> Reviews</a></li>
