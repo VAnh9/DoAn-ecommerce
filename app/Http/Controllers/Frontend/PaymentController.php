@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CodSetting;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe\Charge;
 use Stripe\Stripe;
+use Str;
 
 class PaymentController extends Controller
 {
@@ -227,5 +229,30 @@ class PaymentController extends Controller
       toastr('Something went wrong. Try again later!', 'error');
       return redirect()->route('user.payment');
     }
+  }
+
+  /** Pay with COD */
+  public function payWithCod(Request $request)
+  {
+    $codSetting = CodSetting::first();
+    $setting = GeneralSetting::first();
+    if($codSetting->status == 0) {
+      return redirect()->back();
+    }
+
+    
+
+    // calculate payable amount depending on currency rate
+    $total = getFinalPayableAmount();
+    $payableAmount = round($total, 2);
+
+    /** @disregard P1009 */
+    $this->storeOrderAndTransaction('COD', 0, Str::random(10), $payableAmount, $setting->currency_name);
+
+    //clear session
+    $this->clearSession();
+
+    return redirect()->route('user.payment.success');
+
   }
 }

@@ -34,8 +34,15 @@
   <section id="wsus__cart_view">
       <div class="container">
           <div class="wsus__pay_info_area">
-            <div class="row">
-              <h1>Payment success</h1>
+            <div class="row payment_success_wrapper">
+              <div class="payment_success_card">
+                <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                  <i class="checkmark">✓</i>
+                </div>
+                  <h1>Success</h1>
+                  <p>Thank you for your order. Your order will be delivered to you soon!</p>
+                  <a href="{{ route('home') }}" class="btn btn-primary mt-3">Continue Shopping</a>
+                </div>
             </div>
           </div>
       </div>
@@ -45,5 +52,4 @@
   ==============================-->
 
 @endsection
-
 

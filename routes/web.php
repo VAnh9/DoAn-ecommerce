@@ -119,7 +119,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
     /** Stripe routes */
-    Route::post('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+    Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+
+    /** COD routes */
+    Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
 
     /** Order routes */
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');

@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CodSettingsController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -160,6 +161,9 @@ Route::resource('paypal-settings', PaypalSettingController::class);
 
 /** Stripe settings routes */
 Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->name('stripe-settings.update');
+
+/** COD settings routes */
+Route::put('cod-settings/{id}', [CodSettingsController::class, 'update'])->name('cod-settings.update');
 
 /** Orders routes */
 Route::put('order/change-order-status', [OrderController::class, 'changeOrderStatus'])->name('order.change-order-status');
