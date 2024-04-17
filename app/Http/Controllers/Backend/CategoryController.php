@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Str;
@@ -12,117 +14,129 @@ use Str;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(CategoryDataTable $dataTable)
-    {
-        return $dataTable->render('admin.category.index');
+  /**
+   * Display a listing of the resource.
+   */
+  public function index(CategoryDataTable $dataTable)
+  {
+    return $dataTable->render('admin.category.index');
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   */
+  public function create()
+  {
+    return view('admin.category.create');
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   */
+  public function store(Request $request)
+  {
+    $request->validate([
+      'icon' => ['required', 'not_in:empty'],
+      'name' => ['required', 'max:200', 'unique:categories,name'],
+      'status' => ['required']
+    ]);
+
+    $category = new Category();
+
+    $category->icon = $request->icon;
+    $category->name = $request->name;
+    /** @disregard P1009 */
+    $category->slug = Str::slug($request->name);
+    $category->status = $request->status;
+
+    $category->save();
+
+    toastr('Created Successfully!');
+
+    return redirect()->route('admin.category.index');
+  }
+
+  /**
+   * Display the specified resource.
+   */
+  public function show(string $id)
+  {
+    //
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   */
+  public function edit(string $id)
+  {
+    $category = Category::findOrFail($id);
+    return view('admin.category.edit', compact('category'));
+  }
+
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(Request $request, string $id)
+  {
+    $request->validate([
+      'icon' => ['required', 'not_in:empty'],
+      'name' => ['required', 'max:200', 'unique:categories,name,' . $id],
+      'status' => ['required']
+    ]);
+
+    $category = Category::findOrFail($id);
+
+    $category->icon = $request->icon;
+    $category->name = $request->name;
+    /** @disregard P1009 */
+    $category->slug = Str::slug($request->name);
+    $category->status = $request->status;
+
+    $category->save();
+
+    toastr('Updated Successfully!');
+
+    return redirect()->route('admin.category.index');
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(string $id)
+  {
+    $category = Category::findOrFail($id);
+
+    $subCategory = SubCategory::where('category_id', $category->id)->count();
+
+    if ($subCategory > 0) {
+      return response(['status' => 'error', 'message' => 'This item contains sub items for delete this you have to delete the sub items first!']);
+    } else if (Product::where('category_id', $category->id)->count() > 0) {
+      return response(['status' => 'error', 'message' => 'This item contains relation. Can\' delete it!']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.category.create');
+    $homeSettings = HomePageSetting::all();
+    foreach ($homeSettings as $item) {
+      $array = json_decode($item->value, true);
+      $collection = collect($array);
+      if ($collection->contains('category', $category->id)) {
+        return response(['status' => 'error', 'message' => 'This item contains relation. Can\' delete it!']);
+      }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-          'icon' => ['required', 'not_in:empty'],
-          'name' => ['required', 'max:200', 'unique:categories,name'],
-          'status' => ['required']
-        ]);
+    $category->delete();
 
-        $category = new Category();
+    return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+  }
 
-        $category->icon = $request->icon;
-        $category->name = $request->name;
-        /** @disregard P1009 */
-        $category->slug = Str::slug($request->name);
-        $category->status= $request->status;
+  public function changeStatus(Request $request)
+  {
 
-        $category->save();
+    $category = Category::findOrFail($request->id);
 
-        toastr('Created Successfully!');
+    $category->status = $request->isChecked == 'true' ? 1 : 0;
 
-        return redirect()->route('admin.category.index');
-    }
+    $category->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $category = Category::findOrFail($id);
-        return view('admin.category.edit', compact('category'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-          'icon' => ['required', 'not_in:empty'],
-          'name' => ['required', 'max:200', 'unique:categories,name,'.$id],
-          'status' => ['required']
-        ]);
-
-        $category = Category::findOrFail($id);
-
-        $category->icon = $request->icon;
-        $category->name = $request->name;
-        /** @disregard P1009 */
-        $category->slug = Str::slug($request->name);
-        $category->status= $request->status;
-
-        $category->save();
-
-        toastr('Updated Successfully!');
-
-        return redirect()->route('admin.category.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $category = Category::findOrFail($id);
-
-        $subCategory = SubCategory::where('category_id', $category->id)->count();
-
-        if($subCategory > 0) {
-          return response(['status' => 'error', 'message' => 'This item contains sub items for delete this you have to delete the sub items first!']);
-        }
-
-        $category->delete();
-
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
-    }
-
-    public function changeStatus(Request $request) {
-
-      $category = Category::findOrFail($request->id);
-
-      $category->status = $request->isChecked == 'true' ? 1 : 0;
-
-      $category->save();
-
-      return response(['message' => 'Status has been updated!']);
-    }
+    return response(['message' => 'Status has been updated!']);
+  }
 }

@@ -72,6 +72,11 @@ class PaymentController extends Controller
       $orderProduct->qty = $item->qty;
 
       $orderProduct->save();
+
+      //update product quantity
+      $updatedQty = $product->quantity - $item->qty;
+      $product->quantity = $updatedQty;
+      $product->save();
     }
 
     // store transaction details
@@ -240,7 +245,7 @@ class PaymentController extends Controller
       return redirect()->back();
     }
 
-    
+
 
     // calculate payable amount depending on currency rate
     $total = getFinalPayableAmount();

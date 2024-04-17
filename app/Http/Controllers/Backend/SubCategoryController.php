@@ -6,6 +6,8 @@ use App\DataTables\SubCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Str;
@@ -110,6 +112,17 @@ class SubCategoryController extends Controller
 
         if($childCategory > 0) {
           return response(['status' => 'error', 'message' => 'This item contains sub items for delete this you have to delete the sub items first!']);
+        } else if (Product::where('sub_category_id', $subCategory->id)->count() > 0) {
+          return response(['status' => 'error', 'message' => 'This item contains relation. Can\' delete it!']);
+        }
+
+        $homeSettings = HomePageSetting::all();
+        foreach ($homeSettings as $item) {
+          $array = json_decode($item->value, true);
+          $collection = collect($array);
+          if ($collection->contains('sub_category', $subCategory->id)) {
+            return response(['status' => 'error', 'message' => 'This item contains relation. Can\' delete it!']);
+          }
         }
 
         $subCategory->delete();
