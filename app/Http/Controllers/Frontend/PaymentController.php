@@ -44,7 +44,7 @@ class PaymentController extends Controller
     $order->amount = getFinalPayableAmount();
     $order->currency_name = $setting->currency_name;
     $order->currency_icon = $setting->currency_icon;
-    $order->product_qty = Cart::content()->count();
+    $order->product_qty = Cart::count();
     $order->payment_method = $paymentMethod;
     $order->payment_status = $paymentStatus;
     $order->order_address = json_encode(Session::get('shipping')['shipping_address']);

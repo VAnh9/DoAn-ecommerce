@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content mt-2 mt-md-0">
-            <h4><i class="far fa-store"></i> products</h4>
+            <h4><i class="far fa-box"></i> Products</h4>
             <div class="text-end mb-2">
               <a href="{{ route('vendor.products.create') }}" class="btn btn-primary rounded-pill"><i class="fas fa-plus"></i> Create New</a>
             </div>

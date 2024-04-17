@@ -6827,6 +6827,10 @@ WISHLIST PAGE START
   background: #f91942;
 }
 
+.wsus__dashboard .yellow {
+  background: #e6b400;
+}
+
 .wsus__dashboard .green {
   background: #1ec38b;
 }
