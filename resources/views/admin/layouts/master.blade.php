@@ -27,7 +27,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('uploads/icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset( $logoSettings->favicon ) }}">
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>

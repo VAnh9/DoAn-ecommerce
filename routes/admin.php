@@ -136,6 +136,8 @@ Route::delete('flash-sale/{id}', [FlashSaleController::class, 'destroy'])->name(
 Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
 Route::get('general-settings/currency-symbol', [SettingController::class, 'getCurrencySymbol'])->name('general-settings.currency-symbol');
 Route::put('general-settings/update', [SettingController::class, 'updateGeneralSettings'])->name('general-settings.update');
+Route::put('logo-setting-update', [SettingController::class, 'updateLogoSetting'])->name('logo-setting-update');
+
 
 /** Coupon routes */
 Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');

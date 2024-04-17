@@ -3,7 +3,7 @@
       <i class="far fa-bars dash_bar"></i>
       <i class="far fa-times dash_close"></i>
     </span>
-    <a href="{{ url('/') }}" class="dash_logo"><img src="{{ asset('uploads/logo-removebg.png') }}" alt="logo" class="img-fluid"></a>
+    <a href="{{ url('/') }}" class="dash_logo"><img src="{{ asset( $logoSettings->logo ) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link" style="margin-top: 18px">
       <li><a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
       <li><a class="{{ setActive(['vendor.orders.*', 'vendor.orders']) }}" href="{{ route('vendor.orders') }}"><i class="far fa-truck"></i> Orders</a></li>

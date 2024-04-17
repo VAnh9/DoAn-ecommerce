@@ -5,17 +5,23 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
+use App\Models\LogoSetting;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Symfony\Component\Intl\Currencies;
 
+use function PHPUnit\Framework\isEmpty;
+
 class SettingController extends Controller
 {
+  use ImageUploadTrait;
   public function index()
   {
 
     $generalSettings = GeneralSetting::first();
     $emailConfig = EmailConfiguration::first();
-    return view('admin.settings.index', compact('generalSettings', 'emailConfig'));
+    $logoSettings = LogoSetting::first();
+    return view('admin.settings.index', compact('generalSettings', 'emailConfig', 'logoSettings'));
   }
 
   public function updateGeneralSettings(Request $request)
@@ -70,6 +76,32 @@ class SettingController extends Controller
         'password' => $request->password,
         'port' => $request->port,
         'encryption' => $request->encryption,
+      ]
+    );
+
+    toastr('Updated Successfully!');
+
+    return redirect()->back();
+  }
+
+  public function updateLogoSetting(Request $request)
+  {
+    $request->validate([
+      'logo' => ['nullable', 'image', 'max:3000'],
+      'favicon' => ['nullable', 'image', 'max:3000'],
+    ]);
+
+    $logoSettings = LogoSetting::first();
+
+
+    $logoPath = $this->updateImage($request, 'logo', 'uploads', isset($logoSettings) ? $logoSettings->logo : null);
+    $faviconPath = $this->updateImage($request, 'favicon', 'uploads', isset($logoSettings) ? $logoSettings->favicon : null);
+
+    LogoSetting::updateOrCreate(
+      [ 'id' => 1],
+      [
+        'logo' => !empty($logoPath) ? $logoPath : ($logoSettings ? $logoSettings->logo : ''),
+        'favicon' => !empty($faviconPath) ? $faviconPath : ($logoSettings ? $logoSettings->favicon : '')
       ]
     );
 
