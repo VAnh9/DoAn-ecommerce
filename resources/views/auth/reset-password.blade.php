@@ -15,7 +15,7 @@
                         <h4>Reset password</h4>
                         <ul>
                             <li><a href="{{ route('login') }}">login</a></li>
-                            <li><a href="{{ route('password.reset') }}">reset password</a></li>
+                            <li><a href="javascript:;">reset password</a></li>
                         </ul>
                     </div>
                 </div>
