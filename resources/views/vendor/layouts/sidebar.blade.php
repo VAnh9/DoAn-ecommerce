@@ -11,6 +11,7 @@
       <li><a class="{{ setActive(['vendor.products.*', 'vendor.product-image-gallery.*', 'vendor.product-variant.*', 'vendor.product-variant-item.*', 'vendor.product-additional-information.*']) }}" href="{{ route('vendor.products.index') }}"><i class="far fa-box"></i> Products</a></li>
       <li><a class="{{ setActive(['vendor.reviews.*', 'vendor.review.*']) }}" href="{{ route('vendor.reviews.index') }}"><i class="far fa-star"></i> Reviews</a></li>
       <li><a class="{{ setActive(['vendor.shop-profile.index']) }}" href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-store"></i> Shop Profile</a></li>
+      <li><a class="{{ setActive(['vendor.withdraw.*']) }}" href="{{ route('vendor.withdraw.index') }}"><i class="fas fa-money-bill"></i> Withdraw</a></li>
       <li><a class="{{ setActive(['vendor.profile']) }}" href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
       <li>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Session;
 
 /** Set Sidebar item active */
@@ -157,4 +158,10 @@ function limitText($text, $limit = 20)
 {
   /** @disregard P1009 */
   return \Str::limit($text, $limit);
+}
+
+function getCurrencyIcon()
+{
+  $settings = GeneralSetting::first();
+  return $settings->currency_icon;
 }

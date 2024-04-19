@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('withdraw_methods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // minimum amount must be earned to withdraw
+            // minimum amount must be earned to withdraw and minimum amount vendor can withdraw
             $table->double('minimum_amount');
             // maximoum amount per withdraw
             $table->double('maximum_amount');
