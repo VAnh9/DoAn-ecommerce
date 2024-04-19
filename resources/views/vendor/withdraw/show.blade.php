@@ -23,39 +23,39 @@
                 <table class="table table-bordered">
                   <tbody>
                     <tr>
-                      <th>Withdraw Method</th>
+                      <th style="width: 300px">Withdraw Method</th>
                       <td>{{ $withdrawRequest->method }}</td>
                     </tr>
                     <tr>
-                      <th>Withdraw Charge</th>
+                      <th style="width: 300px">Withdraw Charge</th>
                       <td>{{ ($withdrawRequest->withdraw_charge / $withdrawRequest->total_amount) * 100 }}%</td>
                     </tr>
                     <tr>
-                      <th>Withdraw Charge Amount</th>
+                      <th style="width: 300px">Withdraw Charge Amount</th>
                       <td>{{ $settings->currency_icon }}{{ $withdrawRequest->withdraw_charge }}</td>
                     </tr>
                     <tr>
-                      <th>Total Amount</th>
+                      <th style="width: 300px">Total Amount</th>
                       <td>{{ $settings->currency_icon }}{{ $withdrawRequest->total_amount }}</td>
                     </tr>
                     <tr>
-                      <th>Withdraw Amount</th>
+                      <th style="width: 300px">Withdraw Amount</th>
                       <td>{{ $settings->currency_icon }}{{ $withdrawRequest->withdraw_amount }}</td>
                     </tr>
                     <tr>
-                      <th>Status</th>
+                      <th style="width: 300px">Status</th>
                       <td>
                         @if ($withdrawRequest->status == 'pending')
                           <i class="badge bg-warning">Pending</i>
                         @elseif ($withdrawRequest->status == 'paid')
-                          <i class="badge bg-warning">Paid</i>
+                          <i class="badge bg-success">Paid</i>
                         @else
                           <i class="badge bg-secondary">Declined</i>
                         @endif
                       </td>
                     </tr>
                     <tr>
-                      <th>Account Information</th>
+                      <th style="width: 300px">Account Information</th>
                       <td>{{ $withdrawRequest->account_info }}</td>
                     </tr>
                   </tbody>

@@ -138,11 +138,12 @@
           </ul>
         </li>
 
-        {{-- Withdraw methods --}}
-        <li class="dropdown {{ setActive(['admin.withdraw.*'])}}">
+        {{-- Withdraw payments --}}
+        <li class="dropdown {{ setActive(['admin.withdraw.*', 'admin.withdraw-list.*'])}}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-money-bill"></i> <span>Withdraw Payments</span></a>
           <ul class="dropdown-menu">
             <li class="{{ setActive(['admin.withdraw.*']) }}"><a class="nav-link" href="{{ route('admin.withdraw.index') }}">Withdraw Methods</a></li>
+            <li class="{{ setActive(['admin.withdraw-list.*']) }}"><a class="nav-link" href="{{ route('admin.withdraw-list.index') }}">Withdraw Requests</a></li>
           </ul>
         </li>
 

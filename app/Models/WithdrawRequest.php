@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class WithdrawRequest extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  public function vendor()
+  {
+    return $this->belongsTo(Vendor::class);
+  }
 }

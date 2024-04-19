@@ -43,6 +43,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithdrawController;
 use App\Http\Controllers\Backend\WithdrawMethodController;
 use Illuminate\Support\Facades\Route;
 
@@ -275,4 +276,9 @@ Route::delete('blog-comment/{id}', [BlogCommentController::class, 'destroy'])->n
 /** Withdraw methods routes */
 Route::put('withdraw/change-status', [WithdrawMethodController::class, 'changeStatus'])->name('withdraw.change-status');
 Route::resource('withdraw', WithdrawMethodController::class);
+
+/** Withdraw routes */
+Route::get('withdraw-list', [WithdrawController::class, 'index'])->name('withdraw-list.index');
+Route::get('withdraw-list/{id}', [WithdrawController::class, 'show'])->name('withdraw-list.show');
+Route::put('withdraw-list/{id}', [WithdrawController::class, 'update'])->name('withdraw-list.update');
 
