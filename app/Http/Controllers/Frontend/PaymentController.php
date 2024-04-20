@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\CodSetting;
+use App\Models\Coupon;
+use App\Models\CouponUser;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -37,6 +39,28 @@ class PaymentController extends Controller
 
   public function storeOrderAndTransaction($paymentMethod, $paymentStatus, $transactionId, $paidAmount, $paidCurrencyName)
   {
+
+    // calculate coupon usage
+    if(Session::has('coupon')) {
+      $usageCoupon = Session::get('coupon');
+      $coupon = Coupon::where('id', $usageCoupon['id'])->firstOrFail();
+      $coupon->total_used += 1;
+      $coupon->save();
+
+      $couponUser = CouponUser::where('coupon_id', $usageCoupon['id'])->where('user_id', Auth::user()->id)->first();
+      if(isset($couponUser)) {
+        $couponUser->usage_count += 1;
+        $couponUser->save();
+      }
+      else {
+        $couponUser = new CouponUser();
+        $couponUser->coupon_id = $usageCoupon['id'];
+        $couponUser->user_id = Auth::user()->id;
+        $couponUser->usage_count = 1;
+        $couponUser->save();
+      }
+    }
+
     $setting = GeneralSetting::first();
     $order = new Order();
 
@@ -55,6 +79,7 @@ class PaymentController extends Controller
     $order->order_status = 'pending';
 
     $order->save();
+
 
     // store order products
     foreach (Cart::content() as $item) {
@@ -237,7 +262,7 @@ class PaymentController extends Controller
   }
 
   /** Pay with COD */
-  public function payWithCod(Request $request)
+  public function payWithCod()
   {
     $codSetting = CodSetting::first();
     $setting = GeneralSetting::first();

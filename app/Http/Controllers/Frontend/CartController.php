@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Coupon;
+use App\Models\CouponUser;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -176,9 +178,13 @@ class CartController extends Controller
     } else if ($coupon->total_used >= $coupon->quantity) {
       return response(['status' => 'error', 'message' => 'This coupon is run out!']);
     }
+    else if($coupon->max_use <= CouponUser::where('coupon_id', $coupon->id)->where('user_id', Auth::user()->id)->sum('usage_count')) {
+      return response(['status' => 'error', 'message' => 'You have expired using this discount code!']);
+    }
 
     if ($coupon->discount_type == 'amount') {
       Session::put('coupon', [
+        'id' => $coupon->id,
         'coupon_name' => $coupon->name,
         'coupon_code' => $coupon->code,
         'discount_type' => 'amount',
@@ -186,6 +192,7 @@ class CartController extends Controller
       ]);
     } else if ($coupon->discount_type == 'percent') {
       Session::put('coupon', [
+        'id' => $coupon->id,
         'coupon_name' => $coupon->name,
         'coupon_code' => $coupon->code,
         'discount_type' => 'percent',
