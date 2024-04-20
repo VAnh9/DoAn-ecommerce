@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterGridTwo;
 use App\Models\FooterTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterGridTwoController extends Controller
 {
@@ -45,6 +46,8 @@ class FooterGridTwoController extends Controller
     $footer->status = $request->status;
 
     $footer->save();
+
+    Cache::forget('footer_grid_two');
 
     toastr('Created Successfully!');
 
@@ -87,6 +90,8 @@ class FooterGridTwoController extends Controller
 
     $footer->save();
 
+    Cache::forget('footer_grid_two');
+
     toastr('Updated Successfully!');
 
     return redirect()->route('admin.footer-grid-two.index');
@@ -101,6 +106,8 @@ class FooterGridTwoController extends Controller
 
     $footer->delete();
 
+    Cache::forget('footer_grid_two');
+
     return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
   }
 
@@ -111,6 +118,8 @@ class FooterGridTwoController extends Controller
     $footer->status = $request->status == 'true' ? 1 : 0;
 
     $footer->save();
+
+    Cache::forget('footer_grid_two');
 
     return response(['message' => 'Status has been updated!']);
   }

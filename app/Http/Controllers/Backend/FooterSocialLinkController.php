@@ -6,6 +6,7 @@ use App\DataTables\FooterSocialLinkDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\FooterSocialLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterSocialLinkController extends Controller
 {
@@ -45,6 +46,8 @@ class FooterSocialLinkController extends Controller
     $footerSocial->status = $request->status;
 
     $footerSocial->save();
+
+    Cache::forget('footer_social_link');
 
     toastr('Created Successfully!');
 
@@ -89,6 +92,8 @@ class FooterSocialLinkController extends Controller
 
     $footerSocial->save();
 
+    Cache::forget('footer_social_link');
+
     toastr('Updated Successfully!');
 
     return redirect()->route('admin.footer-social-links.index');
@@ -103,6 +108,8 @@ class FooterSocialLinkController extends Controller
 
     $footerSocial->delete();
 
+    Cache::forget('footer_social_link');
+
     return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
   }
 
@@ -113,6 +120,8 @@ class FooterSocialLinkController extends Controller
     $footerSocial->status = $request->status == 'true' ? 1 : 0;
 
     $footerSocial->save();
+
+    Cache::forget('footer_social_link');
 
     return response(['message' => 'Status has been updated!']);
   }

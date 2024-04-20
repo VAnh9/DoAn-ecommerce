@@ -16,14 +16,16 @@ use App\Models\Slider;
 use App\Models\SubCategory;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
   public function index()
   {
-
-    $sliders = Slider::where('status', 1)->orderBy('serial', 'asc')->get();
+    $sliders = Cache::remember('sliders', 10800, function () {
+      return Slider::where('status', 1)->orderBy('serial', 'asc')->get();
+    });
     $flashSaleDate  = FlashSale::first();
     $flashSaleItems = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->pluck('product_id')->toArray();
     $popularCategory = HomePageSetting::where('key', 'popular_category_section')->first();
