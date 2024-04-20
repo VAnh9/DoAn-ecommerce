@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Frontend\SocialLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,6 +97,14 @@ Route::get('blog/{slug}', [BlogController::class, 'index'])->name('blog.index');
 
 /** Blog routes */
 Route::get('blogs', [BlogController::class, 'getAllBlogs'])->name('blogs.index');
+
+/** Social Google login routes */
+Route::get('auth/google', [SocialLoginController::class, 'googlePage'])->name('auth.google');
+Route::get('auth/google/callback', [SocialLoginController::class, 'googleCallback'])->name('auth.goole.callback');
+
+/** Social Facebook login routes */
+Route::get('auth/facebook', [SocialLoginController::class, 'facebookPage'])->name('auth.facebook');
+Route::get('auth/facebook/callback', [SocialLoginController::class, 'facebookCallback'])->name('auth.facebook.callback');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function() {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
