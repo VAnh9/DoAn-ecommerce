@@ -16,4 +16,8 @@ class Vendor extends Model
     public function productReviews() {
       return $this->hasMany(ProductReview::class);
     }
+
+    public function products() {
+      return $this->hasMany(Product::class);
+    }
 }

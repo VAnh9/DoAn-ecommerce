@@ -20,15 +20,15 @@
 
               if(array_keys($lastKey)[0] == 'category') {
                 $category = \App\Models\Category::find($lastKey['category']);
-                $products = \App\Models\Product::with('productReviews')->where('category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
+                $products = \App\Models\Product::withAvg('productReviews as review_rating', 'rating')->where('category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
               }
               else if(array_keys($lastKey)[0] == 'sub_category') {
                 $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                $products = \App\Models\Product::with('productReviews')->where('sub_category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
+                $products = \App\Models\Product::withAvg('productReviews as review_rating', 'rating')->where('sub_category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
               }
               else {
                 $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                $products = \App\Models\Product::with('productReviews')->where('child_category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
+                $products = \App\Models\Product::withAvg('productReviews as review_rating', 'rating')->where('child_category_id', $category->id)->orderBy('id', 'DESC')->take(6)->get();
               }
             @endphp
             <div class="col-xl-6 col-sm-6">
@@ -45,11 +45,8 @@
                             <div class="wsus__hot_deals__single_text">
                                 <h5>{!! limitText($item->name) !!}</h5>
                                 <p class="wsus__rating">
-                                  @php
-                                    $avgRating = round($item->productReviews()->avg('rating'));
-                                  @endphp
                                   @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $avgRating)
+                                    @if ($i <= $item->review_rating)
                                       <i class="fas fa-star"></i>
                                     @else
                                       <i class="far fa-star"></i>

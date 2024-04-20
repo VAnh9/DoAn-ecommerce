@@ -3,7 +3,7 @@
   $(document).ready(function() {
 
     // add product to cart
-    $('.shopping-cart-form').on('submit', function(e) {
+    $(document).on('submit', '.shopping-cart-form', function(e) {
       e.preventDefault();
 
       let formData = $(this).serialize();
@@ -123,7 +123,7 @@
     }
 
     // add product to wishlist
-    $('.wishlist-btn').on('click', function(e) {
+    $(document).on('click', '.wishlist-btn', function(e) {
       e.preventDefault();
 
       let id = $(this).data('id');
@@ -193,6 +193,60 @@
         }
       })
     })
+
+    // show product modal
+    $('.show_product_modal').on('click', function() {
+      let id = $(this).data('id');
+
+      $.ajax({
+        method: 'GET',
+        url: "{{ route('show-product-modal', ':id') }}".replace(':id', id),
+        beforeSend: function() {
+          $('.product_modal_content').html('<span class="loader"></span>')
+        },
+        success: function(response) {
+          $('.product_modal_content').html(response);
+          $(document).ready(function () {
+            $('.select_2').select2();
+            loadModalScripts();
+          });
+
+        },
+        error: function(xhr, status, err) {
+          console.log(err);
+        },
+        complete: function() {
+
+        }
+      })
+    })
+
+    function loadModalScripts() {
+      $.fn.spinner = function() {
+        this.each(function() {
+          var el = $(this);
+
+          // add elements
+          el.wrap('<span class="spinner"></span>');
+          el.before('<span class="sub">-</span>');
+          el.after('<span class="add">+</span>');
+
+          // substract
+          el.parent().on('click', '.sub', function () {
+            if (el.val() > parseInt(el.attr('min')))
+              el.val( function(i, oldval) { return --oldval; });
+          });
+
+          // increment
+          el.parent().on('click', '.add', function () {
+            if (el.val() < parseInt(el.attr('max')))
+              el.val( function(i, oldval) { return ++oldval; });
+            });
+          });
+        };
+      $('.number_area_product_modal').spinner();
+
+    }
 
   })
 

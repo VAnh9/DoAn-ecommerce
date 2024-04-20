@@ -43,12 +43,9 @@
                             <div class="wsus__vendor_text">
                                 <div class="wsus__vendor_text_center">
                                     <h4>{{ $vendor->name }}</h4>
-                                    @php
-                                      $rating = round($vendor->productReviews()->avg('rating'));
-                                    @endphp
                                     <p class="wsus__vendor_rating">
                                       @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $rating)
+                                        @if ($i <= $vendor->review_rating)
                                           <i class="fas fa-star"></i>
                                         @else
                                           <i class="far fa-star"></i>

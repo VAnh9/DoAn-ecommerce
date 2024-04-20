@@ -45,14 +45,14 @@ class BlogController extends Controller
   public function getAllBlogs(Request $request)
   {
     if($request->has('search')) {
-      $blogs = Blog::where('title', 'like', '%'.$request->search.'%')->where('status', 1)->orderBy('id', 'DESC')->paginate(8);
+      $blogs = Blog::with('blogCategory')->where('title', 'like', '%'.$request->search.'%')->where('status', 1)->orderBy('id', 'DESC')->paginate(8);
     }
     else if($request->has('category')) {
       $category = BlogCategory::where('slug', $request->category)->where('status', 1)->firstOrFail();
-      $blogs = Blog::where('blog_category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(8);
+      $blogs = Blog::with('blogCategory')->where('blog_category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(8);
     }
     else {
-      $blogs = Blog::where('status', 1)->orderBy('id', 'DESC')->paginate(8);
+      $blogs = Blog::with('blogCategory')->where('status', 1)->orderBy('id', 'DESC')->paginate(8);
     }
 
     return view('frontend.pages.blog', compact('blogs'));

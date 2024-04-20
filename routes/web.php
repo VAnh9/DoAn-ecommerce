@@ -55,6 +55,9 @@ Route::get('change-product-format-view', [ProductController::class, 'changeProdu
 /** Product detail route */
 Route::get('product-detail/{slug}', [ProductController::class, 'showProduct'])->name('product-detail');
 
+/** Product modal routes */
+Route::get('show-product-modal/{id}', [HomeController::class, 'showProductModal'])->name('show-product-modal');
+
 /**  Cart routes */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::get('cart-details', [CartController::class, 'showCartDetails'])->name('cart-details');
