@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use App\Models\LogoSetting;
+use App\Models\PusherSetting;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Symfony\Component\Intl\Currencies;
@@ -21,7 +22,8 @@ class SettingController extends Controller
     $generalSettings = GeneralSetting::first();
     $emailConfig = EmailConfiguration::first();
     $logoSettings = LogoSetting::first();
-    return view('admin.settings.index', compact('generalSettings', 'emailConfig', 'logoSettings'));
+    $pusherSetting = PusherSetting::first();
+    return view('admin.settings.index', compact('generalSettings', 'emailConfig', 'logoSettings', 'pusherSetting'));
   }
 
   public function updateGeneralSettings(Request $request)
@@ -98,7 +100,7 @@ class SettingController extends Controller
     $faviconPath = $this->updateImage($request, 'favicon', 'uploads', isset($logoSettings) ? $logoSettings->favicon : null);
 
     LogoSetting::updateOrCreate(
-      [ 'id' => 1],
+      ['id' => 1],
       [
         'logo' => !empty($logoPath) ? $logoPath : ($logoSettings ? $logoSettings->logo : ''),
         'favicon' => !empty($faviconPath) ? $faviconPath : ($logoSettings ? $logoSettings->favicon : '')
@@ -117,5 +119,25 @@ class SettingController extends Controller
     $symbol = Currencies::getSymbol($request->currencyCode);
 
     return $symbol;
+  }
+
+  public function pusherSettting(Request $request)
+  {
+    $validatedData = $request->validate([
+      'pusher_app_id' => ['required'],
+      'pusher_key' => ['required'],
+      'pusher_secret' => ['required'],
+      'pusher_cluster' => ['required'],
+    ]);
+
+
+    PusherSetting::updateOrCreate(
+      ['id' => 1],
+      $validatedData
+    );
+
+    toastr('Updated Successfully!');
+
+    return redirect()->back();
   }
 }

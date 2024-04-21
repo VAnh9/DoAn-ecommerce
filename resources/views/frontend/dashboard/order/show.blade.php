@@ -22,7 +22,7 @@
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content mt-2 mt-md-0">
             <div class="d-flex justify-content-between">
-              <h4><i class="far fa-store"></i>Order Details</h4>
+              <h4><i class="far fa-store"></i> Order Details</h4>
               <a href="{{ route('user.orders.index') }}" class="btn btn-secondary">Back</a>
             </div>
             <div class="wsus__dashboard_profile">

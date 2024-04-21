@@ -141,6 +141,8 @@ Route::get('general-settings/currency-symbol', [SettingController::class, 'getCu
 Route::put('general-settings/update', [SettingController::class, 'updateGeneralSettings'])->name('general-settings.update');
 Route::put('logo-setting-update', [SettingController::class, 'updateLogoSetting'])->name('logo-setting-update');
 
+/** Pusher setting routes */
+Route::put('pusher-settings-update', [SettingController::class, 'pusherSettting'])->name('puhser-setting-update');
 
 /** Coupon routes */
 Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');

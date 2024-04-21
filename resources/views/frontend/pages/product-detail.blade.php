@@ -6,6 +6,30 @@
 
 @section('content')
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" class="message_modal" method="POST">
+          @csrf
+          <div class="form-group">
+            <label for="">Message</label>
+            <input type="text" name="message" class="form-control mt-2 message_box" placeholder="Enter message..."/>
+            <input type="hidden" name="receiver_id" value="{{ $vendor->id }}">
+          </div>
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary send_btn">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!--============================
       BREADCRUMB START
@@ -132,6 +156,9 @@
                               {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
                               <li></li>
                               <li><a href="javascript:;" class="wishlist-btn" data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a></li>
+                              @if (Auth::check())
+                                <li><a data-bs-toggle="modal" data-bs-target="#exampleModal" href="javascript:;" class=""><i class="fal fa-comment-alt"></i></a></li>
+                              @endif
                           </ul>
                         </form>
 
@@ -421,8 +448,48 @@
         year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
         month: {{ date('m', strtotime($flashSaleDate->end_date)) }},
         day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
-        enableUtc: true
-    });
+      });
+
+      $('.message_modal').on('submit', function(e) {
+        e.preventDefault();
+        let formData = $(this).serialize();
+
+        $.ajax({
+          method: 'POST',
+          url: "{{ route('user.send-message') }}",
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          data: formData,
+          beforeSend: function() {
+            let html = `<span class="spinner-border spinner-border-sm text-white" style="margin-bottom:3px" role="status" aria-hidden="true"></span> Sending...`;
+            $('.send_btn').html(html);
+            $('.send_btn').prop('disabled', true);
+          },
+          success: function(response) {
+            if(response.status == 'success') {
+              $('.message_box').val('');
+              toastr.success(response.message);
+            }
+          },
+          error: function(xhr, status, err) {
+            $('.send_btn').html('Send');
+            $('.send_btn').prop('disabled', false);
+            if(err == 'Unauthorized') {
+              toastr.error('Please login to send message!');
+            }
+            let errors = xhr.responseJSON.errors;
+            console.log(errors);
+            $.each(errors, function(i, e) {
+              toastr.error(e);
+            })
+          },
+          complete: function() {
+            $('.send_btn').html('Send');
+            $('.send_btn').prop('disabled', false);
+          }
+        })
+      })
+
+
     })
   </script>
 

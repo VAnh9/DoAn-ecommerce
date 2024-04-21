@@ -16,7 +16,7 @@
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content mt-2 mt-md-0">
             <div class="d-flex justify-content-between mb-2">
-              <h4><i class="far fa-store"></i>All Images</h4>
+              <h4><i class="fal fa-star"></i> All Review Images</h4>
               <a href="{{ route('user.review.index') }}" class="btn btn-secondary">Back</a>
             </div>
             <div class="wsus__dashboard_profile">

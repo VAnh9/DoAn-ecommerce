@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css')}}">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+    @vite(['resources/js/app.js'])
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>

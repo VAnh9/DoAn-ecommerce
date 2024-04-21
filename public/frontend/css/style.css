@@ -9250,7 +9250,7 @@ DASHBOARD CHAT START
   max-height: 591px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #08C #0b172d;
+  /* scrollbar-color: #08C #0b172d; */
 }
 
 .wsus__chat_single {

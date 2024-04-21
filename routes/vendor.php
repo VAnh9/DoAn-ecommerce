@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductAdditionalInformationController;
 use App\Http\Controllers\Backend\VendorProductController;
@@ -72,3 +73,5 @@ Route::get('review/image-gallery/{id}', [VendorProductReviewController::class, '
 Route::get('withdraw-request/{id}', [VendorWithdrawController::class, 'showDetailRequest'])->name('withdraw-request.show');
 Route::resource('withdraw', VendorWithdrawController::class);
 
+/** Message routes */
+Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');

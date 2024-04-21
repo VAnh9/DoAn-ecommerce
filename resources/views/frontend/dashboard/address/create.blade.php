@@ -13,7 +13,7 @@
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content mt-2 mt-md-0">
             <div class="d-flex justify-content-between">
-              <h3><i class="fal fa-gift-card"></i>create address</h3>
+              <h3><i class="fas fa-map-marker-alt"></i>create address</h3>
               <div><a href="{{ route('user.address.index') }}" class="btn btn-secondary">Back</a></div>
             </div>
             <div class="wsus__dashboard_add wsus__add_address">

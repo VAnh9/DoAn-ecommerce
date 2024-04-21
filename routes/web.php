@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\SocialLoginController;
+use App\Http\Controllers\Frontend\UserMessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -155,5 +156,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     /** Blog comment routes */
     Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
+
+    /** Message routes */
+    Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
+    Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
+    Route::get('send-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
 });
 
