@@ -34,7 +34,7 @@ class UserVendorRequestController extends Controller
       return redirect()->back();
     }
 
-    $imagePath = $this->uploadImage($request, 'banner', 'uploads');
+    $imagePath = $this->uploadImage($request, 'banner', 'uploads', 'banner_store');
 
     $vendor = new Vendor();
 

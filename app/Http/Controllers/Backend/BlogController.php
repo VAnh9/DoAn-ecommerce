@@ -45,7 +45,7 @@ class BlogController extends Controller
       'seo_description' => ['nullable', 'max:200'],
     ]);
 
-    $imagePath = $this->uploadImage($request, 'image', 'uploads');
+    $imagePath = $this->uploadImage($request, 'image', 'uploads', 'blog');
 
     $blog = new Blog();
 
@@ -101,7 +101,7 @@ class BlogController extends Controller
 
     $blog = Blog::findOrFail($id);
 
-    $imagePath = $this->updateImage($request, 'image', 'uploads', $blog->thumb_image);
+    $imagePath = $this->updateImage($request, 'image', 'uploads', $blog->thumb_image, 'blog');
 
     $blog->thumb_image = !empty($imagePath) ? $imagePath : $blog->thumb_image;
     $blog->title = $request->title;
