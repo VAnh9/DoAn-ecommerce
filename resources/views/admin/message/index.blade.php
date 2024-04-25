@@ -38,7 +38,7 @@
           <div class="card-header">
             <h4 id="chat_inbox_title"></h4>
           </div>
-          <div class="card-body chat-content" style="position: relative">
+          <div class="card-body chat-content" data-inbox="" style="position: relative">
 
 
           </div>
@@ -98,7 +98,8 @@
       let senderImage = $(this).find('img').attr('src');
       //bind sender name
       let chatUserName = $(this).find('.sender_name').text();
-
+      // set id to box chat
+      mainChatBox.attr('data-inbox', senderId);
       // set receriver id
       $('#receiver_id').val(senderId);
       $.ajax({
@@ -187,6 +188,7 @@
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: formData,
         beforeSend: function() {
+          $('.message_box').val('');
           $('.send_btn').prop('disabled', true);
           formSubmitting = true;
         },

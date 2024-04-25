@@ -37,6 +37,7 @@
       image: "{{ asset(Auth::user()->image) }}",
     }
   </script>
+  @vite(['resources/js/app.js', 'resources/js/frontend.js'])
 </head>
 
 <body>

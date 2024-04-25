@@ -467,6 +467,7 @@
           success: function(response) {
             if(response.status == 'success') {
               $('.message_box').val('');
+              $('#exampleModal').modal('toggle');
               toastr.success(response.message);
             }
           },

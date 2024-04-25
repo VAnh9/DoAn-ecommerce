@@ -53,27 +53,8 @@
                                                 <div class="wsus__chat_area_header">
                                                     <h2 id="chat_inbox_title">Chat with Seller</h2>
                                                 </div>
-                                                <div class="wsus__chat_area_body">
-                                                    {{-- <div class="wsus__chat_single single_chat_2">
-                                                        <div class="wsus__chat_single_img">
-                                                            <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
-                                                                alt="user" class="img-fluid">
-                                                        </div>
-                                                        <div class="wsus__chat_single_text">
-                                                            <p>I have some queries</p>
-                                                            <span>15 August, 2022, 12:57 PM</span>
-                                                        </div>
-                                                    </div> --}}
-                                                    {{-- <div class="wsus__chat_single">
-                                                        <div class="wsus__chat_single_img">
-                                                            <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
-                                                                alt="user" class="img-fluid">
-                                                        </div>
-                                                        <div class="wsus__chat_single_text">
-                                                            <p>Please tell me you query</p>
-                                                            <span>15 August, 2022, 12:58 PM</span>
-                                                        </div>
-                                                    </div> --}}
+                                                <div class="wsus__chat_area_body" data-inbox="">
+
                                                 </div>
                                                 <div class="wsus__chat_area_footer" style="margin-top: 50px; position: absolute; width:100%; bottom: 0">
                                                     <form class="message_modal" method="POST">
@@ -136,6 +117,7 @@
       let receiverId = $(this).data('id');
       let receiverImage = $(this).find('img').attr('src');
       let chatUserName = $(this).find('h4').text();
+      mainChatBox.attr('data-inbox', receiverId);
       $('#receiver_id').val(receiverId);
       $.ajax({
         method: 'GET',
@@ -227,6 +209,7 @@
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: formData,
         beforeSend: function() {
+          $('.message_box').val('');
           $('.send_btn').prop('disabled', true);
           formSubmitting = true;
         },
