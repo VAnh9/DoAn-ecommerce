@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialLinkController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\ManageUserController;
+use App\Http\Controllers\Backend\MessageController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -283,4 +284,9 @@ Route::resource('withdraw', WithdrawMethodController::class);
 Route::get('withdraw-list', [WithdrawController::class, 'index'])->name('withdraw-list.index');
 Route::get('withdraw-list/{id}', [WithdrawController::class, 'show'])->name('withdraw-list.show');
 Route::put('withdraw-list/{id}', [WithdrawController::class, 'update'])->name('withdraw-list.update');
+
+/** message routes */
+Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('get-messages', [MessageController::class, 'getMessages'])->name('get-messages');
+Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-meesage');
 

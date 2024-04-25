@@ -110,7 +110,7 @@
 <script>
   const mainChatBox = $('.wsus__chat_area_body');
 
-  function formateDateTime(dateTimeString) {
+  function formatDateTime(dateTimeString) {
     const options = {
       year: 'numeric',
       month: 'short',
@@ -134,6 +134,7 @@
       $('.chat_user_profile').removeClass('active');
       $(this).addClass('active');
       let receiverId = $(this).data('id');
+      let receiverImage = $(this).find('img').attr('src');
       let chatUserName = $(this).find('h4').text();
       $('#receiver_id').val(receiverId);
       $.ajax({
@@ -155,16 +156,30 @@
         success: function(response) {
           mainChatBox.html("");
           $.each(response, function(i, value) {
-            let message = `<div class="wsus__chat_single single_chat_2">
-                          <div class="wsus__chat_single_img">
-                              <img src="${USER.image}"
-                                  alt="user" class="img-fluid">
-                          </div>
-                          <div class="wsus__chat_single_text">
-                              <p>${value.message}</p>
-                              <span>${formateDateTime(value.created_at)}</span>
-                          </div>
-                        </div>`;
+            if(value.sender_id == USER.id) {
+              var message = `<div class="wsus__chat_single single_chat_2">
+                            <div class="wsus__chat_single_img">
+                                <img src="${USER.image}"
+                                    alt="user" class="img-fluid">
+                            </div>
+                            <div class="wsus__chat_single_text">
+                                <p>${value.message}</p>
+                                <span>${formatDateTime(value.created_at)}</span>
+                            </div>
+                          </div>`;
+            }
+            else {
+              var message = `<div class="wsus__chat_single">
+                            <div class="wsus__chat_single_img">
+                                <img src="${receiverImage}"
+                                    alt="user" class="img-fluid">
+                            </div>
+                            <div class="wsus__chat_single_text">
+                                <p>${value.message}</p>
+                                <span>${formatDateTime(value.created_at)}</span>
+                            </div>
+                          </div>`;
+            }
             mainChatBox.append(message);
           });
 
@@ -182,59 +197,60 @@
 
     // send message
     $('.message_modal').on('submit', function(e) {
-        e.preventDefault();
-        let formData = $(this).serialize();
-        let messageData = $('.message_box').val();
+      e.preventDefault();
+      let formData = $(this).serialize();
+      let messageData = $('.message_box').val();
 
-        var formSubmitting = false;
+      var formSubmitting = false;
 
-        if(formSubmitting || messageData == "") {
-          return;
-        }
+      if(formSubmitting || messageData == "") {
+        return;
+      }
 
-        // set mesage in inbox before getting response
-        let message = `<div class="wsus__chat_single single_chat_2">
-                          <div class="wsus__chat_single_img">
-                              <img src="${USER.image}"
-                                  alt="user" class="img-fluid">
-                          </div>
-                          <div class="wsus__chat_single_text">
-                              <p>${messageData}</p>
-                              <span>${formateDateTime(new Date())}</span>
-                          </div>
-                        </div>`;
-        mainChatBox.append(message);
-        scrollToBottom();
+      // set mesage in inbox before getting response
+      let message = `<div class="wsus__chat_single single_chat_2">
+                        <div class="wsus__chat_single_img">
+                            <img src="${USER.image}"
+                                alt="user" class="img-fluid">
+                        </div>
+                        <div class="wsus__chat_single_text">
+                            <p>${messageData}</p>
+                            <span>${formatDateTime(new Date())}</span>
+                        </div>
+                      </div>`;
+      mainChatBox.append(message);
+      scrollToBottom();
 
-        $.ajax({
-          method: 'POST',
-          url: "{{ route('user.send-message') }}",
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          data: formData,
-          beforeSend: function() {
-            $('.send_btn').prop('disabled', true);
-            formSubmitting = true;
-          },
-          success: function(response) {
-            if(response.status == 'success') {
-              $('.message_box').val('');
-            }
-          },
-          error: function(xhr, status, err) {
-            $('.send_btn').prop('disabled', false);
-            let errors = xhr.responseJSON.errors;
-            console.log(errors);
-            $.each(errors, function(i, e) {
-              toastr.error(e);
-            })
-            formSubmitting = false;
-          },
-          complete: function() {
-            $('.send_btn').prop('disabled', false);
-            formSubmitting = false;
+      $.ajax({
+        method: 'POST',
+        url: "{{ route('user.send-message') }}",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: formData,
+        beforeSend: function() {
+          $('.send_btn').prop('disabled', true);
+          formSubmitting = true;
+        },
+        success: function(response) {
+          if(response.status == 'success') {
+            $('.message_box').val('');
           }
-        })
+        },
+        error: function(xhr, status, err) {
+          $('.send_btn').prop('disabled', false);
+          let errors = xhr.responseJSON.errors;
+          console.log(errors);
+          $.each(errors, function(i, e) {
+            toastr.error(e);
+          })
+          formSubmitting = false;
+        },
+        complete: function() {
+          $('.send_btn').prop('disabled', false);
+          formSubmitting = false;
+        }
       })
+    })
+
   })
 </script>
 

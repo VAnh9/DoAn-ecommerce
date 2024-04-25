@@ -36,7 +36,7 @@
                                 <img src="{{ asset($homepageBannerSectionThree->banner_one->banner_image) }}" alt="banner" class="img-fluid w-100">
                             </div>
                             <div class="wsus__single_banner_text">
-                                <h6>sell on <span>35% off</span></h6>
+                                <h6>sale on <span>35% off</span></h6>
                                 <h3>smart watch</h3>
                                 <a class="shop_btn" href="{{ $homepageBannerSectionThree->banner_one->banner_url }}">shop now</a>
                             </div>
@@ -52,7 +52,7 @@
                                         <img src="{{ asset($homepageBannerSectionThree->banner_two->banner_image) }}" alt="banner" class="img-fluid w-100">
                                     </div>
                                     <div class="wsus__single_banner_text">
-                                        <h6>sell on <span>35% off</span></h6>
+                                        <h6>sale on <span>35% off</span></h6>
                                         <h3>smart watch</h3>
                                         <a class="shop_btn" href="{{ $homepageBannerSectionThree->banner_two->banner_url }}">shop now</a>
                                     </div>
@@ -66,7 +66,7 @@
                                         <img src="{{ asset($homepageBannerSectionThree->banner_three->banner_image) }}" alt="banner" class="img-fluid w-100">
                                     </div>
                                     <div class="wsus__single_banner_text">
-                                        <h6>sell on <span>35% off</span></h6>
+                                        <h6>sale on <span>35% off</span></h6>
                                         <h3>smart watch</h3>
                                         <a class="shop_btn" href="{{ $homepageBannerSectionThree->banner_three->banner_url }}">shop now</a>
                                     </div>

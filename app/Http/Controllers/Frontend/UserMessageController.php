@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserMessageController extends Controller
 {
+  // get all chat users of a sender
   public function index()
   {
     $userId = Auth::user()->id;
@@ -39,6 +40,7 @@ class UserMessageController extends Controller
     return response(['status' => 'success', 'message' => 'Message has been sent.']);
   }
 
+  // get all message between sender and receiver
   public function getMessages(Request $request)
   {
     $senderId = Auth::user()->id;

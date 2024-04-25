@@ -119,6 +119,10 @@
           </ul>
         </li>
 
+        <li class="{{ setActive([
+          'admin.messages.index'
+        ])}}"><a class="nav-link" href="{{ route('admin.messages.index') }}"><i class="fas fa-comments"></i> <span>Messages</span></a></li>
+
         {{-- Manage Advertisement --}}
         <li class="{{ setActive([
           'admin.advertisement.index'

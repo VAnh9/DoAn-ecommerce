@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     /** Message routes */
     Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
     Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
-    Route::get('send-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
+    Route::get('get-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
+    
 });
 
