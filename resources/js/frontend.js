@@ -13,6 +13,11 @@ function formatDateTime(dateTimeString) {
 function scrollToBottom() {
   mainChatBox.scrollTop(mainChatBox.prop('scrollHeight'));
 }
+function enableSoundMessage() {
+  const audio = document.getElementById('message_send_audio');
+  audio.autoplay = true;
+  audio.load();
+}
 
 window.Echo.private('message.' + USER.id).listen(
   "MessageEvent",
@@ -34,5 +39,16 @@ window.Echo.private('message.' + USER.id).listen(
 
     mainChatBox.append(message);
     scrollToBottom();
+
+    // add notification circle when received message
+    $('.chat_user_profile').each(function() {
+      let profileUserId = $(this).data('id');
+      if(profileUserId == e.sender_id) {
+        $(this).find('.wsus_chat_list_img').addClass('msg-notification');
+      }
+    })
+
+    //add sound
+    enableSoundMessage();
   }
 )

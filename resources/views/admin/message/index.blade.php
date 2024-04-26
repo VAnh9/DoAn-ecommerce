@@ -2,6 +2,10 @@
 
 @section('content')
 
+<audio id="message_send_audio">
+  <source src="{{ asset('sounds/message-send.mp3') }}" type="audio/mpeg"/>
+</audio>
+
 <section class="section">
   <div class="section-header">
     <h1>Messages</h1>
@@ -21,8 +25,11 @@
           <div class="card-body">
             <ul class="list-unstyled list-unstyled-border">
               @foreach ($chatUsers as $chatUser )
+              @php
+                $unseenMessages = \App\Models\Chat::where(['sender_id' => $chatUser->senderProfile->id, 'receiver_id' => auth()->user()->id, 'seen' => 0])->exists();
+              @endphp
                 <li class="media chat_user_profile p-2 rounded align-items-center" data-id="{{ $chatUser->senderProfile->id }}" style="cursor: pointer">
-                  <img alt="image" class="mr-3 rounded-circle" width="50" src="{{ asset($chatUser->senderProfile->image) }}">
+                  <img alt="image" class="mr-3 rounded-circle {{ $unseenMessages ? 'msg-notification' : '' }}" width="50" src="{{ asset($chatUser->senderProfile->image) }}">
                   <div class="media-body">
                     <div class="mt-0 mb-1 font-weight-bold sender_name">{{ $chatUser->senderProfile->name }}</div>
                     {{-- <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i> Online</div> --}}
@@ -34,7 +41,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-9">
-        <div class="card chat-box" id="mychatbox" style="height: 70vh">
+        <div class="card chat-box" id="mychatbox" style="height: 70vh" data-inbox="">
           <div class="card-header">
             <h4 id="chat_inbox_title"></h4>
           </div>
@@ -100,8 +107,11 @@
       let chatUserName = $(this).find('.sender_name').text();
       // set id to box chat
       mainChatBox.attr('data-inbox', senderId);
+      $('#mychatbox').attr('data-inbox', senderId);
       // set receriver id
       $('#receiver_id').val(senderId);
+      // remove css notification
+      $(this).find('img').removeClass('msg-notification');
       $.ajax({
         method: 'GET',
         url: "{{ route('admin.get-messages') }}",
@@ -211,6 +221,13 @@
           formSubmitting = false;
         }
       })
+    })
+
+    // remove css unseen message
+    $('#mychatbox').on('click', function() {
+      if($(this).attr('data-inbox') == $('.chat_user_profile').attr('data-id')) {
+        $('.chat_user_profile').find('img').removeClass('msg-notification');
+      }
     })
 
   })

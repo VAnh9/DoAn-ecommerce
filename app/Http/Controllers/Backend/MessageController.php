@@ -36,6 +36,8 @@ class MessageController extends Controller
       ->orderBy('created_at', 'ASC')
       ->get();
 
+    Chat::where(['sender_id' => $senderId, 'receiver_id' => $receiverId])->update(['seen' => 1]);
+
     return response($messages);
   }
 
@@ -55,6 +57,8 @@ class MessageController extends Controller
     $message->save();
 
     broadcast(new MessageEvent($message->message, $message->receiver_id, $message->created_at));
+
+    Chat::where(['sender_id' => $request->receiver_id, 'receiver_id' => Auth::user()->id])->update(['seen' => 1]);
 
     return response(['status' => 'success', 'message' => 'Message has been sent from admin!']);
   }

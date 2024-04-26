@@ -7,6 +7,9 @@
 
 @section('content')
 
+<audio id="message_send_audio">
+  <source src="{{ asset('sounds/message-send.mp3') }}" type="audio/mpeg"/>
+</audio>
 
   <section id="wsus__dashboard">
     <div class="container-fluid">
@@ -24,10 +27,13 @@
                                     <h2>Seller List</h2>
                                     <div class="wsus__chatlist_body">
                                       @foreach ($chatUsers as $chatUser )
+                                      @php
+                                        $unseenMessages = \App\Models\Chat::where(['sender_id' => $chatUser->receiverProfile->id, 'receiver_id' => auth()->user()->id, 'seen' => 0])->exists();
+                                      @endphp
                                         <button class="nav-link chat_user_profile" data-id="{{ $chatUser->receiverProfile->id }}" data-bs-toggle="pill"
                                             data-bs-target="#v-pills-home" type="button" role="tab"
                                             aria-controls="v-pills-home" aria-selected="true">
-                                            <div class="wsus_chat_list_img">
+                                            <div class="wsus_chat_list_img {{ $unseenMessages ? 'msg-notification' : '' }}">
                                                 <img src="{{ asset($chatUser->receiverProfile->image) }}"
                                                     alt="user" class="img-fluid">
                                                 <span class="pending d-none" id="pending-6">0</span>
@@ -44,7 +50,7 @@
                             </div>
                         </div>
                         <div class="col-xl-8 col-md-7">
-                            <div class="wsus__chat_main_area" style="position: relative;">
+                            <div class="wsus__chat_main_area" style="position: relative;" data-inbox="">
                                 <div class="tab-content" id="v-pills-tabContent">
                                     <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                         aria-labelledby="v-pills-home-tab">
@@ -118,7 +124,11 @@
       let receiverImage = $(this).find('img').attr('src');
       let chatUserName = $(this).find('h4').text();
       mainChatBox.attr('data-inbox', receiverId);
+      $('.wsus__chat_main_area').attr('data-inbox', receiverId);
       $('#receiver_id').val(receiverId);
+      //remove css mesage notification
+      $(this).find('.wsus_chat_list_img').removeClass('msg-notification');
+
       $.ajax({
         method: 'GET',
         url: "{{ route('user.get-messages') }}",
@@ -232,6 +242,14 @@
           formSubmitting = false;
         }
       })
+    })
+
+    // remove css unseen message
+    $('.wsus__chat_main_area').on('click', function() {
+      if($(this).attr('data-inbox') == $('.chat_user_profile').attr('data-id')) {
+        $('.wsus_chat_list_img').removeClass('msg-notification');
+      }
+      else return;
     })
 
   })

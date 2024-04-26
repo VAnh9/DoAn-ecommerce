@@ -2813,3 +2813,6 @@ span.select2.select2-container.select2-container--default {
 .chat_user_profile.active {
   background-color: #eeeeeeb3;
 }
+.msg-notification {
+  border: 4px solid #1AC933 !important;
+}
