@@ -24,7 +24,7 @@
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item orange" href="{{ route('vendor.orders') }}">
                     <i class="fas fa-shipping-fast"></i>
-                    <p>today's pending order</p>
+                    <p>todays pending order</p>
                     <h5 class="text-white">{{ $todayPendingOrders }}</h5>
                   </a>
                 </div>

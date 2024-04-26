@@ -75,3 +75,5 @@ Route::resource('withdraw', VendorWithdrawController::class);
 
 /** Message routes */
 Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');
+Route::post('send-message', [VendorMessageController::class, 'sendMessage'])->name('send-message');
+Route::get('get-messages', [VendorMessageController::class, 'getMessages'])->name('get-messages');

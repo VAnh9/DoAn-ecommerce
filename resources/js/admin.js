@@ -45,6 +45,9 @@ window.Echo.private('message.' + USER.id).listen(
       }
     })
 
+    // set sender id to input for remove css unseen message
+    $('#sender_id_real_time').val(e.sender_id);
+
     //add sound
     enableSoundMessage();
   }

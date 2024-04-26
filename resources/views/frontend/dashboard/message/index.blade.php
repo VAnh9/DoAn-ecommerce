@@ -11,6 +11,9 @@
   <source src="{{ asset('sounds/message-send.mp3') }}" type="audio/mpeg"/>
 </audio>
 
+<input type="hidden" name="" id="sender_id_real_time" value="">
+
+
   <section id="wsus__dashboard">
     <div class="container-fluid">
       @include('frontend.dashboard.layouts.sidebar')
@@ -246,7 +249,7 @@
 
     // remove css unseen message
     $('.wsus__chat_main_area').on('click', function() {
-      if($(this).attr('data-inbox') == $('.chat_user_profile').attr('data-id')) {
+      if($(this).attr('data-inbox') == $('#sender_id_real_time').val()) {
         $('.wsus_chat_list_img').removeClass('msg-notification');
       }
       else return;

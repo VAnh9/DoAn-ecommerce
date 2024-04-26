@@ -35,6 +35,15 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
+    <script>
+      const USER = {
+        id: "{{ Auth::user()->id }}",
+        name: "{{ Auth::user()->name }}",
+        image: "{{ asset(Auth::user()->image) }}",
+      }
+    </script>
+
+    @vite(['resources/js/app.js', 'resources/js/vendor.js'])
 </head>
 
 <body>

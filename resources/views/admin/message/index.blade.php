@@ -6,6 +6,9 @@
   <source src="{{ asset('sounds/message-send.mp3') }}" type="audio/mpeg"/>
 </audio>
 
+<input type="hidden" name="" id="sender_id_real_time" value="">
+
+
 <section class="section">
   <div class="section-header">
     <h1>Messages</h1>
@@ -225,7 +228,7 @@
 
     // remove css unseen message
     $('#mychatbox').on('click', function() {
-      if($(this).attr('data-inbox') == $('.chat_user_profile').attr('data-id')) {
+      if($(this).attr('data-inbox') == $('#sender_id_real_time').val()) {
         $('.chat_user_profile').find('img').removeClass('msg-notification');
       }
     })
