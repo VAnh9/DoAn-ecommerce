@@ -22,6 +22,7 @@ class ManageUserController extends Controller
       'email' => ['required', 'email', 'unique:users,email'],
       'password' => ['required', 'min:8', 'confirmed'],
       'role' => ['required'],
+      'phone' => ['required_if:role,shipper', 'max:20']
     ]);
 
     $user = new User();
@@ -85,6 +86,22 @@ class ManageUserController extends Controller
       $vendor->user_id = $user->id;
       $vendor->status = 1;
       $vendor->save();
+
+      SendMailWhenAccountCreated::dispatch($request->name, $request->email, $request->password);
+
+      toastr('Created Successfully!');
+
+      return redirect()->back();
+    }
+    else if($request->role == 'shipper') {
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->password = bcrypt($request->password);
+      $user->role = 'shipper';
+      $user->status = 'active';
+      $user->phone = $request->phone;
+
+      $user->save();
 
       SendMailWhenAccountCreated::dispatch($request->name, $request->email, $request->password);
 

@@ -101,6 +101,7 @@
                             @endif">order Processing</li>
                           <li class="icon_three @if (
                             @$order->order_status == 'out_for_delivery' ||
+                            @$order->order_status == 'shipping' ||
                             @$order->order_status == 'delivered')
                               check_mark
                             @endif">on the way</li>

@@ -67,6 +67,8 @@
                             <li><a href="{{ route('vendor.dashboard') }}">Vendor Dashboard</a></li>
                           @elseif (Auth::user()->role == 'admin')
                             <li><a href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                          @elseif (Auth::user()->role == 'shipper')
+                            <li><a href="{{ route('shipper.dashboard') }}">Shipper Dashboard</a></li>
                           @endif
 
                         @endif

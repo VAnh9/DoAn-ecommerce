@@ -22,6 +22,9 @@ class RoleMiddleware
           else if($request->user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
           }
+          else if($request->user()->role == 'shipper') {
+            return redirect()->route('shipper.dashboard');
+          }
           else {
             return redirect()->route('user.dashboard');
           }

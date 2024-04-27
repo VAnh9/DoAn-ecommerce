@@ -10,8 +10,11 @@ use App\DataTables\OutForDeliveryOrderDataTable;
 use App\DataTables\PendingOrderDataTable;
 use App\DataTables\ProcessedOrderDataTable;
 use App\DataTables\ShippedOrderDataTable;
+use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -88,7 +91,8 @@ class OrderController extends Controller
   public function show(string $id)
   {
     $order = Order::findOrFail($id);
-    return view('admin.order.show', compact('order'));
+    $shippers = User::where('role', 'shipper')->get();
+    return view('admin.order.show', compact('order', 'shippers'));
   }
 
   /**
@@ -128,13 +132,43 @@ class OrderController extends Controller
   /** Change order status */
   public function changeOrderStatus(Request $request)
   {
+    $request->validate([
+      'shipper' => ['required_if:order_status,shipping']
+    ]);
+
     $order = Order::findOrFail($request->id);
 
-    $order->order_status = $request->status;
+    $order->order_status = $request->order_status;
+    $order->shipper_id = $request->shipper;
 
-    $order->save();
+    if($request->order_status == 'shipping' && $order->is_broadcasted == 0) {
+      $order->save();
 
-    return response(['status' => 'success', 'message' => 'Updated Order Status']);
+      $orderUserName = $order->user->name;
+      $orderInvoice = $order->invoice_id;
+      $messageText ="Hello $orderUserName, your order with invoice number #$orderInvoice is now en route. Kindly keep an eye on your phone to receive the goods at your earliest convenience." ;
+
+      $message = new Chat();
+
+      $message->sender_id = $request->shipper;
+      $message->receiver_id = $order->user_id;
+      $message->message = $messageText;
+
+      $message->save();
+
+
+      $senderImage = asset($order->shipper->image);
+      broadcast(new MessageEvent($message, $order->user_id, $order->updated_at, $request->shipper, $senderImage));
+
+      $order->is_broadcasted = 1;
+      $order->save();
+    }
+    else {
+      $order->save();
+    }
+
+    toastr('Order Status Updated Successfully!');
+    return redirect()->back();
   }
 
   /** Change payment status */

@@ -173,7 +173,7 @@
                                 <div class="wsus__det_sidebar_banner_text">
                                     <p>Flash Sale</p>
                                     <h4>Up To 70% Off</h4>
-                                    <a href="{{ route('flash-sale') }}" class="common_btn">shope now</a>
+                                    <a href="{{ route('flash-sale') }}" class="common_btn">shop now</a>
                                 </div>
                             </div>
                         </div>

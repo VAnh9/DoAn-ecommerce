@@ -52,6 +52,9 @@ class UserOrderDataTable extends DataTable
                 case 'out_for_delivery':
                   return "<i class='badge bg-primary rounded-pill'>Out for delivery</i>";
                   break;
+                case 'shipping':
+                  return "<i class='badge bg-primary rounded-pill'>Shipping</i>";
+                  break;
                 case 'delivered':
                   return "<i class='badge bg-success rounded-pill'>Delivered</i>";
                   break;
@@ -74,8 +77,16 @@ class UserOrderDataTable extends DataTable
               }
               else return "<i class='badge bg-warning rounded-pill'>Pending</i>";
             })
+            ->addColumn('shipper', function($query) {
+              if(isset($query->shipper_id)) {
+                return "<a class='text-primary' href=".route('user.messages.index').">".$query->shipper->name."</a>";
+              }
+              else {
+                return 'Shopnest';
+              }
+            })
             ->addIndexColumn()
-            ->rawColumns(['order_status', 'payment_status', 'action'])
+            ->rawColumns(['order_status', 'payment_status', 'action', 'shipper'])
             ->setRowId('id');
     }
 
@@ -115,19 +126,20 @@ class UserOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->width(100)->title('#')->name('id'),
+            Column::make('DT_RowIndex')->width(80)->title('#')->name('id'),
             Column::make('invoice_id'),
             Column::make('customer'),
             Column::make('date'),
             Column::make('product_qty'),
             Column::make('amount'),
             Column::make('order_status'),
+            Column::make('shipper')->width(130),
             Column::make('payment_method'),
             Column::make('payment_status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(200)
+                  ->width(70)
                   ->addClass('text-center'),
         ];
     }

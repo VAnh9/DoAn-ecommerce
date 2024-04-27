@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('shipping_method');
             $table->text('coupon');
             $table->string('order_status');
+            $table->integer('shipper_id')->nullable();
+            $table->boolean('is_broadcasted')->nullable()->default(false);
             $table->timestamps();
         });
     }

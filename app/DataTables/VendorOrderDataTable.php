@@ -52,6 +52,9 @@ class VendorOrderDataTable extends DataTable
                 case 'out_for_delivery':
                   return "<i class='badge bg-primary rounded-pill'>Out for delivery</i>";
                   break;
+                case 'shipping':
+                  return "<i class='badge bg-primary rounded-pill'>Shipping</i>";
+                  break;
                 case 'delivered':
                   return "<i class='badge bg-success rounded-pill'>Delivered</i>";
                   break;

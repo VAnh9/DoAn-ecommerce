@@ -22,6 +22,10 @@ return [
       'status' => 'Out For Delivery',
       'details' => 'Our delivery partner will attempt to delivery your package'
     ],
+    'shipping' => [
+      'status' => 'Shipping',
+      'details' => 'Your order is on its way'
+    ],
     'delivered' => [
       'status' => 'Delivered',
       'details' => 'Deliverd'
@@ -41,6 +45,17 @@ return [
     'processed_and_ready_to_ship' => [
       'status' => 'Processed and ready to ship',
       'details' => 'Your package has been processed and will be with our delivery partner soon'
+    ],
+  ],
+
+  'order_status_shipper' => [
+    'shipping' => [
+      'status' => 'Shipping',
+      'details' => 'Your order is on its way'
+    ],
+    'delivered' => [
+      'status' => 'Delivered',
+      'details' => 'Deliverd'
     ],
   ],
 ];

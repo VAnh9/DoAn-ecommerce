@@ -52,6 +52,9 @@ class OrderDataTable extends DataTable
                 case 'out_for_delivery':
                   return "<i class='badge badge-primary'>Out for delivery</i>";
                   break;
+                case 'shipping':
+                  return "<i class='badge badge-primary'>Shipping</i>";
+                  break;
                 case 'delivered':
                   return "<i class='badge badge-success'>Delivered</i>";
                   break;

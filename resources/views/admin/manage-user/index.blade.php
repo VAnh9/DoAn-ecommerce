@@ -56,17 +56,32 @@
                         </div>
                       </div>
 
-                      <div class="form-group" style="margin-bottom: 1rem">
-                        <label for="inputState">Role</label>
-                         <select name="role" id="inputState" class="form-control">
-                            <option value="">Select</option>
-                            <option value="user">User</option>
-                            <option value="vendor">Vendor</option>
-                            <option value="admin">Admin</option>
-                         </select>
-                         @if ($errors->has('role'))
-                          <code>{{ $errors->first('role') }}</code>
-                        @endif
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group" style="margin-bottom: 1rem">
+                            <label for="inputState">Role</label>
+                             <select name="role" id="inputState" class="form-control manage_user_role">
+                                <option value="">Select</option>
+                                <option value="user">User</option>
+                                <option value="vendor">Vendor</option>
+                                <option value="shipper">Shipper</option>
+                                <option value="admin">Admin</option>
+                             </select>
+                             @if ($errors->has('role'))
+                              <code>{{ $errors->first('role') }}</code>
+                            @endif
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group shipper_phone_number d-none" style="margin-bottom: 1rem">
+                            <label>Phone Number</label>
+                            <input type="text"  name="phone" class="form-control value="{{ old('phone') }}">
+                            @if ($errors->has('phone'))
+                              <code>{{ $errors->first('phone') }}</code>
+                            @endif
+                          </div>
+                        </div>
                       </div>
 
                       <button type="submit" class="btn btn-primary">Create</button>
@@ -82,3 +97,21 @@
 
 @endsection
 
+@push('scripts')
+
+<script>
+  $(document).ready(function() {
+    $('.manage_user_role').on('change', function() {
+      let value = $(this).val();
+
+      if(value != 'shipper') {
+        $('.shipper_phone_number').addClass('d-none');
+      }
+      else {
+        $('.shipper_phone_number').removeClass('d-none');
+      }
+    })
+  })
+</script>
+
+@endpush

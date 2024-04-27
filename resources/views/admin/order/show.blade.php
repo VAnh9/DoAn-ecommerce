@@ -111,14 +111,33 @@
                     <div class="row mt-4">
                       <div class="col-lg-8">
                         <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="">Order Status</label>
-                            <select name="order_status" id="order_status" data-id="{{ $order->id }}" class="form-control">
-                              @foreach (config('order_status.order_status_admin') as $key => $orderStatus )
-                                <option {{ $order->order_status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $orderStatus['status'] }}</option>
-                              @endforeach
-                            </select>
-                          </div>
+                          <form action="{{ route('admin.order.change-order-status') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group" style="margin-bottom: 1rem">
+                              <label for="">Order Status</label>
+                              <input type="hidden" value="{{ $order->id }}" name="id">
+                              <select name="order_status" id="order_status" data-id="{{ $order->id }}" class="form-control">
+                                @foreach (config('order_status.order_status_admin') as $key => $orderStatus )
+                                  <option {{ $order->order_status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $orderStatus['status'] }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+
+                            <div class="form-group {{ $order->order_status != 'shipping' ? 'd-none' : '' }}" style="margin-bottom: 1rem" id="choose_shipper">
+                              <label for="">Shipper</label>
+                              <select name="shipper" id="shipper" class="form-control">
+                                <option value="">Select</option>
+                                @foreach ($shippers as $shipper )
+                                  <option {{ $order->shipper_id == $shipper->id ? 'selected' : '' }} value="{{ $shipper->id }}">{{ $shipper->name }}</option>
+                                @endforeach
+                              </select>
+                              @if ($errors->has('shipper'))
+                                <code>{{ $errors->first('shipper') }}</code>
+                              @endif
+                            </div>
+                            <button class="btn btn-primary">Update</button>
+                          </form>
 
                           <div class="form-group">
                             <label for="">Payment Status</label>
@@ -166,27 +185,57 @@
 
 <script>
   $(document).ready(function() {
+    // change order status
+    // $('body').on('change', '#order_status', function() {
+    //   let orderStatus = $(this).val();
+    //   let id = $(this).data('id');
+    //   let shipperId = null;
+
+    //   //show select box to choose shipper
+    //   if(orderStatus != 'shipping') {
+    //     $('#choose_shipper').addClass('d-none');
+    //   }
+    //   else {
+    //     $('#choose_shipper').removeClass('d-none');
+    //   }
+
+    //   if (orderStatus == 'shipping') {
+    //     shipperId = $('#shipper').val();
+
+    //     if (!shipperId) {
+    //       return;
+    //     }
+    //   }
+
+    //   $.ajax({
+    //     url: "{{ route('admin.order.change-order-status') }}",
+    //     method: 'PUT',
+    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //     data: {
+    //       id: id,
+    //       shipperId: shipperId,
+    //       status: orderStatus
+    //     },
+    //     success: function(data) {
+    //       if(data.status == 'success') {
+    //         toastr.success(data.message);
+    //       }
+    //     },
+    //     error: function(xhr, status, err) {
+    //       console.log(err);
+    //     }
+    //   })
+    // })
+
+    // show select option to choose shipper
     $('body').on('change', '#order_status', function() {
       let orderStatus = $(this).val();
-      let id = $(this).data('id');
-
-      $.ajax({
-        url: "{{ route('admin.order.change-order-status') }}",
-        method: 'PUT',
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        data: {
-          id: id,
-          status: orderStatus
-        },
-        success: function(data) {
-          if(data.status == 'success') {
-            toastr.success(data.message);
-          }
-        },
-        error: function(xhr, status, err) {
-          console.log(err);
-        }
-      })
+      if(orderStatus != 'shipping') {
+        $('#choose_shipper').addClass('d-none');
+      }
+      else {
+        $('#choose_shipper').removeClass('d-none');
+      }
     })
 
     // change payment status
@@ -212,6 +261,7 @@
         }
       })
     })
+
 
     // print order
     $('.print-btn').on('click', function() {
