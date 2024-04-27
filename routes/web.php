@@ -131,7 +131,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
     /** Stripe routes */
-    Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+    Route::post('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
 
     /** COD routes */
     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
@@ -161,6 +161,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
     Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
     Route::get('get-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
-    
+
 });
 

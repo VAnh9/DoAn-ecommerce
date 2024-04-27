@@ -242,7 +242,7 @@ class PaymentController extends Controller
     $payableAmount = round($total * $stripeSetting->currency_rate, 2);
 
     $response = Charge::create([
-      "amount" => $payableAmount * 100, // change to cent (stripe pay by cent)
+      "amount" => $payableAmount, // change to cent (stripe pay by cent)
       "currency" => $stripeSetting->currency_name,
       "source" => $request->stripe_token,
       "description" => "Product Purchase!"

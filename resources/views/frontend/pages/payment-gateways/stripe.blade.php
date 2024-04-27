@@ -6,7 +6,7 @@
                     @csrf
                     <input type="hidden" name="stripe_token" id="stripe-token-id">
                     <div id="card-element"></div>
-                    <button type="button" onclick="createToken()" class="nav-link common_btn" id="pay-btn">Pay with Stripe</button>
+                    <button type="button" onclick="createToken()" class="nav-link common_btn" id="pay-btn">Pay with Stripe (Pay in VND)</button>
                 </form>
             </div>
         </div>
