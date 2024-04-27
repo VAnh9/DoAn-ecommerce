@@ -60,7 +60,10 @@
   <!--=============================
     DASHBOARD START
   ==============================-->
-    @yield('content')
+  <audio id="message_send_audio">
+    <source src="{{ asset('sounds/message-send.mp3') }}" type="audio/mpeg"/>
+  </audio>
+  @yield('content')
   <!--=============================
     DASHBOARD START
   ==============================-->

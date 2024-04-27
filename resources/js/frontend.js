@@ -1,3 +1,5 @@
+const mainChatBox = $('.wsus__chat_area_body');
+
 function formatDateTime(dateTimeString) {
   const options = {
     year: 'numeric',
@@ -22,7 +24,7 @@ function enableSoundMessage() {
 window.Echo.private('message.' + USER.id).listen(
   "MessageEvent",
   (e) => {
-    const mainChatBox = $('.wsus__chat_area_body');
+
     if(mainChatBox.attr('data-inbox') == e.sender_id) {
       var message = `<div class="wsus__chat_single">
                       <div class="wsus__chat_single_img">
@@ -47,6 +49,11 @@ window.Echo.private('message.' + USER.id).listen(
         $(this).find('.wsus_chat_list_img').addClass('msg-notification');
       }
     })
+
+    // increase value unseen message
+    let unseenMessage = parseInt($('#message-count').text());
+    unseenMessage += 1;
+    $('#message-count').text(unseenMessage);
 
     // set sender id to input for remove css unseen message
     $('#sender_id_real_time').val(e.sender_id);

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserMessageController extends Controller
 {
@@ -19,6 +20,16 @@ class UserMessageController extends Controller
       ->where('receiver_id', '!=', $userId)
       ->groupBy('receiver_id')
       ->get();
+
+
+    // $latestMessage = Chat::where('receiver_id', $userId)
+    // ->orderByDesc('created_at')
+    // ->get();
+
+    // $chatUserIds = $latestMessage->pluck('sender_id')->unique()->toArray();
+
+    // $chatUsers = Chat::with('senderProfile')->select(['sender_id'])->whereIn('sender_id', $chatUserIds)->groupBy('sender_id')->orderByDesc(DB::raw('MAX(created_at)'))->get();
+
 
     return view('frontend.dashboard.message.index', compact('chatUsers'));
   }

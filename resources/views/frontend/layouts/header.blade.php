@@ -33,6 +33,14 @@
                         </div>
                     </div>
                     <ul class="wsus__icon_area">
+                      @php
+                        $role = Auth::check() ? auth()->user()->role : 'user';
+                      @endphp
+                        <li>
+                          <a class="" href="{{ route("$role.messages.index") }}"><i class="fal fa-comment-dots"></i>
+                            <span id="message-count">{{ Auth::check() ? \App\Models\Chat::where(['receiver_id' => auth()->user()->id, 'seen' => 0 ])->count() : 0 }}</span>
+                          </a>
+                        </li>
                         <li><a href="{{ route('user.wishlist.index') }}"><i class="fal fa-heart"></i><span id="wishlist-count">{{ Auth::check() ? \App\Models\Wishlist::where('user_id', auth()->user()->id)->count() : 0 }}</span></a></li>
                         <li><a class="wsus__cart_icon" href="javascript:;"><i
                                     class="fal fa-shopping-bag"></i><span id="cart-count">{{ Cart::content()->count() }}</span></a></li>

@@ -1,3 +1,5 @@
+const mainChatBox = $('.chat-content');
+
 function formatDateTime(dateTimeString) {
   const options = {
     year: 'numeric',
@@ -23,7 +25,7 @@ function enableSoundMessage() {
 window.Echo.private('message.' + USER.id).listen(
   "MessageEvent",
   (e) => {
-    const mainChatBox = $('.chat-content');
+
     if(mainChatBox.attr('data-inbox') == e.sender_id) {
       var message = `<div class="chat-item chat-left" style="">
                       <img src="${e.sender_image}">
@@ -44,6 +46,11 @@ window.Echo.private('message.' + USER.id).listen(
         $(this).find('img').addClass('msg-notification');
       }
     })
+
+    // increase value unseen message
+    let unseenMessage = parseInt($('#message-count').text());
+    unseenMessage += 1;
+    $('#message-count').text(unseenMessage);
 
     // set sender id to input for remove css unseen message
     $('#sender_id_real_time').val(e.sender_id);
