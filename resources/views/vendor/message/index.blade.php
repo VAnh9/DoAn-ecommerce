@@ -26,9 +26,10 @@
                             <div class="wsus__chatlist d-flex align-items-start">
                                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                     aria-orientation="vertical">
-                                    <h2>Seller List</h2>
+                                    <h2>Customer List</h2>
                                     <div class="wsus__chatlist_body">
                                       @foreach ($chatUsers as $chatUser )
+
                                       @php
                                         $unseenMessages = \App\Models\Chat::where(['sender_id' => $chatUser->senderProfile->id, 'receiver_id' => auth()->user()->id, 'seen' => 0])->exists();
                                       @endphp
@@ -43,6 +44,27 @@
                                             </div>
                                             <div class="wsus_chat_list_text">
                                                 <h4>{{ $chatUser->senderProfile->name }}</h4>
+                                            </div>
+                                        </button>
+
+                                      @endforeach
+
+                                      @foreach ($boughtUsers as $boughtUser )
+                                      @php
+                                        $unseenMessages = \App\Models\Chat::where(['sender_id' => $boughtUser['sender_profile']['id'], 'receiver_id' => auth()->user()->id, 'seen' => 0])->exists();
+                                      @endphp
+
+                                        <button class="nav-link chat_user_profile" data-id="{{ $boughtUser['sender_profile']['id'] }}"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#v-pills-home" type="button" role="tab"
+                                            aria-controls="v-pills-home" aria-selected="true">
+                                            <div class="wsus_chat_list_img {{ $unseenMessages ? 'msg-notification' : '' }}">
+                                                <img src="{{ asset($boughtUser['sender_profile']['image']) }}"
+                                                    alt="user" class="img-fluid">
+                                                {{-- <span class="pending d-none" id="pending-6">0</span> --}}
+                                            </div>
+                                            <div class="wsus_chat_list_text">
+                                                <h4>{{ $boughtUser['sender_profile']['name'] }}</h4>
                                             </div>
                                         </button>
 

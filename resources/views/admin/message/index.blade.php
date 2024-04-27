@@ -39,6 +39,19 @@
                   </div>
                 </li>
               @endforeach
+
+              @foreach ($boughtUsers as $boughtUser )
+              @php
+                $unseenMessages = \App\Models\Chat::where(['sender_id' => $boughtUser['sender_profile']['id'], 'receiver_id' => auth()->user()->id, 'seen' => 0])->exists();
+              @endphp
+                <li class="media chat_user_profile p-2 rounded align-items-center" data-id="{{ $boughtUser['sender_profile']['id'] }}" style="cursor: pointer">
+                  <img alt="image" class="mr-3 rounded-circle {{ $unseenMessages ? 'msg-notification' : '' }}" width="50" src="{{ asset($boughtUser['sender_profile']['image']) }}">
+                  <div class="media-body">
+                    <div class="mt-0 mb-1 font-weight-bold sender_name">{{ $boughtUser['sender_profile']['name'] }}</div>
+                    {{-- <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i> Online</div> --}}
+                  </div>
+                </li>
+              @endforeach
             </ul>
           </div>
         </div>

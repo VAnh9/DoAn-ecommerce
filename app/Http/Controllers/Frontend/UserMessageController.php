@@ -21,6 +21,13 @@ class UserMessageController extends Controller
       ->groupBy('receiver_id')
       ->get();
 
+    $chatUserIds = $chatUsers->pluck('receiver_id')->toArray();
+
+    $chatSenderUsers = Chat::with('senderProfile')->whereNotIn('sender_id', $chatUserIds)
+      ->select(['sender_id'])
+      ->where('receiver_id', $userId)
+      ->where('sender_id', '!=', $userId)
+      ->groupBy('sender_id')->get();
 
     // $latestMessage = Chat::where('receiver_id', $userId)
     // ->orderByDesc('created_at')
@@ -31,7 +38,7 @@ class UserMessageController extends Controller
     // $chatUsers = Chat::with('senderProfile')->select(['sender_id'])->whereIn('sender_id', $chatUserIds)->groupBy('sender_id')->orderByDesc(DB::raw('MAX(created_at)'))->get();
 
 
-    return view('frontend.dashboard.message.index', compact('chatUsers'));
+    return view('frontend.dashboard.message.index', compact('chatUsers', 'chatSenderUsers'));
   }
 
   public function sendMessage(Request $request)

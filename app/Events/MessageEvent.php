@@ -19,15 +19,19 @@ class MessageEvent implements ShouldBroadcastNow
   public $message;
   public $receiverId;
   public $sendDate;
+  public $senderId;
+  public $senderImage;
 
   /**
    * Create a new event instance.
    */
-  public function __construct($message, $receiverId, $sendDate)
+  public function __construct($message, $receiverId, $sendDate, $senderId = null, $senderImage = null)
   {
     $this->message = $message;
     $this->receiverId = $receiverId;
     $this->sendDate = $sendDate;
+    $this->senderId = $senderId;
+    $this->senderImage = $senderImage;
   }
 
   /**
@@ -47,8 +51,8 @@ class MessageEvent implements ShouldBroadcastNow
     return [
       'message' => $this->message,
       'receiver_id' => $this->receiverId,
-      'sender_id' => Auth::user()->id,
-      'sender_image' => asset(Auth::user()->image),
+      'sender_id' => $this->senderId ?? Auth::user()->id,
+      'sender_image' => $this->senderImage ?? asset(Auth::user()->image),
       'send_date' => $this->sendDate,
     ];
   }

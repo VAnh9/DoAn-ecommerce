@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function PHPSTORM_META\map;
 
 class VendorMessageController extends Controller
 {
@@ -19,7 +22,24 @@ class VendorMessageController extends Controller
       ->where('sender_id', '!=', $userId)
       ->groupBy('sender_id')->get();
 
-    return view('vendor.message.index', compact('chatUsers'));
+    $chatUserIds = $chatUsers->pluck('sender_id')->toArray();
+
+    $boughtUsers = Order::whereHas('orderProducts', function($query) {
+      $query->where('vendor_id', Auth::user()->vendor->id);
+    })->whereNotIn('user_id', $chatUserIds)->select(['user_id'])->groupBy('user_id')->get();
+
+    $boughtUsers = $boughtUsers->map(function($boughtUser) {
+      return [
+        'sender_id' => $boughtUser->user_id,
+        'sender_profile' => [
+          'id' => $boughtUser->user->id,
+          'image' => $boughtUser->user->image,
+          'name' => $boughtUser->user->name,
+        ]
+      ];
+    });
+
+    return view('vendor.message.index', compact('chatUsers', 'boughtUsers'));
   }
 
   public function getMessages(Request $request)
@@ -33,7 +53,7 @@ class VendorMessageController extends Controller
       ->get();
 
     Chat::where(['sender_id' => $senderId, 'receiver_id' => $receiverId])->update(['seen' => 1]);
-    
+
     return response($messages);
   }
 

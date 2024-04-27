@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,24 @@ class MessageController extends Controller
       ->get();
 
 
-    return view('admin.message.index', compact('chatUsers'));
+    $chatUserIds = $chatUsers->pluck('sender_id')->toArray();
+
+    $boughtUsers = Order::whereHas('orderProducts', function($query) {
+      $query->where('vendor_id', Auth::user()->vendor->id);
+    })->whereNotIn('user_id', $chatUserIds)->select(['user_id'])->groupBy('user_id')->get();
+
+    $boughtUsers = $boughtUsers->map(function($boughtUser) {
+      return [
+        'sender_id' => $boughtUser->user_id,
+        'sender_profile' => [
+          'id' => $boughtUser->user->id,
+          'image' => $boughtUser->user->image,
+          'name' => $boughtUser->user->name,
+        ]
+      ];
+    });
+
+    return view('admin.message.index', compact('chatUsers', 'boughtUsers'));
   }
 
   // get all message between sender and receiver
