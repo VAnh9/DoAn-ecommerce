@@ -55,7 +55,7 @@
                         <div class="col-xl-8 col-md-7">
                             <div class="wsus__chat_main_area" style="position: relative;" data-inbox="">
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
+                                    <div class="tab-pane fade show chat_wrapper" id="v-pills-home" role="tabpanel"
                                         aria-labelledby="v-pills-home-tab">
                                         <div id="chat_box">
                                             <div class="wsus__chat_area">
@@ -126,9 +126,12 @@
       let receiverId = $(this).data('id');
       let receiverImage = $(this).find('img').attr('src');
       let chatUserName = $(this).find('h4').text();
+      // push # in url
+      window.location.hash = '#' + receiverId;
       mainChatBox.attr('data-inbox', receiverId);
       $('.wsus__chat_main_area').attr('data-inbox', receiverId);
       $('#receiver_id').val(receiverId);
+      // set focus on input
       //remove css mesage notification
       $(this).find('.wsus_chat_list_img').removeClass('msg-notification');
 
@@ -185,7 +188,7 @@
           mainChatBox.html("");
         },
         complete: function() {
-
+          $('.message_box').focus();
         }
       })
     })
@@ -253,6 +256,21 @@
         $('.wsus_chat_list_img').removeClass('msg-notification');
       }
       else return;
+    })
+
+    // check if in url has hash(#), the box chat auto open
+    window.addEventListener('load', function() {
+      var newFragment = window.location.hash;
+      if (newFragment) {
+        $('.chat_user_profile').each(function() {
+          let hash = '#' + $(this).data('id');
+          if(hash == newFragment) {
+            $(this).click();
+            $('.chat_wrapper').show();
+            return;
+          }
+        })
+      }
     })
 
   })

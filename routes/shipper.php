@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\ShipperMessageController;
+use App\Http\Controllers\Backend\ShipperOrderController;
 use App\Http\Controllers\Backend\ShipperProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,7 @@ Route::post('profile', [ShipperProfileController::class, 'updatePassword'])->nam
 Route::get('messages', [ShipperMessageController::class, 'index'])->name('messages.index');
 Route::post('send-message', [ShipperMessageController::class, 'sendMessage'])->name('send-message');
 Route::get('get-messages', [ShipperMessageController::class, 'getMessages'])->name('get-messages');
+
+/** Order routes */
+Route::get('orders', [ShipperOrderController::class, 'index'])->name('orders.index');
+Route::put('orders', [ShipperOrderController::class, 'changeOrderStatus'])->name('order.update.status');

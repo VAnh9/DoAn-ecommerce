@@ -210,7 +210,7 @@
           mainChatBox.html("");
         },
         complete: function() {
-
+          $('.message_box').focus();
         }
       })
     })

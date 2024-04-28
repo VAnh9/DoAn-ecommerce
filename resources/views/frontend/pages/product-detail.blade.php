@@ -490,6 +490,10 @@
         })
       })
 
+      // set focus on input when show modal
+      $('#exampleModal').on('shown.bs.modal', function () {
+        $('.message_box').trigger('focus');
+      })
 
     })
   </script>

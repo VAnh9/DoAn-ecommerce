@@ -96,6 +96,7 @@
                             @$order->order_status == 'dropped_off' ||
                             @$order->order_status == 'shipped' ||
                             @$order->order_status == 'out_for_delivery' ||
+                            @$order->order_status == 'shipping' ||
                             @$order->order_status == 'delivered')
                               check_mark
                             @endif">order Processing</li>

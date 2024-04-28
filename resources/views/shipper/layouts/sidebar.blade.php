@@ -6,6 +6,7 @@
     <a href="{{ url('/') }}" class="dash_logo"><img src="{{ asset( $logoSettings->logo ) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link" style="margin-top: 18px">
       <li><a class="{{ setActive(['shipper.dashboard']) }}" href="{{ route('shipper.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
+      <li><a class="{{ setActive(['shipper.orders.*']) }}" href="{{ route('shipper.orders.index') }}"><i class="fas fa-list-ul"></i> Orders</a></li>
       <li><a class="{{ setActive(['shipper.messages.*']) }}" href="{{ route('shipper.messages.index') }}"><i class="far fa-comment"></i> Message</a></li>
       <li><a class="{{ setActive(['shipper.profile.*']) }}" href="{{ route('shipper.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
       <li>

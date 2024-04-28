@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserOrderDataTable extends DataTable
+class ShipperOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,15 +24,26 @@ class UserOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query) {
-              $showBtn = "<a href='".route('user.orders.show', $query->id)."' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+              if($query->order_status == 'shipping') {
+                return "<select class='form-control change-order-status-shipper' data-id='$query->id' style='height: 34px; padding: 0 0 0 15px;'>
+                          <option selected value='shipping'>Shipping</option>
+                          <option value='delivered'>Delivered</option>
+                        </select>";
+              }
+              else if($query->order_status == 'delivered') {
+                return "<select class='form-control change-order-status-shipper' data-id='$query->id' style='height: 34px; padding: 0 0 0 15px;'>
+                          <option value='shipping'>Shipping</option>
+                          <option selected value='delivered'>Delivered</option>
+                        </select>";
 
-              return $showBtn;
+                // return "<i class='badge bg-success rounded-pill'>Delivered</i>";
+              }
+              else {
+                return "<i class='badge bg-secondary rounded-pill'>Canceled</i>";
+              }
             })
             ->addColumn('customer', function($query) {
-              return $query->user->name;
-            })
-            ->addColumn('date', function($query) {
-              return date('d-M-Y', strtotime($query->created_at));
+              return "<a class='text-primary' href='".route('shipper.messages.index').'#'.$query->user->id."'>".$query->user->name."</a>";
             })
             ->addColumn('order_status', function($query) {
               $orderStatus = $query->order_status;
@@ -77,16 +88,8 @@ class UserOrderDataTable extends DataTable
               }
               else return "<i class='badge bg-warning rounded-pill'>Pending</i>";
             })
-            ->addColumn('shipper', function($query) {
-              if(isset($query->shipper_id)) {
-                return "<a class='text-primary' href=".route('user.messages.index').'#'.$query->shipper_id.">".$query->shipper->name."</a>";
-              }
-              else {
-                return 'Shopnest';
-              }
-            })
             ->addIndexColumn()
-            ->rawColumns(['order_status', 'payment_status', 'action', 'shipper'])
+            ->rawColumns(['customer', 'payment_status', 'order_status', 'action'])
             ->setRowId('id');
     }
 
@@ -95,7 +98,7 @@ class UserOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->where('user_id', Auth::user()->id)->newQuery();
+        return $model->where('shipper_id', Auth::user()->id)->newQuery();
     }
 
     /**
@@ -104,11 +107,11 @@ class UserOrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('userorder-table')
+                    ->setTableId('shipperorder-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
+                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -129,17 +132,13 @@ class UserOrderDataTable extends DataTable
             Column::make('DT_RowIndex')->width(80)->title('#')->name('id'),
             Column::make('invoice_id'),
             Column::make('customer'),
-            Column::make('date'),
-            Column::make('product_qty'),
             Column::make('amount'),
             Column::make('order_status'),
-            Column::make('shipper')->width(130),
-            Column::make('payment_method'),
             Column::make('payment_status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(70)
+                  ->width(150)
                   ->addClass('text-center'),
         ];
     }
@@ -149,6 +148,6 @@ class UserOrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'UserOrder_' . date('YmdHis');
+        return 'ShipperOrder_' . date('YmdHis');
     }
 }

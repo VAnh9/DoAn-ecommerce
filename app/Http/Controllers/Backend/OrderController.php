@@ -145,8 +145,9 @@ class OrderController extends Controller
       $order->save();
 
       $orderUserName = $order->user->name;
+      $shipperPhoneNumber = $order->shipper->phone;
       $orderInvoice = $order->invoice_id;
-      $messageText ="Hello $orderUserName, your order with invoice number #$orderInvoice is now en route. Kindly keep an eye on your phone to receive the goods at your earliest convenience." ;
+      $messageText ="Hello $orderUserName, your order with invoice number #$orderInvoice is now en route. Kindly keep an eye on your phone to receive the goods at your earliest convenience. You can contact me via phone number: $shipperPhoneNumber" ;
 
       $message = new Chat();
 
@@ -158,7 +159,7 @@ class OrderController extends Controller
 
 
       $senderImage = asset($order->shipper->image);
-      broadcast(new MessageEvent($message, $order->user_id, $order->updated_at, $request->shipper, $senderImage));
+      broadcast(new MessageEvent($message->message, $message->receiver_id, $order->updated_at, $message->sender_id, $senderImage));
 
       $order->is_broadcasted = 1;
       $order->save();
