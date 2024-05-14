@@ -71,8 +71,8 @@ class ProductController extends Controller
       ->paginate(12);
     }
     else if($request->has('childcategory')) {
-      $category = ChildCategory::withAvg('productReviews as review_rating', 'rating')->withCount('productReviews as review_count')->with(['productImageGalleries', 'variants', 'category', 'variants.productVariantItems'])->where('slug', $request->childcategory)->firstOrFail();
-      $products = Product::where(['child_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])
+      $category = ChildCategory::where('slug', $request->childcategory)->firstOrFail();
+      $products = Product::withAvg('productReviews as review_rating', 'rating')->withCount('productReviews as review_count')->with(['productImageGalleries', 'variants', 'category', 'variants.productVariantItems'])->where(['child_category_id' => $category->id, 'status' => 1, 'is_approved' => 1])
       ->when($request->has('range'), function($query) use ($request) {
         $price = explode(';', $request->range);
         $from = $price[0];

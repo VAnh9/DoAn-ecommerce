@@ -33,6 +33,7 @@
           'admin.product-image-gallery.*',
           'admin.product-variant.*',
           'admin.product-variant-item.*',
+          'admin.product-additional-information.*',
           'admin.seller-products.*',
           'admin.seller-pending-products.*',
           'admin.reviews.*',
@@ -46,6 +47,7 @@
               'admin.product-image-gallery.*',
               'admin.product-variant.*',
               'admin.product-variant-item.*',
+              'admin.product-additional-information.*',
               ]) }}"><a class="nav-link" href="{{ route('admin.product.index') }}">Products</a></li>
             <li class="{{ setActive([
               'admin.seller-products.*',

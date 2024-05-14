@@ -808,6 +808,14 @@ header {
   height: 570px;
 }
 
+.wsus__sub_category li a {
+  border-bottom: 1px solid #eeeeeede !important;
+}
+
+.wsus__sub_category li:last-child a {
+  border-bottom: 0 !important;
+}
+
 .wsus_menu_cat_droapdown li:hover .wsus__sub_category {
   opacity: 1;
   visibility: visible;
@@ -2003,7 +2011,8 @@ MONTHLY TOP PRODUCT START
 }
 
 .grid .wsus__hot_deals__single_img img {
-  height: 100%;
+  /* height: 100%; */
+  height: 164px;
   object-fit: cover;
 }
 
@@ -9791,4 +9800,55 @@ li.page-item > .page-link {
 
 .msg-notification {
   border: 4px solid #1AC933 !important;
+}
+
+.icon_area_in_dashboard a {
+  position: relative;
+}
+/* .icon_area_in_dashboard a span {
+  position: absolute;
+  background-color: #d33;
+  border-radius: 8px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  color: #fff;
+  font-size: 12px;
+  top: 3px;
+  left: 32px;
+  text-align: center;
+  margin: auto;
+} */
+.message_beep {
+  position: absolute;
+  top: 11px;
+  left: 40px;
+}
+.message_beep::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 7px;
+  height: 7px;
+  background-color: #ffa426;
+  border-radius: 50%;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 1;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0.0;
+  }
+  50% {
+      opacity: 1.0;
+  }
+
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0.0;
+  }
 }

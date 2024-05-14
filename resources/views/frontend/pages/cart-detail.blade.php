@@ -43,7 +43,7 @@
                             <tbody>
                                 <tr class="d-flex">
                                     <th class="wsus__pro_img">
-                                        product item
+                                        product image
                                     </th>
 
                                     <th class="wsus__pro_name">

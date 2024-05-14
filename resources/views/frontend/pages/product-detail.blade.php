@@ -7,7 +7,7 @@
 @section('content')
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -157,7 +157,7 @@
                               <li></li>
                               <li><a href="javascript:;" class="wishlist-btn" data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a></li>
                               @if (Auth::check())
-                                <li><a data-bs-toggle="modal" data-bs-target="#exampleModal" href="javascript:;" class=""><i class="fal fa-comment-alt"></i></a></li>
+                                <li><a data-bs-toggle="modal" data-bs-target="#exampleModal2" href="javascript:;" class=""><i class="fal fa-comment-alt"></i></a></li>
                               @endif
                           </ul>
                         </form>
@@ -467,7 +467,7 @@
           success: function(response) {
             if(response.status == 'success') {
               $('.message_box').val('');
-              $('#exampleModal').modal('toggle');
+              $('#exampleModal2').modal('toggle');
               toastr.success(response.message);
             }
           },
@@ -491,7 +491,7 @@
       })
 
       // set focus on input when show modal
-      $('#exampleModal').on('shown.bs.modal', function () {
+      $('#exampleModal2').on('shown.bs.modal', function () {
         $('.message_box').trigger('focus');
       })
 

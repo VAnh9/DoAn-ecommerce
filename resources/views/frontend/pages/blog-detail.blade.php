@@ -60,7 +60,7 @@
                     <div class="wsus__related_post">
                         <div class="row">
                             <div class="col-xl-12">
-                                <h5>related post</h5>
+                                <h5>related blogs</h5>
                             </div>
                         </div>
                         <div class="row blog_det_slider">
@@ -147,7 +147,7 @@
                       </ul>
                   </div>
                   <div class="wsus__blog_post">
-                      <h4>More Post</h4>
+                      <h4>More Blogs</h4>
                       @foreach ($moreBlogs as $moreBlog )
                         <div class="wsus__blog_post_single">
                             <a href="{{ route('blog.index', $moreBlog->slug) }}" class="wsus__blog_post_img">
