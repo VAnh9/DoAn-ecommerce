@@ -246,7 +246,7 @@
       $('#shipping_fee').text("{{ $settings->currency_icon }}" + shippingFee);
 
       let totalPriceBeforeApplyShipping = $('#total_price').data('price');
-      let totalPriceAfterApplyShipping = totalPriceBeforeApplyShipping + shippingFee;
+      let totalPriceAfterApplyShipping = (totalPriceBeforeApplyShipping + shippingFee).toFixed(2);
       $('#total_price').text("{{ $settings->currency_icon }}" + totalPriceAfterApplyShipping);
     })
 

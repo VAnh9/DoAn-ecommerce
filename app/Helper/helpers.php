@@ -94,7 +94,7 @@ function getPriceAfterApplyDiscount()
       return $total;
     } else if ($coupon['discount_type'] == 'percent') {
 
-      $discount = $originalPrice - ($originalPrice * $coupon['discount'] / 100);
+      $discount = round($originalPrice - ($originalPrice * $coupon['discount'] / 100), 2);
 
       $total = $originalPrice - $discount;
 
@@ -118,7 +118,7 @@ function getDiscountPrice()
 
       $discount = $originalPrice - ($originalPrice * $coupon['discount'] / 100);
 
-      return $discount;
+      return round($discount,2);
     }
   } else return 0;
 }

@@ -222,9 +222,9 @@ class CartController extends Controller
         return response(['status' => 'success', 'discount' => $coupon['discount'], 'priceAfterDiscount' => $total]);
       } else if ($coupon['discount_type'] == 'percent') {
 
-        $discount = $originalPrice - ($originalPrice * $coupon['discount'] / 100);
+        $discount = round($originalPrice - ($originalPrice * $coupon['discount'] / 100), 2);
 
-        $total = $originalPrice - $discount;
+        $total = round($originalPrice - $discount, 2);
 
         return response(['status' => 'success', 'discount' => $discount, 'priceAfterDiscount' => $total]);
       }
