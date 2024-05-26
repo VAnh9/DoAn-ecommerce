@@ -174,6 +174,7 @@
               <hr>
               <div class="text-md-right">
                 <button class="btn btn-warning btn-icon icon-left print-btn"><i class="fas fa-print"></i> Print</button>
+                {{-- <a href="{{ route('admin.order.print', $order->id) }}">Print</a> --}}
               </div>
             </div>
           </div>

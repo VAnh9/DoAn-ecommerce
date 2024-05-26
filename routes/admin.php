@@ -173,6 +173,7 @@ Route::put('cod-settings/{id}', [CodSettingsController::class, 'update'])->name(
 /** Orders routes */
 Route::put('order/change-order-status', [OrderController::class, 'changeOrderStatus'])->name('order.change-order-status');
 Route::put('order/change-payment-status', [OrderController::class, 'changePaymentStatus'])->name('order.change-payment-status');
+Route::get('order/print/{id}', [OrderController::class, 'printOrder'])->name('order.print');
 Route::get('pending-orders', [OrderController::class, 'getPendingOrders'])->name('pending-orders.index');
 Route::get('processed-orders', [OrderController::class, 'getProcessedOrders'])->name('processed-orders.index');
 Route::get('dropped-off-orders', [OrderController::class, 'getDroppedOffOrders'])->name('dropped-off-orders.index');

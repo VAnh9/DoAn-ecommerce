@@ -16,6 +16,7 @@ use App\Models\Chat;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -69,6 +70,18 @@ class OrderController extends Controller
     return $dataTable->render('admin.order.canceled-order');
   }
 
+  /** Print Order */
+  public function printOrder($id) {
+
+    $order = Order::findOrFail($id);
+    $shippers = User::where('role', 'shipper')->get();
+    $data = [
+      'order' => $order,
+      'shippers' => $shippers
+    ];
+    $pdf = Pdf::loadView('admin.order.show', $data);
+    return $pdf->download('order.pdf');
+  }
   /**
    * Show the form for creating a new resource.
    */
