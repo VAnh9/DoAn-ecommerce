@@ -6,6 +6,7 @@ use App\DataTables\UserProductReviewsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ProductReview;
 use App\Models\ProductReviewGallery;
+use App\Rules\badWord;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,12 @@ class ReviewController extends Controller
       return redirect()->back();
     }
 
+    $badWords = ['shoot', 'fuck', 'gun', 'punch'];
+
+    $originalReview = $request->review;
+
+    $reviewAfterCheck = $this->checkVadidReview($badWords, $originalReview);
+
     $imagePaths = $this->uploadMultiImage($request, 'image', 'uploads');
 
     $productReview = new ProductReview();
@@ -58,7 +65,7 @@ class ReviewController extends Controller
     $productReview->user_id = Auth::user()->id;
     $productReview->vendor_id = $request->vendor_id;
     $productReview->rating = $request->star_rate;
-    $productReview->review = $request->review;
+    $productReview->review = $request->review != $reviewAfterCheck ? $reviewAfterCheck : $request->review;
     $productReview->status = 1;
 
     $productReview->save();
@@ -78,5 +85,19 @@ class ReviewController extends Controller
     toastr('Review added successfully!');
 
     return redirect()->back();
+  }
+
+  public function checkVadidReview(array $badWords, string &$value) {
+
+    foreach($badWords as $badWord) {
+
+      $pattern = '/\b' . preg_quote($badWord, '/') . '\b/i';
+
+      $replacement = str_repeat('*' , strlen($badWord));
+
+      $value = preg_replace($pattern, $replacement, $value);
+    }
+
+    return $value;
   }
 }
