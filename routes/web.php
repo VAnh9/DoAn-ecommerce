@@ -139,6 +139,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     /** Order routes */
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+    Route::post('order/update-status/{id}', [UserOrderController::class, 'updateOrderStatus'])->name('order.update-status');
 
     /** Wishlist routes */
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');

@@ -67,6 +67,12 @@ class OrderDataTable extends DataTable
                   break;
               }
             })
+            ->addColumn('shipping_status', function($query) {
+              if($query->shipper_status == 1) {
+                return "<i class='badge badge-success'>Delivered</i>";
+              }
+              else return "<i class='badge badge-warning'>Shipping</i>";
+            })
             ->addColumn('amount', function($query) {
               return $query->currency_icon.$query->amount;
             })
@@ -76,7 +82,7 @@ class OrderDataTable extends DataTable
               }
               else return "<i class='badge badge-warning'>Pending</i>";
             })
-            ->rawColumns(['order_status', 'action', 'payment_status'])
+            ->rawColumns(['order_status', 'action', 'payment_status', 'shipping_status'])
             ->setRowId('id');
     }
 
@@ -123,6 +129,7 @@ class OrderDataTable extends DataTable
             Column::make('product_qty'),
             Column::make('amount'),
             Column::make('order_status'),
+            Column::make('shipping_status'),
             Column::make('payment_method'),
             Column::make('payment_status'),
             Column::computed('action')

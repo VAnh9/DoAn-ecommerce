@@ -91,7 +91,7 @@ class ReviewController extends Controller
 
     foreach($badWords as $badWord) {
 
-      $pattern = '/\b' . preg_quote($badWord, '/') . '\b/i';
+      $pattern = '/' . preg_quote($badWord, '/') . '/i';
 
       $replacement = str_repeat('*' , strlen($badWord));
 

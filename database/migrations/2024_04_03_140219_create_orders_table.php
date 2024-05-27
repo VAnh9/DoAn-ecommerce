@@ -28,6 +28,12 @@ return new class extends Migration
             $table->string('order_status');
             $table->integer('shipper_id')->nullable();
             $table->boolean('is_broadcasted')->nullable()->default(false);
+            // store status order updated by shipper
+            $table->boolean('shipper_status')->nullable()->default(false);
+            // store status order updated by customer
+            $table->boolean('customer_status')->nullable()->default(false);
+            // time shipper update shipping status
+            $table->date('shipping_arrive_at')->nullable();
             $table->timestamps();
         });
     }

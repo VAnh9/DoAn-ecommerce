@@ -135,12 +135,24 @@
                     INVOICE PAGE END
                 ==============================-->
 
-                <div class="row">
+                <div class="d-flex mt-5 justify-content-between">
 
-                  <div class="col-md-12 text-end">
-                    <button class="print-btn btn btn-warning mt-5 text-white"><i class="fas fa-print me-1"></i>Print</button>
+                  @if ($order->shipper_status == 1 && $order->customer_status != 1)
+                    <div>
+                      <form action="{{ route('user.order.update-status', $order->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Received</button>
+                      </form>
+                    </div>
+                  @else
+                    <div></div>
+                  @endif
+
+                  <div class="">
+                    <button class="print-btn btn btn-warning text-white"><i class="fas fa-print me-1"></i>Print</button>
                   </div>
                 </div>
+
             </div>
           </div>
         </div>

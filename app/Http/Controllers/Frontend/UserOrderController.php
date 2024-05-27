@@ -19,10 +19,27 @@ class UserOrderController extends Controller
   {
     $order = Order::findOrFail($id);
 
-    if($order->user_id != Auth::user()->id) {
+    if ($order->user_id != Auth::user()->id) {
       abort(404);
     }
 
     return view('frontend.dashboard.order.show', compact('order'));
+  }
+
+  public function updateOrderStatus(string $id)
+  {
+    $order = Order::findOrFail($id);
+
+    $order->customer_status = 1;
+
+    if($order->shipper_status == 1 && $order->customer_status == 1) {
+      $order->order_status = 'delivered';
+    }
+
+    $order->save();
+
+    toastr('Updated successfully!');
+
+    return redirect()->route('user.orders.index');
   }
 }

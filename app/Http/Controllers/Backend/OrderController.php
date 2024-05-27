@@ -181,6 +181,13 @@ class OrderController extends Controller
       $order->save();
     }
 
+    if($order->order_status == 'delivered') {
+      $order->shipper_status = 1;
+      $order->customer_status = 1;
+
+      $order->save();
+    }
+
     toastr('Order Status Updated Successfully!');
     return redirect()->back();
   }

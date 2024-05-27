@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\ShipperOrderDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ShipperOrderController extends Controller
@@ -17,7 +18,11 @@ class ShipperOrderController extends Controller
   {
     $order = Order::findOrFail($request->orderId);
 
-    $order->order_status = $request->orderStatus;
+    $order->shipper_status = $request->orderStatus == 'delivered' ? 1 : 0;
+
+    if($request->orderStatus == 'delivered') {
+      $order->shipping_arrive_at = Carbon::now();
+    }
 
     $order->save();
 

@@ -24,15 +24,15 @@ class ShipperOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query) {
-              if($query->order_status == 'shipping') {
+              if($query->shipper_status == 0) {
                 return "<select class='form-control change-order-status-shipper' data-id='$query->id' style='height: 34px; padding: 0 0 0 15px;'>
                           <option selected value='shipping'>Shipping</option>
                           <option value='delivered'>Delivered</option>
                         </select>";
               }
-              else if($query->order_status == 'delivered') {
+              else if($query->shipper_status == 1) {
                 return "<select class='form-control change-order-status-shipper' data-id='$query->id' style='height: 34px; padding: 0 0 0 15px;'>
-                          <option value='shipping'>Shipping</option>
+                          <option disabled value='shipping'>Shipping</option>
                           <option selected value='delivered'>Delivered</option>
                         </select>";
 
@@ -111,7 +111,7 @@ class ShipperOrderDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
