@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
@@ -75,6 +76,9 @@ class VendorOrderDataTable extends DataTable
                 }
               }
               return $query->currency_icon.$total;
+            })
+            ->addColumn('product_qty', function($query) {
+              return OrderProduct::where('order_id', $query->id)->where('vendor_id', Auth::user()->id)->count();
             })
             ->addColumn('payment_status', function($query) {
               if($query->payment_status == 1) {

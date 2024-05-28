@@ -14,6 +14,8 @@ use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -186,6 +188,17 @@ class OrderController extends Controller
       $order->customer_status = 1;
 
       $order->save();
+    }
+
+    if($order->order_status == 'canceled') {
+
+      $orderProducts = OrderProduct::where('order_id', $order->id)->get();
+      foreach($orderProducts as $item) {
+        $product = Product::where('id', $item->product_id)->first();
+        $updatedQty = $product->quantity + $item->qty;
+        $product->quantity = $updatedQty;
+        $product->save();
+      }
     }
 
     toastr('Order Status Updated Successfully!');
